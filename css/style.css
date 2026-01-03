@@ -1,0 +1,161 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #272822;
+}
+
+main {
+  text-align: center;
+}
+
+h2 {
+  font-size: 3.0rem;        /* tamaño de letra */
+  font-weight: bold;      /* negrita */
+  font-family: 'Arial', sans-serif;  /* tipo de letra */
+  line-height: 42px;       /* altura de línea */
+  color: #ffffff;         /* color de texto */
+  text-transform: capitalize; /* capitaliza la primera letra de cada palabra */
+  text-align: center;     /* opcional: centrar texto */
+}
+
+main h3 {
+  color: #ffffff;
+  font-size: 2.6rem;
+  font-weight: 600;
+  margin: 2rem auto 1rem;  /* 👈 centra horizontalmente */
+  font-family: Arial, sans-serif;
+
+  display: inline-block;
+  border-bottom: 2px solid #008080;
+  padding-bottom: 5px;
+}
+
+main p {
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin: 2rem auto 1rem;
+  text-align: justify;
+  line-height: 1.6;
+  margin-top: 1rem;
+  max-width: 800px;
+}
+
+
+.hero {
+  position: relative;
+  width: 100%;       /* ancho total del contenedor padre */
+  height: 35vh;      /* altura que quieras */
+  overflow: hidden;
+  padding: 0;
+  line-height: 0;    /* elimina espacios de línea */
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;   /* elimina espacios blancos debajo de la imagen */
+}
+
+
+.contenedor-hoja {
+  max-width: 950px;   /* O el ancho que prefieras */
+  margin-left: auto;  /* Empuja desde la izquierda */
+  margin-right: auto; /* Empuja desde la derecha */
+  
+  /* El resto de tus estilos se quedan igual */
+  background-color: #272822;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  white-space: nowrap;      /* 👈 Obliga al texto a no saltar de línea jamás */
+  width: auto;              /* 👈 El contenedor se ajusta al texto */
+  min-width: max-content;   /* 👈 Asegura que el ancho sea el máximo del contenido */
+
+  background-color: rgba(39, 40, 34, 0.98); 
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 18px 18px 0 0; /* Opcional: queda mejor si solo redondeas las esquinas de arriba al estar pegado abajo */
+
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+}
+
+.indice-lateral {
+  position: fixed;
+  left: 20px;
+  top: 100px; 
+  opacity: 0;
+  visibility: hidden;
+  display: none;
+
+  /* --- CAMBIOS AQUÍ --- */
+  width: auto;           /* 👈 Quitamos los 220px */
+  min-width: 120px;      /* 👈 Un mínimo para que no se vea muy comprimido */
+  max-width: 280px;      /* 👈 Un máximo para que no ocupe media pantalla */
+  display: inline-block; /* 👈 Hace que el ancho sea según el contenido */
+  /* -------------------- */
+
+  padding: 1.2rem;
+  background-color: #272822;
+  border: 2px solid #008080; /* El mismo color que el border-bottom de tus h3 */
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 100;
+  transition: opacity 0.3s ease;
+}
+
+/* 2. Esta clase la usaremos para mostrarlo cuando el JS termine el cálculo */
+.indice-lateral.visible {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+.indice-lateral h4 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.indice-lateral ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.indice-lateral li {
+  margin: 0.6rem 0;
+}
+
+.indice-lateral a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.indice-lateral a:hover {
+  color: #FFBF00;
+  transform: translateX(4px);
+}
+
+.indice-lateral a.seccion-activa {
+  color: #FFBF00 !important;
+  transform: translateX(10px); /* Un pequeño desplazamiento para dar dinamismo */
+  font-weight: bold;
+}
+
+html {
+  scroll-behavior: smooth;
+}

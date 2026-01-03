@@ -1,0 +1,227 @@
+
+.menu-navegacion {
+  background-color: #008080;
+  position: absolute;       /* permite colocar libremente */
+  top: 120px;                /* distancia vertical desde la parte superior del header */
+  left: 50%;                /* punto de referencia horizontal: centro de la pantalla */
+  transform: translateX(-50%); /* mueve el menú exactamente al centro */
+
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+
+  z-index: 9999;  /* <<< Esto asegura que esté delante de todo */
+}
+  
+.menu-navegacion a {
+  color: #ffffff;
+  margin: 0;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 0.5rem 0.9rem;           /* tamaño clicable por enlace */
+  border-radius: 8px;               /* esquinas redondeadas por enlace */
+  transition: background-color 160ms ease, transform 160ms ease, color 160ms ease;
+}
+
+/* Nuevo tono al pasar el cursor (hover / focus) */
+.menu-navegacion a:hover,
+.menu-navegacion a:focus {
+  background-color: #272822;
+  color: #FFBF00;
+  transform: translateY(-2px); /* eleva 3px; ajustar si quieres más/menos */
+  box-shadow: none;
+  outline: none;
+}
+
+  .menu-navegacion a.active {
+    background-color: #FFBF00;
+    color: #272822;
+  }
+  main {
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+  }
+  section {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  footer {
+    background-color: #111827;
+    color: #d1d5db;
+    text-align: center;
+    padding: 1rem;
+  }
+  button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #1d4ed8;
+  }
+
+h1 {
+  font-size: 2.2rem;        /* tamaño de letra */
+  font-weight: bold;      /* negrita */
+  font-family: 'Arial', sans-serif;  /* tipo de letra */
+  line-height: 42px;       /* altura de línea */
+  color: #ffffff;         /* color de texto */
+  text-transform: capitalize; /* capitaliza la primera letra de cada palabra */
+  text-align: center;     /* opcional: centrar texto */
+}
+
+.cabecera {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;      /* permite que los elementos se muevan a la siguiente fila si no caben */
+  align-items: center;  /* centra verticalmente los elementos */
+  gap: 1rem;            /* espacio entre elementos */
+  padding: 1rem 2rem;
+  background-color: #272822;
+
+  border: 5px solid #008080;   /* color y grosor del borde */
+  border-radius: 15px;          /* esquinas redondeadas */
+}
+
+.header-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start; /* centra el grupo en la cabecera */
+  gap: 1rem;
+  padding: 0.25rem 0;
+  width: auto;
+  box-sizing: border-box;
+}
+.logo {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;      /* quitar sombra */
+  display: block;
+}
+
+/* Fecha/hora en la esquina superior derecha */
+.header-fecha-hora {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  align-items: center;
+  
+  
+}
+  
+#fecha-hora {
+  font-size: 1.2rem;
+  opacity: 1;
+  color: #ffffff; /* ajustar según fondo */
+  white-space: nowrap;
+}
+
+.busqueda-header {
+    position: absolute;
+    top: 85px;
+    right: 30px;
+    display: flex;
+    justify-content: center;   /* centra la barra horizontalmente */
+    gap: 5px;
+    margin-top: 15px;          /* separación del menú */
+}
+
+#barra-busqueda {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+#boton-buscar {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+
+  background-color: #008080;   /* color base del botón */
+  color: #fffffff0;              /* texto normal */
+
+  border: 4px solid #008080;   /* borde del mismo color que el botón */
+  cursor: pointer;
+  font-weight: bold;
+
+  transition: 
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+#boton-buscar:hover {
+  background-color: #272822;   /* interior negro */
+  color: #FFBF00;              /* letras amarillas */
+  border-color: #008080;       /* borde mantiene el color original */
+}
+
+.header-texto {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  transition: top 0.2s; /* suaviza el cambio de posición */
+}
+
+.logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* Contenedor del item con submenú */
+.menu-item {
+  position: relative;
+}
+
+/* Submenú oculto */
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  
+  display: inline-block; /* se ajusta al contenido más largo */
+  background-color: #008080;
+  border-radius: 10px;
+  padding: 0.5rem 0;
+  display: none;
+  white-space: nowrap; /* ❗ texto en una sola línea, ancho depende del contenido */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  z-index: 1000;
+}
+
+/* Links del submenú */
+.submenu a {
+  display: block;
+  padding: 0.6rem 1.2rem;
+  background-color: #008080;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+/* Hover del submenú */
+.submenu a:hover {
+  background-color: #272822;
+  color: #FFBF00;
+}
+
+/* Mostrar submenú al pasar el ratón */
+.menu-item:hover .submenu {
+  display: block;
+}

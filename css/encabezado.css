@@ -1,9 +1,3 @@
-header {
-  background-color: #395daa;
-  color: white;
-  padding: 1.5rem;
-  text-align: center;
-}
 
 .menu-navegacion {
   background-color: #008080;
@@ -18,6 +12,8 @@ header {
   border-radius: 12px;
   padding: 0.5rem 1rem;
   box-sizing: border-box;
+
+  z-index: 9999;  /* <<< Esto asegura que esté delante de todo */
 }
   
 .menu-navegacion a {
@@ -186,4 +182,46 @@ h1 {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
+}
+
+/* Contenedor del item con submenú */
+.menu-item {
+  position: relative;
+}
+
+/* Submenú oculto */
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  
+  display: inline-block; /* se ajusta al contenido más largo */
+  background-color: #008080;
+  border-radius: 10px;
+  padding: 0.5rem 0;
+  display: none;
+  white-space: nowrap; /* ❗ texto en una sola línea, ancho depende del contenido */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  z-index: 1000;
+}
+
+/* Links del submenú */
+.submenu a {
+  display: block;
+  padding: 0.6rem 1.2rem;
+  background-color: #008080;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+/* Hover del submenú */
+.submenu a:hover {
+  background-color: #272822;
+  color: #FFBF00;
+}
+
+/* Mostrar submenú al pasar el ratón */
+.menu-item:hover .submenu {
+  display: block;
 }

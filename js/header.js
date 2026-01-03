@@ -1,11 +1,12 @@
-fetch("header.html")
+fetch("/header.html")
   .then(function (response) {
     return response.text();
   })
   .then(function (data) {
     document.getElementById("header-container").innerHTML = data;
     iniciarReloj();
-    ajustarPosicionTexto();  // <<-- mover aquí
+    ajustarPosicionTexto();
+    marcarMenuActivo();
   });
 
 function ajustarPosicionTexto() {
@@ -57,5 +58,33 @@ function iniciarReloj() {
 
   actualizarFechaHora();
   setInterval(actualizarFechaHora, 1000);
+}
+
+function marcarMenuActivo() {
+  const enlaces = document.querySelectorAll('.menu-navegacion a');
+  // Obtenemos el nombre del archivo actual (ej: proyectos.html o pcb_adc.html)
+  let rutaActual = window.location.pathname.split('/').pop() || 'index.html';
+
+  enlaces.forEach(enlace => {
+    // Limpiamos clases previas
+    enlace.classList.remove('active');
+
+    const href = enlace.getAttribute('href').split('/').pop();
+
+    if (rutaActual === href) {
+      // 1. Marcamos el enlace donde estamos
+      enlace.classList.add('active');
+
+      // 2. BUSCAMOS AL PADRE: Si este enlace está dentro de un submenú...
+      const submenu = enlace.closest('.submenu');
+      if (submenu) {
+        // Buscamos el enlace principal que está justo antes del submenú
+        const padrePrincipal = submenu.parentElement.querySelector('a');
+        if (padrePrincipal) {
+          padrePrincipal.classList.add('active');
+        }
+      }
+    }
+  });
 }
 

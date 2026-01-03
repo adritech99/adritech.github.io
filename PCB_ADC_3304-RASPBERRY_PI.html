@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="css/encabezado.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+
+  <!-- Aquí se carga el header -->
+  <div id="header-container"></div>
+
+  <section class="hero">
+    <img src="img/proyectos/MCP3304-RASPBERRY PI/ADC3304_RASPBERRY_PI_4.webp" alt="Imagen principal">
+    
+    <div class="hero-text">
+      <h2>PCB ADC 3304 - RASPBERRY PI</h2>
+    </div>
+
+  </section>
+
+  <nav class="indice-lateral">
+    <ul>
+      <li><a href="#introduccion">INTRODUCCIÓN</a></li>
+      <li><a href="#proteus">PROTEUS</a></li>
+      <li><a href="#proceso-cnc">PROCESO CNC</a></li>
+      <li><a href="#montaje-pcb">MONTAJE DE PCB</a></li>
+      <li><a href="#programacion">PROGRAMACIÓN</a></li>
+    </ul>
+  </nav>
+
+  <div class="contenedor-hoja">
+    <main>
+
+      <h3 id="introduccion">INTRODUCCIÓN</h3>
+
+      <p>
+        Dado que la Raspberry Pi carece de conversores analógico-digitales integrados, 
+        se ha diseñado una PCB específica que incorpora un ADC para permitir la adquisición 
+        y lectura de señales de tensión.
+      </p>
+
+      <p>Para este desarrollo se ha integrado el ADC MCP3304, encargado de procesar la tensión 
+        regulada mediante un potenciómetro a través de sus canales de entrada.
+      </p>
+
+      <p>Asimismo, se ha incorporado una pantalla OLED para visualizar en tiempo real los niveles 
+        de tensión procesados por la Raspberry Pi, tras su adquisición mediante el MCP3304.
+      </p>
+
+
+      <P>"Este dispositivo es un conversor analógico-digital (ADC) de bajo consumo, diseñado 
+        específicamente para sistemas alimentados por batería y aplicaciones de adquisición de datos remota.
+      </P>
+
+      <p>Presenta una eficiencia energética excepcional, con un consumo nominal en stand-by de apenas 50 nA 
+        (máximo 1 μA) y un consumo operativo de 450 μA bajo una alimentación de 5V.
+      </p>
+
+      <p>El sistema integra 8 canales de entrada configurables en dos modos de operación: el modo 
+        diferencial, que organiza los canales en 4 pares para alcanzar una resolución de 13 bits, 
+        y el modo simple, que permite utilizar cada canal de forma independiente con una resolución 
+        de 12 bits. Todo ello con una tasa de muestreo de 100 ksps (100.000 muestras por segundo).
+      </p>
+
+      <p>Asimismo, incorpora una entrada para tensión de referencia externa ajustable entre 400 mV y 
+        5V, lo que permite una precisión de escala que oscila entre los 98 µV y los 1,22 mV.
+      </p>
+
+      <p>Finalmente, su interfaz de comunicación SPI garantiza una integración sencilla y versátil 
+        con cualquier microcontrolador del mercado.
+      </p>
+
+      <h3 id="proteus">PROTEUS</h3>
+
+      <p>Para el desarrollo de la PCB se ha utilizado Proteus 8.12, empleando ISIS para la 
+        captura del esquemático y ARES para el diseño del trazado. Previo al ruteado, es necesario 
+        aplicar configuraciones específicas en el entorno para optimizar el diseño final.
+      </p>
+
+      <p>La interconexión entre la Raspberry Pi 4 y la PCB se realiza mediante un cable plano 
+        tipo ribbon, garantizando el acceso a todos los GPIO. Aquellos pines que no se emplean 
+        en el diseño principal se han derivado a conectores auxiliares para facilitar su uso en 
+        futuras expansiones.
+      </p>
+
+      <p>Ante los requerimientos de potencia del sistema, superiores a la capacidad de suministro 
+        de la Raspberry Pi 4, se ha integrado un conector ATX que permite alimentar la placa mediante 
+        una fuente de alimentación de PC convencional.
+      </p>
+
+      <p>El diseño incorpora dos potenciómetros de precisión: el primero destinado a ajustar la tensión 
+        de referencia externa, y el segundo configurado para regular una señal de prueba, permitiendo la 
+        verificación y calibración de los ocho canales de entrada del ADC.
+      </p>
+
+      <h3 id="proceso-cnc">PROCESO CNC</h3>
+
+      <h3 id="montaje-pcb">MONTAJE DE PCB</h3>
+
+      <h3 id="programacion">PROGRAMACIÓN</h3>
+
+    </main>
+  </div>
+  
+
+  <div id="footer-container"></div>
+  
+  <script src="js/header.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/indice_lateral.js"></script>
+
+
+</body>
+</html>

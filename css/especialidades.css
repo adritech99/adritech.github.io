@@ -182,6 +182,7 @@
   margin: 0; /* Sin margen externo */
   text-align: center; /* Centrado */
   line-height: 1.25; /* Interlineado compacto */
+  text-transform: none; /* Tipo oración (anula capitalize del h2 global) */
   transition: color 0.3s ease; /* Cambio de color al hover */
 
   /* Resetear herencia de main h3 */

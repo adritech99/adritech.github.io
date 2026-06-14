@@ -11,7 +11,7 @@ const PROYECTOS_CATALOGO = [
     titulo: "PCB ADC 3304 – Raspberry Pi",
     descripcion: "Diseño de PCB para interfaz entre el conversor analógico-digital MCP3304 y Raspberry Pi. Captura de señales con alta resolución y comunicación SPI.",
     imagen: "img/proyectos/PCB_ADC_3304_RASPBERRY_PI/ADC3304_RASPBERRY_PI_4.webp",
-    etiquetas: ["PCB", "Raspberry Pi", "SPI"]
+    etiquetas: ["Raspberry Pi", "MCP3304", "SPI", "PCB", "Python", "ADC", "Pantalla OLED", "SSD1306", "THT", "ATX"]
   },
   {
     href: "BASE_DE_DATOS_LABVIEW.html",
@@ -30,8 +30,8 @@ const PROYECTOS_CATALOGO = [
   {
     href: "DESHUMIDIFICADOR_DIY.html",
     titulo: "Deshumidificador DIY",
-    descripcion: "Deshumidificador doméstico construido desde cero con PCB personalizada, ESP32, pantalla TFT y control automático de humedad vía Wi-Fi.",
+    descripcion: "Reconstrucción integral de un deshumidificador mediante una electrónica propia basada en ESP32, incorporando control inteligente, pantalla táctil TFT, firmware personalizado y nuevas funciones de seguridad y monitorización.",
     imagen: "img/proyectos/DESHUMIDIFICADOR DIY/PCB_top_montada.webp",
-    etiquetas: ["ESP32", "PCB", "TFT"]
+    etiquetas: ["ESP32", "PCB", "Pantalla TFT", "ILI9341", "SHT45", "SSR", "MOSFECT", "Proteus", "EEZ Studio", "PlatformIO", "SMD", "THT"]
   }
 ];

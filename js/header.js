@@ -80,6 +80,8 @@ function ajustarPosicionTexto() {
   } else {
     contenedor.style.top = '10px';
   }
+
+  if (typeof posicionarFechaCompactaRef === 'function') posicionarFechaCompactaRef();
 }
 
 // --------------------------------------------------------------------------
@@ -202,10 +204,14 @@ function iniciarBusqueda() {
 
 /** Enlaza la búsqueda flotante (misma lógica que la principal). */
 function iniciarBusquedaFlotante() {
+  const contenedor = document.querySelector('.busqueda-flotante');
+  const cabecera = document.getElementById('cabecera-flotante');
   const input = document.getElementById('barra-busqueda-flotante');
   const boton = document.getElementById('boton-buscar-flotante');
   const inputPrincipal = document.getElementById('barra-busqueda');
-  if (!input || !boton) return;
+  if (!input || !boton || !contenedor) return;
+
+  const esMovil = () => window.matchMedia('(max-width: 700px)').matches;
 
   function sincronizarConPrincipal() {
     if (inputPrincipal) inputPrincipal.value = input.value;
@@ -215,13 +221,56 @@ function iniciarBusquedaFlotante() {
     if (inputPrincipal) input.value = inputPrincipal.value;
   }
 
+  function cerrarBusquedaFlotante() {
+    contenedor.classList.remove('busqueda-expandida');
+    if (cabecera) cabecera.classList.remove('busqueda-activa');
+    input.blur();
+    actualizarBusquedaFlotanteMovil();
+  }
+
+  function actualizarBusquedaFlotanteMovil() {
+    if (!esMovil()) {
+      contenedor.classList.remove('busqueda-expandida');
+      if (cabecera) cabecera.classList.remove('busqueda-activa');
+      boton.setAttribute('aria-expanded', 'true');
+      boton.setAttribute('aria-label', 'Buscar');
+      return;
+    }
+
+    const expandida = contenedor.classList.contains('busqueda-expandida');
+    boton.setAttribute('aria-expanded', String(expandida));
+    boton.setAttribute('aria-label', expandida ? 'Buscar' : 'Mostrar búsqueda');
+  }
+
   if (inputPrincipal) {
     inputPrincipal.addEventListener('input', sincronizarDesdePrincipal);
   }
 
   input.addEventListener('input', sincronizarConPrincipal);
 
-  boton.addEventListener('click', function() {
+  boton.addEventListener('click', function(event) {
+    if (esMovil()) {
+      event.stopPropagation();
+      const expandida = contenedor.classList.contains('busqueda-expandida');
+
+      if (!expandida) {
+        contenedor.classList.add('busqueda-expandida');
+        if (cabecera) cabecera.classList.add('busqueda-activa');
+        input.focus();
+        actualizarBusquedaFlotanteMovil();
+        return;
+      }
+
+      if (input.value.trim()) {
+        if (inputPrincipal) inputPrincipal.value = input.value;
+        ejecutarBusqueda(input);
+        return;
+      }
+
+      cerrarBusquedaFlotante();
+      return;
+    }
+
     if (inputPrincipal) inputPrincipal.value = input.value;
     ejecutarBusqueda(input);
   });
@@ -231,35 +280,93 @@ function iniciarBusquedaFlotante() {
       event.preventDefault();
       if (inputPrincipal) inputPrincipal.value = input.value;
       ejecutarBusqueda(input);
+      return;
     }
+
+    if (event.key === 'Escape' && esMovil()) cerrarBusquedaFlotante();
   });
+
+  document.addEventListener('click', function(event) {
+    if (!esMovil()) return;
+    if (!contenedor.classList.contains('busqueda-expandida')) return;
+    if (!contenedor.contains(event.target)) cerrarBusquedaFlotante();
+  });
+
+  actualizarBusquedaFlotanteMovilRef = actualizarBusquedaFlotanteMovil;
+  actualizarBusquedaFlotanteMovil();
 }
 
 // Referencia global al sincronizador móvil (asignada en iniciarBusqueda)
 var actualizarBusquedaMovilRef;
+var actualizarBusquedaFlotanteMovilRef;
 
 // --------------------------------------------------------------------------
 // Reloj y fecha — PC: fecha larga | Móvil: dd/mm/aaaa
 // --------------------------------------------------------------------------
 
+/** Centra la fecha en el hueco libre a la derecha del título (PC compacto). */
+function posicionarFechaCompacta() {
+  var bloqueFecha = document.querySelector('.header-fecha-hora');
+  var titulo = document.querySelector('.header-texto');
+  var cabecera = document.querySelector('.cabecera');
+  if (!bloqueFecha || !cabecera) return;
+
+  var esPcCompacto = window.matchMedia('(min-width: 701px) and (max-width: 1499px)').matches;
+  if (!esPcCompacto || !bloqueFecha.classList.contains('fecha-compacta')) {
+    bloqueFecha.style.left = '';
+    bloqueFecha.style.right = '';
+    bloqueFecha.style.transform = '';
+    return;
+  }
+
+  var cabeceraRect = cabecera.getBoundingClientRect();
+  var tituloRect = titulo ? titulo.getBoundingClientRect() : cabeceraRect;
+  var margenDer = 24;
+  var inicioLibre = tituloRect.right;
+  var finLibre = cabeceraRect.right - margenDer;
+  var anchoLibre = finLibre - inicioLibre;
+  var anchoFecha = bloqueFecha.offsetWidth;
+
+  if (anchoLibre < anchoFecha + 12) {
+    bloqueFecha.style.left = '';
+    bloqueFecha.style.right = '1.25rem';
+    bloqueFecha.style.transform = '';
+    return;
+  }
+
+  var centro = inicioLibre + anchoLibre / 2 - cabeceraRect.left;
+  bloqueFecha.style.left = centro + 'px';
+  bloqueFecha.style.right = 'auto';
+  bloqueFecha.style.transform = 'translateX(-50%)';
+}
+
 /** Actualiza fecha y hora cada segundo; formato distinto según ancho de pantalla. */
 function iniciarReloj() {
   var contenedor = document.getElementById("fecha-hora");
+  var bloqueFecha = document.querySelector(".header-fecha-hora");
+
+  function formatoFechaNumerica(ahora) {
+    var dia = String(ahora.getDate()).padStart(2, "0");
+    var mes = String(ahora.getMonth() + 1).padStart(2, "0");
+    var anio = ahora.getFullYear();
+    return dia + "/" + mes + "/" + anio;
+  }
 
   function actualizarFechaHora() {
     if (!contenedor) return;
     var ahora = new Date();
     var hora = ahora.toLocaleTimeString("es-ES");
     var fecha;
+    var esMovil = window.matchMedia("(max-width: 700px)").matches;
+    var esPcCompacto = window.matchMedia("(max-width: 1499px)").matches;
 
-    // Móvil: fecha corta numérica
-    if (window.matchMedia("(max-width: 700px)").matches) {
-      var dia = String(ahora.getDate()).padStart(2, "0");
-      var mes = String(ahora.getMonth() + 1).padStart(2, "0");
-      var anio = ahora.getFullYear();
-      fecha = dia + "/" + mes + "/" + anio;
+    if (bloqueFecha) {
+      bloqueFecha.classList.toggle("fecha-compacta", !esMovil && esPcCompacto);
+    }
+
+    if (esMovil || esPcCompacto) {
+      fecha = formatoFechaNumerica(ahora);
     } else {
-      // PC: fecha larga con día de la semana y mes en texto
       var opcionesFecha = {
         weekday: "long",
         year: "numeric",
@@ -268,8 +375,6 @@ function iniciarReloj() {
       };
 
       fecha = ahora.toLocaleDateString("es-ES", opcionesFecha);
-
-      // Capitalizar palabras salvo la partícula "de"
       fecha = fecha.split(" ").map(function(palabra) {
         if (palabra.toLowerCase() === "de") return "de";
         return palabra.charAt(0).toUpperCase() + palabra.slice(1);
@@ -277,9 +382,10 @@ function iniciarReloj() {
     }
 
     contenedor.textContent = fecha + " | " + hora;
+    requestAnimationFrame(posicionarFechaCompacta);
   }
 
-  // Exponer para el listener global de resize (cambio PC ↔ móvil)
+  posicionarFechaCompactaRef = posicionarFechaCompacta;
   actualizarFechaHoraRef = actualizarFechaHora;
   actualizarFechaHora();
   setInterval(actualizarFechaHora, 1000);
@@ -287,6 +393,7 @@ function iniciarReloj() {
 
 // Referencia global al actualizador de fecha (asignada en iniciarReloj)
 var actualizarFechaHoraRef;
+var posicionarFechaCompactaRef;
 
 // --------------------------------------------------------------------------
 // Menú de navegación — marca la página / subpágina activa
@@ -338,7 +445,9 @@ function marcarMenuActivo() {
 window.addEventListener('resize', function() {
   ajustarPosicionTexto();
   if (typeof actualizarFechaHoraRef === 'function') actualizarFechaHoraRef();
+  if (typeof posicionarFechaCompactaRef === 'function') posicionarFechaCompactaRef();
   if (typeof actualizarBusquedaMovilRef === 'function') actualizarBusquedaMovilRef();
+  if (typeof actualizarBusquedaFlotanteMovilRef === 'function') actualizarBusquedaFlotanteMovilRef();
 });
 
 // --------------------------------------------------------------------------

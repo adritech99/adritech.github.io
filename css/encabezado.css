@@ -313,6 +313,259 @@ button:hover { /* Botón al pasar el ratón */
 } /* Fin bloque hover button */
 
 /* --------------------------------------------------------------------------
+   Cabecera flotante al hacer scroll hacia arriba (menú + búsqueda)
+   -------------------------------------------------------------------------- */
+.cabecera-flotante { /* Contenedor fijo menú y búsqueda */
+  position: fixed; /* Fija en la ventana */
+  top: 0; /* Pegada al borde superior */
+  left: 50%; /* Referencia al centro */
+  transform: translateX(-50%) translateY(-120%); /* Oculta fuera de la pantalla */
+  z-index: 99999; /* Por encima de todo */
+  width: auto; /* Ancho según contenido */
+  max-width: min(1300px, 100%); /* Límite alineado al sitio */
+  box-sizing: border-box; /* Incluye borde y padding */
+  background-color: #272822; /* Color de fondo */
+  border: 3px solid #008080; /* Borde */
+  border-radius: 0 0 14px 14px; /* Solo esquinas inferiores redondeadas */
+  padding: 0.35rem 0.5rem 0.45rem; /* Relleno interno */
+  display: flex; /* Menú y búsqueda en fila */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Agrupa menú y búsqueda */
+  gap: 0.35rem; /* Espacio base entre menú y búsqueda */
+  box-shadow: 0 6px 24px rgba(0,0,0,0.55); /* Sombra */
+  transition: transform 0.32s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.32s ease; /* Deslizamiento suave */
+  pointer-events: none; /* No intercepta clics mientras está oculto */
+  opacity: 0; /* Invisible */
+} /* Fin bloque cabecera-flotante */
+
+.cabecera-flotante.visible { /* Estado visible */
+  transform: translateX(-50%) translateY(0); /* Entra desde arriba */
+  pointer-events: auto; /* Acepta clics */
+  opacity: 1; /* Visible */
+} /* Fin bloque cabecera-flotante visible */
+
+.menu-flotante { /* Menú dentro de la barra flotante */
+  display: flex; /* Ítems en fila */
+  align-items: center; /* Centrado vertical */
+  gap: 6px; /* Espacio entre ítems */
+  flex: 0 1 auto; /* Ancho según contenido */
+  background-color: #008080; /* Color de fondo */
+  border-radius: 10px; /* Esquinas redondeadas */
+  padding: 0.28rem 0.45rem; /* Relleno interno */
+} /* Fin bloque menu-flotante */
+
+.menu-flotante a { /* Enlace dentro del menú flotante */
+  color: #ffffff; /* Color del texto */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: bold; /* Negrita */
+  font-size: 0.9rem; /* Tamaño de letra */
+  padding: 0.35rem 0.75rem; /* Área clicable */
+  border-radius: 7px; /* Esquinas redondeadas */
+  transition: background-color 150ms ease, color 150ms ease; /* Transición al interactuar */
+} /* Fin bloque enlace menu-flotante */
+
+.menu-flotante a:hover,
+.menu-flotante a:focus { /* Enlace al interactuar */
+  background-color: #272822; /* Color de fondo */
+  color: #FFBF00; /* Color de resaltado */
+  outline: none; /* Sin contorno */
+} /* Fin bloque hover menu-flotante */
+
+.menu-flotante a.active { /* Página activa en el menú flotante */
+  background-color: #FFBF00; /* Color de resaltado */
+  color: #272822; /* Color del texto */
+} /* Fin bloque activo menu-flotante */
+
+.menu-flotante a.active:hover,
+.menu-flotante a.active:focus { /* Activo al interactuar */
+  background-color: #e0ab00; /* Color de fondo */
+  color: #272822; /* Color del texto */
+} /* Fin bloque activo hover menu-flotante */
+
+/* Submenú dentro del menú flotante */
+.menu-flotante .menu-item { /* Contenedor con submenú en flotante */
+  position: relative; /* Contexto para el desplegable */
+} /* Fin bloque menu-item flotante */
+
+.menu-flotante .submenu { /* Desplegable dentro del flotante */
+  top: 100%; /* Justo bajo el ítem */
+  left: 50%; /* Centro horizontal */
+  transform: translateX(-50%); /* Centra el desplegable */
+  min-width: max-content; /* Ancho según contenido */
+} /* Fin bloque submenu flotante */
+
+.menu-flotante .menu-item:hover .submenu { /* Muestra submenú al hover */
+  display: block; /* Visible */
+} /* Fin bloque hover submenu flotante */
+
+.busqueda-flotante { /* Búsqueda dentro de la barra flotante */
+  display: flex; /* Campo y botón en fila */
+  align-items: center; /* Centrado vertical */
+  gap: 4px; /* Espacio entre input y botón */
+  flex: 0 0 auto; /* No crece */
+} /* Fin bloque busqueda-flotante */
+
+#barra-busqueda-flotante { /* Campo de búsqueda flotante */
+  padding: 0.4rem 0.75rem; /* Relleno interno */
+  border-radius: 6px; /* Esquinas redondeadas */
+  border: 1px solid #ccc; /* Borde */
+  font-size: 0.9rem; /* Tamaño de letra */
+  width: 9rem; /* Ancho del campo */
+  box-sizing: border-box; /* Modelo de caja */
+} /* Fin bloque barra-busqueda-flotante */
+
+#boton-buscar-flotante { /* Botón búsqueda flotante — mismo estilo que encabezado */
+  padding: 0.5rem 1rem !important; /* Relleno del botón */
+  border-radius: 8px !important; /* Esquinas redondeadas */
+  background-color: #008080 !important; /* Color de fondo */
+  color: #ffffff !important; /* Color del texto */
+  border: 4px solid #008080 !important; /* Color del borde */
+  cursor: pointer !important; /* Cursor de mano */
+  font-weight: bold !important; /* Negrita */
+  font-size: 1rem !important; /* Tamaño de letra */
+  font-family: inherit !important; /* Misma tipografía */
+  line-height: normal !important; /* Altura de línea */
+  display: inline-flex !important; /* Flex en línea */
+  align-items: center !important; /* Centrado vertical */
+  justify-content: center !important; /* Centrado horizontal */
+  gap: 0.35rem !important; /* Espacio entre icono y texto */
+  box-sizing: border-box !important; /* Modelo de caja */
+  white-space: nowrap !important; /* Sin salto de línea */
+  overflow: visible !important; /* Contenido visible */
+  min-width: fit-content !important; /* Ancho mínimo según contenido */
+  width: auto !important; /* Ancho según el texto */
+  height: auto !important; /* Alto según contenido */
+  transition: /* Transición de estados */
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+} /* Fin bloque boton-buscar-flotante */
+
+#boton-buscar-flotante:hover { /* Hover igual que encabezado */
+  background-color: #272822 !important; /* Color de fondo */
+  color: #FFBF00 !important; /* Color de resaltado */
+  border-color: #008080 !important; /* Color del borde */
+} /* Fin bloque hover boton-buscar-flotante */
+
+#boton-buscar-flotante .icono-lupa-buscar { /* Lupa oculta en PC */
+  display: none !important; /* Solo texto */
+  width: 0 !important; /* Sin espacio */
+  height: 0 !important; /* Sin espacio */
+} /* Fin bloque icono lupa flotante */
+
+#boton-buscar-flotante .texto-buscar { /* Texto «Buscar» visible en PC */
+  display: inline !important; /* Visible */
+  visibility: visible !important; /* Garantizar visibilidad */
+  opacity: 1 !important; /* Garantizar opacidad */
+  color: inherit !important; /* Hereda blanco del botón */
+  font-size: inherit !important; /* Hereda 1rem */
+  width: auto !important; /* Ancho natural */
+  min-width: 0 !important; /* Sin restricción mínima */
+  overflow: visible !important; /* Texto visible */
+  white-space: nowrap !important; /* Sin salto */
+} /* Fin bloque texto-buscar flotante */
+
+@media (min-width: 701px) { /* Cabecera flotante en PC */
+  .cabecera-flotante { /* Más aire entre menú y búsqueda */
+    gap: 0.9rem; /* Separación visual */
+    padding: 0.4rem 0.7rem 0.5rem; /* Relleno interno */
+  } /* Fin bloque cabecera-flotante PC */
+
+  .busqueda-flotante { /* Separador visual respecto al menú */
+    gap: 5px; /* Espacio entre input y botón */
+    margin-left: 0.15rem; /* Separación extra del menú */
+    padding-left: 0.9rem; /* Hueco antes del separador */
+    border-left: 1px solid rgba(0, 128, 128, 0.55); /* Línea divisoria */
+  } /* Fin bloque busqueda-flotante PC */
+
+  #barra-busqueda-flotante { /* Campo igual que encabezado */
+    padding: 0.5rem 1rem; /* Relleno interno */
+    border-radius: 6px; /* Esquinas redondeadas */
+    border: 1px solid #ccc; /* Borde */
+    font-size: 1rem; /* Tamaño de letra */
+    width: auto; /* Ancho según contenido */
+    min-width: 10rem; /* Ancho mínimo */
+  } /* Fin bloque barra-busqueda-flotante PC */
+} /* Fin media query PC cabecera-flotante */
+
+@media (max-width: 700px) { /* Cabecera flotante en móvil */
+  .cabecera-flotante { /* Ocupa todo el ancho en móvil */
+    width: 100%; /* Ancho completo */
+    max-width: 100%; /* Sin límite lateral */
+    left: 0; /* Pegado al borde izquierdo */
+    transform: translateY(-120%); /* Oculto fuera de pantalla */
+    border-radius: 0 0 10px 10px; /* Esquinas inferiores redondeadas */
+    flex-wrap: wrap; /* Menú y búsqueda en filas */
+    justify-content: center; /* Centrado */
+    gap: 0.28rem; /* Menos espacio entre menú y búsqueda */
+    padding: 0.3rem 0.4rem 0.35rem; /* Relleno compacto */
+  } /* Fin bloque cabecera-flotante móvil */
+
+  .cabecera-flotante.visible { /* Visible en móvil */
+    transform: translateY(0); /* Entra desde arriba */
+  } /* Fin bloque cabecera-flotante visible móvil */
+
+  .menu-flotante { /* Menú en móvil */
+    flex-wrap: wrap; /* Varias filas si hace falta */
+    justify-content: center; /* Centrado */
+    gap: 4px; /* Menos espacio */
+    padding: 0.2rem 0.3rem; /* Relleno compacto */
+    border-radius: 8px; /* Esquinas redondeadas */
+  } /* Fin bloque menu-flotante móvil */
+
+  .menu-flotante a { /* Enlace compacto en móvil */
+    font-size: 0.68rem; /* Tamaño de letra */
+    padding: 0.2rem 0.38rem; /* Relleno reducido */
+  } /* Fin bloque enlace menu-flotante móvil */
+
+  .busqueda-flotante { /* Búsqueda compacta en móvil */
+    justify-content: center; /* Centrada */
+    gap: 3px; /* Menos espacio */
+    margin-left: 0; /* Sin separador lateral */
+    padding-left: 0; /* Sin hueco extra */
+    border-left: none; /* Sin línea divisoria */
+  } /* Fin bloque busqueda-flotante móvil */
+
+  #barra-busqueda-flotante { /* Campo más pequeño en móvil */
+    width: min(9.5rem, calc(100% - 4.5rem)); /* Ancho flexible */
+    font-size: 0.65rem; /* Tamaño de letra */
+    padding: 0.25rem 0.45rem; /* Relleno compacto */
+  } /* Fin bloque barra-busqueda-flotante móvil */
+
+  #boton-buscar-flotante { /* Botón compacto en móvil */
+    padding: 0.25rem 0.5rem; /* Relleno reducido */
+    border-radius: 8px; /* Esquinas redondeadas */
+    background-color: #008080; /* Color de fondo */
+    color: #fffffff0; /* Color del texto */
+    border: 2px solid #008080; /* Color del borde */
+    cursor: pointer; /* Cursor de mano */
+    font-weight: bold; /* Negrita */
+    font-size: 0.65rem; /* Tamaño de letra */
+    display: inline-flex; /* Flex en línea */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    gap: 0.35rem; /* Espacio entre icono y texto */
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; /* Transición */
+  } /* Fin bloque boton-buscar-flotante móvil */
+
+  #boton-buscar-flotante:hover { /* Botón al pasar el ratón en móvil */
+    background-color: #272822; /* Color de fondo */
+    color: #FFBF00; /* Color de resaltado */
+    border-color: #008080; /* Color del borde */
+  } /* Fin bloque hover boton-buscar-flotante móvil */
+
+  #boton-buscar-flotante .texto-buscar { /* Oculta texto en móvil */
+    display: none; /* Solo icono */
+  } /* Fin bloque texto-buscar flotante móvil */
+
+  .busqueda-flotante .icono-lupa-buscar { /* Muestra lupa en móvil */
+    display: block; /* Visible */
+    width: 14px; /* Ancho del icono */
+    height: 14px; /* Alto del icono */
+  } /* Fin bloque icono lupa flotante móvil */
+} /* Fin media query móvil cabecera-flotante */
+
+/* --------------------------------------------------------------------------
    Resaltado de resultados de búsqueda
    -------------------------------------------------------------------------- */
 .destacado-busqueda { /* Elemento resaltado por la búsqueda */

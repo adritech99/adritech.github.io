@@ -47,3 +47,34 @@
     
   </header>
 
+  <!-- Barra flotante: menú + búsqueda al hacer scroll hacia arriba -->
+  <div class="cabecera-flotante" id="cabecera-flotante">
+    <nav class="menu-flotante" id="menu-flotante">
+      <a href="index.html">Inicio</a>
+
+      <div class="menu-item">
+        <a href="proyectos.html">Proyectos</a>
+        <div class="submenu">
+          <a href="PCB_ADC_3304_RASPBERRY_PI.html">PCB ADC 3304 - RASPBERRY PI</a>
+          <a href="BASE_DE_DATOS_LABVIEW.html">BASE DE DATOS / LABVIEW</a>
+          <a href="AUTOMATIZACION_DE_CINTA_TRANSPORTADORA.html">AUTOMATIZACIÓN DE CINTA TRANSPORTADORA</a>
+          <a href="DESHUMIDIFICADOR_DIY.html">DESHUMIDIFICADOR DIY</a>
+        </div>
+      </div>
+
+      <a href="especialidades.html">Especialidades</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+
+    <div class="busqueda-flotante">
+      <input type="text" id="barra-busqueda-flotante" placeholder="Buscar...">
+      <button type="button" id="boton-buscar-flotante" aria-label="Buscar">
+        <svg class="icono-lupa-buscar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <circle cx="10.5" cy="10.5" r="6.5"></circle>
+          <line x1="15.5" y1="15.5" x2="20" y2="20"></line>
+        </svg>
+        <span class="texto-buscar">Buscar</span>
+      </button>
+    </div>
+  </div>
+

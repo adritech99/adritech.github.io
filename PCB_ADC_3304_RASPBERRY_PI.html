@@ -432,18 +432,40 @@
         <p class="pie-foto">PCB ADC 3304 en funcionamiento</p>
       </div>
 
-      <h4 id="descargas-programacion">DESCARGAS</h4>
+      <h3 id="descarga_de_archivos">DESCARGA DE ARCHIVOS</h3>
 
-      <p>Desde aquí puedes descargar el programa de control de la PCB.</p>
+      <p>
+        A continuación, puedes descargar los archivos necesarios para el funcionamiento de la PCB.
+        Estos archivos incluyen el programa de control en Python, los recursos de diseño en Proteus
+        y los modelos 3D de la carcasa.
+      </p>
 
       <div class="descargas-archivos">
-        <a class="tarjeta-descarga" href="#">
-          <span class="descarga-icono">
-            <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PYTHON_LOGO.png" alt="Logo de Python">
-          </span>
+        <a class="tarjeta-descarga" data-descarga-drive href="#">
+          <span class="descarga-icono">Py</span>
           <span class="descarga-contenido">
             <strong>ADC 3304 – Raspberry Pi</strong>
             <small>Programa Python de lectura y visualización</small>
+          </span>
+        </a>
+
+        <a class="tarjeta-descarga" data-descarga-drive href="#">
+          <span class="descarga-icono">
+            <img src="img/proyectos/IMG/Proteus_logo.webp" alt="Logo de Proteus">
+          </span>
+          <span class="descarga-contenido">
+            <strong>Fabricación PCB</strong>
+            <small>Proyecto Proteus con esquemático, PCB y archivos Gerber</small>
+          </span>
+        </a>
+
+        <a class="tarjeta-descarga" data-descarga-drive href="#">
+          <span class="descarga-icono">
+            <img src="img/proyectos/IMG/Inventor_logo.svg" alt="Logo de Autodesk Inventor">
+          </span>
+          <span class="descarga-contenido">
+            <strong>Modelos 3D</strong>
+            <small>Piezas diseñadas en Inventor para la carcasa de la PCB</small>
           </span>
         </a>
       </div>
@@ -460,6 +482,7 @@
   <script src="js/galerias-imagenes.js"></script>
   <script src="js/youtube-embed.js"></script>
   <script src="js/lupa.js"></script>
+  <script src="js/descargas-drive.js"></script>
 
 </body>
 </html>

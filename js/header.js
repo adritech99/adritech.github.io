@@ -45,6 +45,9 @@ fetch("header.html")
     marcarMenuActivo();
     iniciarBusqueda();
     rellenarBusquedaDesdeUrl();
+    if (typeof window.sincronizarActivoFlotante === 'function') {
+      window.sincronizarActivoFlotante();
+    }
   })
   .catch(error => console.error("Error:", error));
 
@@ -85,11 +88,13 @@ function ajustarPosicionTexto() {
 
 /** Lee ?q= de la URL y rellena la barra si existe (p. ej. al volver de busqueda.html). */
 function rellenarBusquedaDesdeUrl() {
-  const input = document.getElementById('barra-busqueda');
-  if (!input) return;
-
   const consulta = new URLSearchParams(window.location.search).get('q');
-  if (consulta) input.value = consulta;
+  if (!consulta) return;
+
+  ['barra-busqueda', 'barra-busqueda-flotante'].forEach(function(id) {
+    const input = document.getElementById(id);
+    if (input) input.value = consulta;
+  });
 }
 
 /** Navega a resultados: API AdriTechBusqueda si está disponible, si no busqueda.html. */
@@ -192,6 +197,42 @@ function iniciarBusqueda() {
   // Exponer para el listener global de resize
   actualizarBusquedaMovilRef = actualizarBusquedaMovil;
   actualizarBusquedaMovil();
+  iniciarBusquedaFlotante();
+}
+
+/** Enlaza la búsqueda flotante (misma lógica que la principal). */
+function iniciarBusquedaFlotante() {
+  const input = document.getElementById('barra-busqueda-flotante');
+  const boton = document.getElementById('boton-buscar-flotante');
+  const inputPrincipal = document.getElementById('barra-busqueda');
+  if (!input || !boton) return;
+
+  function sincronizarConPrincipal() {
+    if (inputPrincipal) inputPrincipal.value = input.value;
+  }
+
+  function sincronizarDesdePrincipal() {
+    if (inputPrincipal) input.value = inputPrincipal.value;
+  }
+
+  if (inputPrincipal) {
+    inputPrincipal.addEventListener('input', sincronizarDesdePrincipal);
+  }
+
+  input.addEventListener('input', sincronizarConPrincipal);
+
+  boton.addEventListener('click', function() {
+    if (inputPrincipal) inputPrincipal.value = input.value;
+    ejecutarBusqueda(input);
+  });
+
+  input.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (inputPrincipal) inputPrincipal.value = input.value;
+      ejecutarBusqueda(input);
+    }
+  });
 }
 
 // Referencia global al sincronizador móvil (asignada en iniciarBusqueda)
@@ -299,3 +340,61 @@ window.addEventListener('resize', function() {
   if (typeof actualizarFechaHoraRef === 'function') actualizarFechaHoraRef();
   if (typeof actualizarBusquedaMovilRef === 'function') actualizarBusquedaMovilRef();
 });
+
+// --------------------------------------------------------------------------
+// Menú flotante — aparece al hacer scroll hacia arriba, se oculta al bajar
+// --------------------------------------------------------------------------
+
+(function iniciarMenuFlotante() {
+  var ultimoScroll = window.scrollY;
+  var umbralMostrar = 120; // píxeles que hay que bajar antes de que aparezca al subir
+
+  function sincronizarActivoFlotante() {
+    // Copia la clase active del menú principal al flotante
+    var enlacesPrincipal = document.querySelectorAll('.menu-navegacion a');
+    var enlacesFlotante  = document.querySelectorAll('#menu-flotante a');
+
+    enlacesFlotante.forEach(function(ef) {
+      ef.classList.remove('active');
+      var hrefF = (ef.getAttribute('href') || '').split('/').pop().toLowerCase();
+      enlacesPrincipal.forEach(function(ep) {
+        var hrefP = (ep.getAttribute('href') || '').split('/').pop().toLowerCase();
+        if (hrefF === hrefP && ep.classList.contains('active')) {
+          ef.classList.add('active');
+        }
+      });
+    });
+  }
+
+  function gestionarScroll() {
+    var scrollActual = window.scrollY;
+    var barra = document.getElementById('cabecera-flotante');
+    if (!barra) return;
+
+    // Ocultar si estamos en la parte superior (el encabezado es visible)
+    if (scrollActual <= umbralMostrar) {
+      barra.classList.remove('visible');
+      ultimoScroll = scrollActual;
+      return;
+    }
+
+    if (scrollActual < ultimoScroll) {
+      // Scroll hacia arriba → mostrar
+      barra.classList.add('visible');
+    } else {
+      // Scroll hacia abajo → ocultar
+      barra.classList.remove('visible');
+    }
+
+    ultimoScroll = scrollActual;
+  }
+
+  // Sincronizar activos tras cargar el header (también se llama desde fetch)
+  window.sincronizarActivoFlotante = sincronizarActivoFlotante;
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(sincronizarActivoFlotante, 300);
+  });
+
+  window.addEventListener('scroll', gestionarScroll, { passive: true });
+})();

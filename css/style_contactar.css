@@ -1,0 +1,47 @@
+/* =========================================
+   CONTACTO
+   ========================================= */
+
+body { /* Estilos base de la página de contacto */
+  margin: 0; /* Elimina margen por defecto del navegador */
+  padding: 0; /* Elimina relleno por defecto */
+  font-family: Arial, sans-serif; /* Tipografía principal */
+  background-color: #272822; /* Color de fondo */
+} /* Fin del bloque body */
+
+main { /* Contenedor principal del contenido */
+  text-align: center; /* Centra elementos en línea */
+} /* Fin del bloque main */
+
+main h3 { /* Títulos de sección en contacto */
+  color: #ffffff; /* Color del texto */
+  font-size: 2.6rem; /* Tamaño de letra */
+  font-weight: 600; /* Peso semi-negrita */
+  margin: 2rem auto 1rem; /* Espaciado vertical y centrado */
+  font-family: Arial, sans-serif; /* Misma familia que el body */
+  display: inline-block; /* Permite borde inferior ajustado al texto */
+  border-bottom: 2px solid #008080; /* Línea decorativa inferior */
+  padding-bottom: 5px; /* Separación entre texto y borde */
+} /* Fin del bloque main h3 */
+
+main p { /* Párrafos del contenido principal */
+  font-size: 1.1rem; /* Tamaño de letra */
+  color: #ffffff; /* Color del texto */
+  margin: 2rem auto 1rem; /* Márgenes verticales y centrado */
+  text-align: justify; /* Texto alineado a ambos lados */
+  line-height: 1.6; /* Interlineado amplio */
+  margin-top: 1rem; /* Refuerza separación superior */
+  max-width: 800px; /* Limita ancho para legibilidad */
+} /* Fin del bloque main p */
+
+.contenedor-hoja { /* Tarjeta contenedora del formulario */
+  max-width: 950px; /* Ancho máximo del bloque */
+  margin-left: auto; /* Centrado horizontal */
+  margin-right: auto; /* Centrado horizontal */
+  background-color: #272822; /* Color de fondo */
+  border-radius: 20px; /* Esquinas redondeadas */
+  overflow: hidden; /* Recorta hijos que sobresalgan */
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Sombra de elevación */
+} /* Fin del bloque .contenedor-hoja */
+
+/* Estilos específicos del formulario de contacto */

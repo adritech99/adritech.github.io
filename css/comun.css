@@ -1,0 +1,86 @@
+/* ============================================================
+   ESTILOS COMUNES (todas las páginas)
+   ============================================================ */
+
+/* ── Hero ─────────────────────────────────────────────────── */
+:root { /* Variables CSS globales del hero */
+  --hero-alto-pc: 35vh; /* Altura del hero en escritorio */
+  --hero-alto-movil: clamp(75px, 12vh, 110px); /* Altura adaptable en móvil */
+} /* Fin de variables :root */
+
+.hero { /* Contenedor principal del banner hero */
+  position: relative; /* Permite posicionar el texto superpuesto */
+  width: 100%; /* Ancho completo del viewport */
+  height: var(--hero-alto-pc); /* Altura según variable de escritorio */
+  overflow: hidden; /* Recorta contenido que sobresalga */
+  padding: 0; /* Sin relleno interno */
+  line-height: 0; /* Elimina hueco bajo la imagen */
+} /* Fin del bloque .hero */
+
+.hero img { /* Imagen de fondo del hero */
+  width: 100%; /* Escala al ancho del contenedor */
+  height: 100%; /* Escala a la altura del contenedor */
+  object-fit: cover; /* Recorta manteniendo proporción */
+  object-position: center center; /* Centra el recorte de la imagen */
+  display: block; /* Evita espacio extra de elemento en línea */
+} /* Fin del bloque .hero img */
+
+.hero-text { /* Título superpuesto sobre el hero */
+  position: absolute; /* Se coloca sobre la imagen */
+  bottom: 0; /* Anclado al borde inferior */
+  left: 50%; /* Punto de referencia horizontal central */
+  transform: translateX(-50%); /* Centra el bloque respecto a left */
+  white-space: nowrap; /* Evita salto de línea en el título */
+  width: auto; /* Ancho según contenido */
+  min-width: max-content; /* No comprime por debajo del texto */
+  background-color: rgba(39, 40, 34, 0.98); /* Color de fondo */
+  color: white; /* Color del texto */
+  padding: 0.5rem 2rem; /* Relleno interno del recuadro */
+  border-radius: 18px 18px 0 0; /* Esquinas redondeadas solo arriba */
+  text-align: center; /* Centra el texto */
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6); /* Sombra para profundidad */
+} /* Fin del bloque .hero-text */
+
+@media (max-width: 768px) { /* Ajustes del hero en pantallas pequeñas */
+  .hero { /* Hero en móvil */
+    height: var(--hero-alto-movil); /* Usa altura reducida */
+  } /* Fin de .hero en media query */
+
+  .hero img { /* Imagen del hero en móvil */
+    object-fit: cover; /* Mantiene recorte proporcional */
+    object-position: center center; /* Centra el encuadre */
+  } /* Fin de .hero img en media query */
+
+  .hero-text { /* Texto del hero en móvil */
+    padding: 0.3rem 0.9rem; /* Relleno más compacto */
+    border-radius: 12px 12px 0 0; /* Radio menor en móvil */
+  } /* Fin de .hero-text en media query */
+
+  .hero-text h2 { /* Encabezado dentro del hero en móvil */
+    font-size: 1.2rem; /* Tamaño de letra */
+    line-height: 1.15; /* Interlineado ajustado */
+  } /* Fin de .hero-text h2 en media query */
+} /* Fin de media query del hero */
+
+/* ── Aviso página en construcción ─────────────────────────── */
+.aviso-construccion { /* Contenedor del aviso de obra */
+  max-width: 800px; /* Limita el ancho del bloque */
+  margin: 2rem auto 0; /* Centra y separa del contenido superior */
+  padding: 0 1.5rem; /* Márgenes laterales internos */
+} /* Fin del bloque .aviso-construccion */
+
+.aviso-construccion img { /* Imagen del aviso de construcción */
+  width: 100%; /* Escala al ancho del contenedor */
+  height: auto; /* Mantiene proporción vertical */
+  display: block; /* Elimina hueco inferior */
+  border-radius: 14px; /* Esquinas redondeadas */
+  border: 1px solid #008080; /* Borde */
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5); /* Sombra suave */
+} /* Fin del bloque .aviso-construccion img */
+
+@media (max-width: 768px) { /* Ajustes del aviso en móvil */
+  .aviso-construccion { /* Contenedor en pantallas pequeñas */
+    margin: 1.25rem auto 0; /* Menor separación superior */
+    padding: 0 0.75rem; /* Laterales más estrechos */
+  } /* Fin de .aviso-construccion en media query */
+} /* Fin de media query del aviso */

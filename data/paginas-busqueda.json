@@ -1,0 +1,14 @@
+{
+  "_nota": "Añade cada página nueva con url, titulo y ruta (migas de pan, ej. [\"Proyectos\", \"Mi proyecto\"]).",
+  "paginas": [
+    { "url": "index.html", "titulo": "Inicio", "ruta": ["Inicio"] },
+    { "url": "proyectos.html", "titulo": "Proyectos", "ruta": ["Proyectos"] },
+    { "url": "PCB_ADC_3304_RASPBERRY_PI.html", "titulo": "PCB ADC 3304 - Raspberry Pi", "ruta": ["Proyectos", "PCB ADC 3304 - Raspberry Pi"] },
+    { "url": "DESHUMIDIFICADOR_DIY.html", "titulo": "Deshumidificador DIY", "ruta": ["Proyectos", "Deshumidificador DIY"] },
+    { "url": "esp32.html", "titulo": "ESP32", "ruta": ["ESP32"] },
+    { "url": "python.html", "titulo": "Python", "ruta": ["Python"] },
+    { "url": "contacto.html", "titulo": "Contacto", "ruta": ["Contacto"] },
+    { "url": "BASE_DE_DATOS_LABVIEW.html", "titulo": "Base de datos / LabVIEW", "ruta": ["Proyectos", "Base de datos / LabVIEW"] },
+    { "url": "AUTOMATIZACION_DE_CINTA_TRANSPORTADORA.html", "titulo": "Automatización de cinta transportadora", "ruta": ["Proyectos", "Automatización de cinta transportadora"] }
+  ]
+}

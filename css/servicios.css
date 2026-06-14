@@ -1,0 +1,331 @@
+/* ============================================================
+   PÁGINA DE SERVICIOS
+   ============================================================ */
+
+.servicios-intro { /* Bloque introductorio centrado de la página */
+  max-width: 800px; /* Limita el ancho del texto introductorio */
+  margin: 0 auto; /* Centra horizontalmente el bloque */
+  padding: 2.5rem 1.5rem 0.5rem; /* Espaciado interno: arriba, laterales y abajo */
+  text-align: center; /* Alinea el texto al centro */
+}
+
+.servicios-intro p { /* Párrafo dentro del bloque introductorio */
+  font-size: 1.1rem; /* Tamaño de letra */
+  color: rgba(255,255,255,0.8); /* Color del texto */
+  line-height: 1.7; /* Interlineado cómodo para lectura */
+  margin: 0; /* Elimina márgenes por defecto del párrafo */
+}
+
+/* ── Lista de servicios ───────────────────────────────────── */
+.servicios-lista { /* Contenedor vertical de todas las tarjetas de servicio */
+  max-width: 950px; /* Ancho máximo de la lista */
+  margin: 2.5rem auto 4rem; /* Separación vertical y centrado horizontal */
+  padding: 0 1.5rem; /* Márgenes laterales internos */
+  display: flex; /* Activa flexbox para apilar tarjetas */
+  flex-direction: column; /* Apila las tarjetas en columna */
+  gap: 2rem; /* Espacio entre tarjetas */
+}
+
+/* ── Tarjeta horizontal ───────────────────────────────────── */
+.servicio-tarjeta { /* Tarjeta enlazable de un servicio (layout horizontal) */
+  position: relative; /* Contexto para pseudo-elementos y capas */
+  display: grid; /* Cuadrícula imagen + contenido */
+  grid-template-columns: 380px 1fr; /* Columna fija para imagen y flexible para texto */
+  column-gap: 0; /* Sin hueco entre columnas */
+  min-height: 240px; /* Altura mínima de la tarjeta */
+  border-radius: 20px; /* Esquinas redondeadas */
+  overflow: hidden; /* Recorta contenido que sobresalga */
+  background: linear-gradient(135deg, #272822 0%, #222620 20%, #141f1f 38%, #0d2525 62%, #002e2e 100%); /* Color de fondo */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.55); /* Sombra profunda bajo la tarjeta */
+  text-decoration: none; /* Quita subrayado del enlace */
+  color: #ffffff; /* Color del texto */
+  transition: /* Transiciones al pasar el cursor */
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.4s ease,
+    background 0.5s ease;
+}
+
+/* Marco + overlay hover: por encima de imagen y contenido */
+.servicio-tarjeta::before { /* Pseudo-elemento: borde y overlay en hover */
+  content: ""; /* Genera la caja del pseudo-elemento */
+  position: absolute; /* Posiciona sobre toda la tarjeta */
+  inset: 0; /* Ocupa todo el perímetro interior */
+  border-radius: 20px; /* Misma curvatura que la tarjeta */
+  border: 1px solid #008080; /* Borde */
+  background: transparent; /* Sin relleno hasta el hover */
+  opacity: 1; /* Visible desde el inicio */
+  transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease; /* Animación del marco */
+  z-index: 10; /* Por encima de imagen y contenido */
+  pointer-events: none; /* No intercepta clics */
+}
+
+.servicio-tarjeta:hover { /* Estado al pasar el cursor sobre la tarjeta */
+  transform: translateY(-6px) scale(1.012); /* Eleva y agranda ligeramente */
+  box-shadow: 0 28px 70px rgba(0,0,0,0.7); /* Sombra más intensa */
+  background: linear-gradient(135deg, #1a1200 0%, #150a00 50%, #181008 100%); /* Color de fondo */
+}
+
+.servicio-tarjeta:hover::before { /* Marco en estado hover */
+  border-color: rgba(255,140,0,0.6); /* Color del borde */
+  box-shadow: 0 0 0 1px rgba(255,140,0,0.5); /* Sombra */
+  background: linear-gradient( /* Color de fondo */
+    120deg,
+    rgba(255,191,0,0.09) 0%,
+    rgba(255,100,0,0.07) 60%,
+    rgba(255,50,0,0.05) 100%
+  );
+}
+
+/* Línea inferior */
+.servicio-tarjeta::after { /* Línea decorativa en la base de la tarjeta */
+  content: ""; /* Crea el elemento visual */
+  position: absolute; /* Anclada al fondo de la tarjeta */
+  bottom: 0; /* Pegada al borde inferior */
+  left: 8%; /* Inset lateral izquierdo */
+  right: 8%; /* Inset lateral derecho */
+  height: 2px; /* Grosor de la línea */
+  z-index: 9; /* Debajo del marco ::before */
+  background: linear-gradient(90deg, transparent, #008080, transparent); /* Color de fondo */
+  border-radius: 2px; /* Extremos suavizados */
+  transition: left 0.4s ease, right 0.4s ease, background 0.4s ease; /* Animación al hover */
+}
+
+.servicio-tarjeta:hover::after { /* Línea inferior en hover */
+  left: 0; /* Se extiende a todo el ancho */
+  right: 0; /* Se extiende a todo el ancho */
+  background: linear-gradient(90deg, transparent, #ff8c00, #ffbf00, #ff8c00, transparent); /* Color de fondo */
+}
+
+/* ── Imagen ─────────────────────────────────────────────── */
+.servicio-imagen { /* Contenedor de la imagen del servicio */
+  position: relative; /* Contexto para máscara y brillo */
+  overflow: hidden; /* Recorta zoom de la imagen */
+  flex-shrink: 0; /* Evita que la imagen se encoja */
+  align-self: stretch; /* Ocupa toda la altura de la fila */
+  -webkit-mask-image: linear-gradient(to right, black 35%, transparent 95%); /* Máscara WebKit: fundido a la derecha */
+  mask-image: linear-gradient(to right, black 35%, transparent 95%); /* Máscara estándar: fundido a la derecha */
+}
+
+.servicio-imagen img { /* Imagen dentro de la tarjeta */
+  width: 100%; /* Ancho completo del contenedor */
+  height: 100%; /* Altura completa del contenedor */
+  object-fit: cover; /* Recorta manteniendo proporción */
+  display: block; /* Elimina hueco inferior inline */
+  filter: brightness(0.82) saturate(1.15); /* Oscurece y aumenta saturación */
+  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1), filter 0.4s ease; /* Animación zoom y brillo */
+}
+
+.servicio-tarjeta:hover .servicio-imagen img { /* Imagen al hover de la tarjeta */
+  transform: scale(1.07); /* Zoom suave */
+  filter: brightness(0.95) saturate(1.3); /* Más luminosa y saturada */
+}
+
+/* Degradado sobre la imagen (vacío, la máscara lo hace todo) */
+.servicio-imagen::after { /* Capa de degradado (deshabilitada en escritorio) */
+  display: none; /* Oculta el pseudo-elemento */
+}
+
+.servicio-tarjeta:hover .servicio-imagen::after { /* Degradado en hover (deshabilitado) */
+  display: none; /* Sigue oculto en escritorio */
+}
+
+/* Brillo sweep */
+.servicio-brillo { /* Capa de brillo que barre la imagen al hover */
+  position: absolute; /* Cubre el área de la imagen */
+  inset: 0; /* Ocupa todo el contenedor */
+  background: linear-gradient( /* Franja de luz diagonal */
+    105deg,
+    transparent 30%,
+    rgba(255,210,80,0.16) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%; /* Permite desplazar el brillo */
+  background-position: -100% 0; /* Posición inicial fuera de vista */
+  transition: background-position 0.65s ease; /* Animación del barrido */
+  pointer-events: none; /* No bloquea interacción */
+}
+
+.servicio-tarjeta:hover .servicio-brillo { /* Barrido de brillo activo */
+  background-position: 200% 0; /* Desplaza el brillo de izquierda a derecha */
+}
+
+/* ── Contenido ──────────────────────────────────────────── */
+.servicio-cuerpo { /* Zona de texto y etiquetas del servicio */
+  position: relative; /* Contexto de apilamiento */
+  z-index: 2; /* Por encima de la imagen */
+  display: flex; /* Flex para alinear contenido verticalmente */
+  flex-direction: column; /* Apila título, descripción y tags */
+  justify-content: center; /* Centra verticalmente el bloque */
+  padding: 2rem 2.2rem 2rem 1.8rem; /* Espaciado interno del cuerpo */
+  gap: 0.8rem; /* Separación entre elementos hijos */
+}
+
+/* Degradado de fusión (ya no necesario, lo hace mask-image) */
+.servicio-cuerpo::before { /* Pseudo-elemento de fusión (no usado) */
+  display: none; /* Desactivado */
+}
+
+.servicio-tarjeta:hover .servicio-cuerpo::before { /* Fusión en hover (no usado) */
+  display: none; /* Sigue desactivado */
+}
+
+.servicio-cuerpo > * { /* Hijos directos del cuerpo (título, desc, tags) */
+  position: relative; /* Mantiene orden de capas */
+  z-index: 2; /* Por encima de fondos */
+}
+
+.servicio-titulo { /* Título del servicio */
+  font-family: Arial, sans-serif; /* Tipografía del título */
+  font-size: 1.35rem; /* Tamaño de letra */
+  font-weight: 700; /* Negrita */
+  color: #ffffff; /* Color del texto */
+  margin: 0; /* Sin margen externo */
+  text-align: center; /* Centrado */
+  line-height: 1.25; /* Interlineado compacto */
+  transition: color 0.3s ease; /* Cambio de color al hover */
+
+  /* Resetear herencia de main h3 */
+  display: block; /* Bloque completo (anula inline de h3) */
+  width: 100%; /* Ocupa todo el ancho */
+  text-decoration: none; /* Sin subrayado heredado */
+  text-underline-offset: unset; /* Restablece offset de subrayado */
+}
+
+.servicio-tarjeta:hover .servicio-titulo { /* Título en hover */
+  color: #ffbf00; /* Color de resaltado */
+}
+
+/* Separador bajo el título */
+.servicio-titulo-grupo { /* Agrupa título y línea separadora */
+  display: flex; /* Flex vertical para título + línea */
+  flex-direction: column; /* Apila título y separador */
+  align-items: center; /* Centra horizontalmente */
+  width: fit-content; /* Ancho según contenido */
+  align-self: center; /* Centra el grupo en la tarjeta */
+  gap: 0.7rem; /* Espacio entre título y separador */
+}
+
+.servicio-separador { /* Línea bajo el título */
+  width: 80px; /* Longitud inicial del separador */
+  height: 2px; /* Grosor de la línea */
+  background: linear-gradient(90deg, #008080, transparent); /* Color de fondo */
+  border-radius: 2px; /* Extremos redondeados */
+  transition: width 0.4s ease, background 0.4s ease; /* Animación al hover */
+}
+
+.servicio-tarjeta:hover .servicio-separador { /* Separador en hover */
+  width: calc(100% + 1.25rem); /* Se alarga más allá del título */
+  background: linear-gradient(90deg, #ff8c00, #ffbf00, transparent); /* Color de fondo */
+}
+
+.servicio-desc { /* Descripción del servicio */
+  font-size: 0.92rem; /* Tamaño de letra */
+  color: rgba(255,255,255,0.72); /* Color del texto */
+  line-height: 1.65; /* Lectura cómoda */
+  margin: 0; /* Sin margen */
+  text-align: justify; /* Texto justificado */
+  max-width: none; /* Sin límite de ancho */
+}
+
+/* Tags */
+.servicio-tags { /* Contenedor de etiquetas del servicio */
+  display: flex; /* Flex para varias etiquetas */
+  flex-wrap: wrap; /* Permite salto de línea */
+  justify-content: center; /* Centra las etiquetas */
+  gap: 0.4rem; /* Espacio entre etiquetas */
+  margin-top: 0.3rem; /* Separación respecto al texto anterior */
+}
+
+.servicio-tags-materiales { /* Variante para etiquetas de materiales */
+  margin-top: 0.55rem; /* Más separación superior */
+}
+
+.servicio-tag { /* Etiqueta individual */
+  font-size: 0.71rem; /* Tamaño de letra */
+  font-weight: 600; /* Semi-negrita */
+  padding: 0.2rem 0.65rem; /* Relleno interno de la pastilla */
+  border-radius: 999px; /* Forma de píldora */
+  background: rgba(0,128,128,0.2); /* Color de fondo */
+  border: 1px solid rgba(0,128,128,0.45); /* Borde */
+  color: #7fffd4; /* Color del texto */
+  letter-spacing: 0.03em; /* Ligero espaciado entre letras */
+  transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease; /* Transición al hover */
+}
+
+.servicio-tarjeta:hover .servicio-tag { /* Etiquetas en hover de tarjeta */
+  background: rgba(255,140,0,0.17); /* Color de fondo */
+  border-color: rgba(255,140,0,0.5); /* Color del borde */
+  color: #ffcc66; /* Color del texto */
+}
+
+/* Flecha */
+.servicio-flecha { /* Icono de flecha indicando enlace */
+  position: absolute; /* Esquina inferior derecha de la tarjeta */
+  bottom: 1.1rem; /* Distancia al borde inferior */
+  right: 1.4rem; /* Distancia al borde derecho */
+  z-index: 3; /* Por encima del contenido */
+}
+
+.servicio-flecha svg { /* SVG de la flecha */
+  width: 1.2rem; /* Ancho del icono */
+  height: 1.2rem; /* Alto del icono */
+  color: #008080; /* Color del texto */
+  transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), color 0.3s ease; /* Movimiento y color al hover */
+}
+
+.servicio-tarjeta:hover .servicio-flecha svg { /* Flecha en hover */
+  transform: translateX(5px); /* Se desplaza a la derecha */
+  color: #ffbf00; /* Color de resaltado */
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) { /* Ajustes para pantallas estrechas */
+  .servicios-lista { /* Lista en móvil */
+    padding: 0 0.75rem; /* Menos margen lateral */
+    margin: 1.5rem auto 2.5rem; /* Menos espacio vertical */
+    gap: 1.25rem; /* Tarjetas más juntas */
+  }
+
+  .servicios-intro { /* Intro en móvil */
+    padding: 1.5rem 1rem 0; /* Padding reducido */
+  }
+
+  .servicio-tarjeta { /* Tarjeta apilada verticalmente */
+    grid-template-columns: 1fr; /* Una sola columna */
+    grid-template-rows: 190px auto; /* Fila de imagen fija + contenido */
+    min-height: unset; /* Altura automática */
+  }
+
+  /* En móvil el degradado pasa a ser inferior */
+  .servicio-imagen::after { /* Degradado inferior sobre la imagen en móvil */
+    top: auto; /* Anula posición superior */
+    right: 0; /* Alineado a la derecha */
+    left: 0; /* Alineado a la izquierda */
+    width: 100% !important; /* Ancho completo */
+    height: 45%; /* Cubre parte inferior de la imagen */
+    background: linear-gradient(to top, /* Fundido hacia arriba */
+      #0d2525 0%,
+      rgba(13,37,37,0.6) 60%,
+      transparent 100%
+    ) !important;
+  }
+
+  /* En móvil no hay costura vertical entre columnas */
+  .servicio-imagen { /* Imagen en móvil */
+    margin-right: 0; /* Sin margen lateral de costura */
+  }
+
+  .servicio-cuerpo { /* Cuerpo en móvil */
+    padding: 1.4rem 1.2rem 2.2rem; /* Padding compacto con espacio para flecha */
+  }
+
+  .servicio-numero { /* Número decorativo (si existe en HTML) */
+    font-size: 2.5rem; /* Tamaño de letra */
+    top: 0.6rem; /* Posición superior */
+    right: 1rem; /* Posición derecha */
+  }
+
+  .servicio-titulo { /* Título en móvil */
+    font-size: 1.15rem; /* Tamaño de letra */
+  }
+}

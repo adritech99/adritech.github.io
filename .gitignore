@@ -1,0 +1,9 @@
+# Carpetas internas que no se suben a GitHub
+.cursor/
+_sync/
+
+# Otros
+__pycache__/
+*.pyc
+Thumbs.db
+.DS_Store

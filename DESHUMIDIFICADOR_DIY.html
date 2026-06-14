@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deshumidificador DIY</title>
+  
+  <link rel="icon" type="image/png" href="img/AdriTech_sp.png">
+  <link rel="apple-touch-icon" href="img/AdriTech_sp.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="AdriTech">
+  <meta property="og:url"         content="https://adritech.es/DESHUMIDIFICADOR_DIY.html">
+  <meta property="og:title"       content="Deshumidificador DIY · AdriTech">
+  <meta property="og:description" content="Deshumidificador doméstico construido desde cero con PCB personalizada, ESP32, pantalla TFT y control automático de humedad vía Wi-Fi.">
+  <meta property="og:image"       content="https://adritech.es/img/proyectos/DESHUMIDIFICADOR DIY/PCB_top_montada.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:locale"      content="es_ES">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Deshumidificador DIY · AdriTech">
+  <meta name="twitter:description" content="Deshumidificador doméstico construido desde cero con PCB personalizada, ESP32, pantalla TFT y control automático de humedad vía Wi-Fi.">
+  <meta name="twitter:image"       content="https://adritech.es/img/proyectos/DESHUMIDIFICADOR DIY/PCB_top_montada.webp">
+
+  <link rel="stylesheet" href="css/encabezado.css">
+  <link rel="stylesheet" href="css/style_proyectos.css">
+  <link rel="stylesheet" href="css/footer.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Aquí se carga el header -->
+  <div id="header-container"></div>
+
+  <section class="hero">
+    <img src="img/proyectos/DESHUMIDIFICADOR DIY/PCB_top_montada.webp" alt="Imagen principal">
+    
+    <div class="hero-text">
+      <h2>DESHUMIDIFICADOR DIY</h2>
+    </div>
+
+  </section>
+
+  <nav class="indice-lateral">
+    <ul></ul>
+  </nav>
+
+  <div class="contenedor-hoja">
+    <main>
+
+      <h3 id="introduccion">INTRODUCCIÓN</h3>
+
+      <div class="bloque-introduccion">
+        <div class="texto-intro">
+
+          <p>
+            Este proyecto surge como una iniciativa de reparación técnica tras la avería de un 
+            deshumidificador en mi anterior entorno laboral. El hallazgo de una segunda unidad 
+            idéntica fuera de servicio, me proporcionó los componentes necesarios para abordar su 
+            reparación.
+          </p>
+
+          <p>Tras evaluar el estado técnico de ambas unidades, se descartó la idea inicial de realizar 
+            una reparación mediante el intercambio de componentes. En su lugar, se optó por un enfoque 
+            más ambicioso: el diseño de una PCB personalizada y el desarrollo de un firmware optimizado
+            para mejorar las prestaciones originales.
+          </p>
+
+          <p>La primera unidad presentaba un fallo en la condensación y activaba una alerta por congelación.
+            El diagnóstico apuntaba a una avería en la sonda de temperatura o un fallo en la PCB de control. 
+          </p>
+
+        </div>
+
+        <div class="imagen-lateral-intro">
+          <img src="img/proyectos/DESHUMIDIFICADOR DIY/Deshumidificador.webp" alt="Prototipo deshumidificador">
+          <p class="pie-foto">Vista del deshumidificador original</p>
+        </div>
+
+      </div>
+
+      <p>En la segunda unidad, el ventilador operaba a baja velocidad emitiendo un ruido intermitente. 
+        Tras su desmontaje integral, se determinó que el fallo no residía en el ventilador, sino en una conmutación 
+        cíclica de los relés de control. Este comportamiento sugería una avería en la etapa de control de la PCB.
+      </p>
+
+      <p>Tras verificar que los componentes críticos —el ventilador y el compresor— se encontraban 
+        en buen estado, se realizaron pruebas de conexión directa a la red para validar su capacidad de 
+        condensación. El éxito de estas pruebas, confirmado por la acumulación de agua en el depósito, 
+        validó la viabilidad de diseñar una PCB personalizada para gestionar el control del sistema.
+      </p>
+
+      <h4 id="lista-de-materiales">LISTA DE MATERIALES</h4>
+
+      <p>A continuación, se detallan los componentes integrados en el diseño, seleccionados 
+        para garantizar la eficiencia y estabilidad del sistema:
+      </p>
+
+      <div class="lista-materiales">
+        <ul>
+          <li>1x Wemos ESP32 D1 Mini</li>
+          <li>1x Pantalla táctil TFT 2,8" (ILI9341)</li>
+          <li>2x Relés de estado sólido (G3MB-202P)</li>
+          <li>3x MOSFECT SMD (IRLML6344)</li>
+          <li>1x Sensor de temperatura y humedad (SHT45)</li>
+          <li>1x Zumbador 5V</li>
+          <li>1x Fuente de alimentación 3,3V (AM21-3W033V)</li>
+          <li>1x Fuente de alimentación 5V (AM21-5W05V)</li>
+          <li>Resistencias de 100kΩ y 1MΩ</li>
+          <li>Condensador ceramico SMD de 10µF y 100nF</li>
+          <li>6x Bloque de terminales (KF128)</li>
+        </ul>
+      </div>
+
+      <p>El principio de funcionamiento de un deshumidificador es muy sencillo: 
+        el sistema activa el compresor y el ventilador de forma simultánea hasta que la 
+        humedad relativa desciende por debajo del umbral establecido. Una vez que el 
+        sensor detecta un incremento en los niveles de humedad, el ciclo se reanuda 
+        automáticamente para mantener las condiciones ambientales óptimas.
+      </p>
+
+      <p>El ESP32 actúa como la unidad central de procesamiento del sistema, 
+        gestionando de manera integral tanto el control de la electrónica como 
+        la interfaz de la pantalla táctil.
+      </p>
+
+      <p>La pantalla TFT funciona como la interfaz principal del sistema, permitiendo 
+        la visualización en tiempo real de los datos de temperatura y humedad, además 
+        de facilitar la configuración de las diversas prestaciones mediante su panel 
+        táctil integrado.
+      </p>
+
+      <p>La conmutación del ventilador y el compresor se realiza mediante relés de 
+        estado sólido (SSR), capaces de gestionar cargas de hasta 2A a 240V AC. 
+        Esta elección es idónea para el consumo máximo de 300W del equipo. Además, su 
+        tecnología zero-cross garantiza una activación precisa en el cruce por cero de 
+        la onda senoidal, eliminando picos de intensidad y protegiendo la integridad del sistema.
+      </p>
+
+      <p>Se han implementado MOSFETs de nivel lógico, capaces de alcanzar la saturación
+         con tensiones de 3,3V en su compuerta (gate). Estos componentes actúan como 
+         controladores para los relés de estado sólido (SSR) y el zumbador, permitiendo 
+         la conmutación de estas etapas que operan a 5V.
+      </p>
+
+      <p>Se ha integrado un sensor combinado de temperatura y humedad con interfaz de 
+        comunicación I2C. Su lógica de operación a 3,3V garantiza una compatibilidad 
+        nativa con el ESP32, ofreciendo una alta precisión con márgenes de error de apenas 
+        ±0,1°C en temperatura y ±1% en humedad relativa.
+      </p>
+
+      <p>El sistema integra un zumbador piezoeléctrico que actúa como alerta acústica, 
+        notificando al usuario de manera inmediata cuando el depósito del deshumidificador 
+        alcanza su capacidad máxima.
+      </p>
+
+      <p>Se han incorporado fuentes de alimentación para garantizar un suministro 
+        eléctrico estable a todos los componentes del diseño.
+      </p>
+
+      <h3 id="proteus">PROTEUS</h3>
+
+      <p>El desarrollo de la PCB se ha llevado a cabo mediante Proteus 8.15, utilizando 
+        ISIS para la captura del esquemático y ARES para el diseño del trazado (layout). 
+        Previo a la fase de ruteado, se han definido reglas de diseño y configuraciones 
+        específicas en el entorno para garantizar la integridad de las señales y optimizar 
+        la fabricación del prototipo.
+      </p>
+
+      <h4 id="esquematico">ESQUEMÁTICO</h4>
+
+      <div class="imagen-zoom-contenedor">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Esquematico.svg" alt="Esquema" class="img-zoom">
+        <div class="lupa-cuadrada"></div>
+      </div>
+
+      <h4 id="diseño-pcb">DISEÑO PCB</h4>
+
+      <p>Tras completar la configuración en Proteus, se procede a la distribución 
+        de los componentes (layout). El diseño sigue un criterio de segregación 
+        técnica: el bloque de corriente continua (DC) se ubica en el sector derecho, 
+        mientras que el área de corriente alterna (AC) se sitúa a la izquierda, garantizando
+         así un aislamiento adecuado entre ambas etapas.
+      </p>
+
+      <div class="imagen-zoom-contenedor" id="contenedor-lupa">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Diseno_PCB.SVG" alt="Esquema" class="img-zoom">
+        <div class="lupa-cuadrada"></div>
+      </div>
+
+      <p>Finalizado el ruteado de las pistas, se procede a la generación de los archivos 
+        Gerber, listos para su exportación y posterior fabricación en JLCPCB.
+      </p>
+
+      <h4 id="modelo-3d">MODELO 3D</h4>
+
+      <p>La generación del modelo 3D es una etapa fundamental para validar visualmente 
+        el acabado final de la placa. Esta fase permite verificar la correcta disposición de 
+        los elementos antes de la fabricación.
+      </p>
+
+      <p>
+        A continuación, se presenta el modelo 3D interactivo de la PCB. Te invito a explorar 
+        el diseño para observar con detalle cada uno de los componentes y la arquitectura de 
+        la placa.
+      </p>
+
+      <div class="contenedor-3d">
+        <div class="visor-3d-wrapper">
+          <model-viewer 
+              src="img/proyectos/DESHUMIDIFICADOR DIY/Modelo_3D.glb" 
+              alt="Modelo 3D interactivo"
+              data-cubo-tipo="pcb"
+              data-cubo-offset-theta="0"
+              data-cubo-inclinacion="75"
+              auto-rotate 
+              camera-controls 
+              shadow-intensity="1" 
+              environment-image="neutral" 
+              exposure="1"
+              touch-action="pan-y">
+          </model-viewer>
+
+          <div class="cubo-vistas" aria-label="Selección de vista">
+            <div class="cubo-vistas-escena">
+              <div class="cubo-vistas-cubo">
+                <button type="button" class="cubo-cara cubo-frontal"   data-vista="frontal">Frontal</button>
+                <button type="button" class="cubo-cara cubo-posterior" data-vista="posterior">Posterior</button>
+                <button type="button" class="cubo-cara cubo-derecha"   data-vista="derecha">Derecha</button>
+                <button type="button" class="cubo-cara cubo-izquierda" data-vista="izquierda">Izquierda</button>
+                <button type="button" class="cubo-cara cubo-superior"  data-vista="superior">Superior</button>
+                <button type="button" class="cubo-cara cubo-inferior"  data-vista="inferior">Inferior</button>
+              </div>
+            </div>
+            <button type="button" class="cubo-inicio" data-vista="isometrica" title="Vista isométrica">⌂</button>
+          </div>
+        </div>
+        <p class="instrucciones-3d">Usa el ratón para rotar, la rueda para zoom o el cubo para cambiar de vista</p>
+      </div>
+
+      <h3 id="envio-y-recepcion-de-las-pcbs" data-indice="ENVÍO Y RECEPCIÓN DE<br>LAS PCBS">ENVÍO Y RECEPCIÓN DE LAS PCBS</h3>
+
+      <p>Finalizada la etapa de diseño, se gestiona la fabricación de la PCB en JLCPCB. 
+        Tras su recepción, se procede al montaje meticuloso de todos los componentes del 
+        prototipo final.
+      </p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Top.webp" alt="Fabricación de PCB para deshumidificador." class="img-centrada">
+        <p class="pie-foto">PCB Deshumidificador DIY Top</p>
+      </div>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Bottom.webp" alt="Fabricación de PCB para deshumidificador." class="img-centrada">
+        <p class="pie-foto">PCB Deshumidificador DIY Bottom</p>
+      </div>
+
+      <h3 id="montaje-pcb">MONTAJE DE PCB</h3>
+
+      <p>Tras la recepción de la PCB y una vez superada la inspección visual, se inicia 
+        el proceso de ensamblaje y soldadura de los componentes.
+      </p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/PCB_top_montada.webp" alt="PCB soldada de un deshumidificador DIY" class="img-centrada">
+        <p class="pie-foto">Montaje Top de la PCB</p>
+      </div>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/PCB_bottom_montada.webp" alt="PCB soldada de un deshumidificador DIY" class="img-centrada">
+        <p class="pie-foto">Montaje Bottom de la PCB</p>
+      </div>
+
+      <h3 id="montaje_del_equipo">MONTAJE DEL EQUIPO</h3>
+
+      <p>Una vez reunidos todos los materiales y componentes necesarios, se procede al ensamblaje e integración de los componentes en el chasis del deshumidificador.</p>
+
+      <div class="contenedor-imagenes-verticales">
+        <div class="contenedor-imagen-vertical">
+          <img src="img/proyectos/DESHUMIDIFICADOR DIY/Montando-electronica.webp" alt="Integración y cableado del módulo electrónico principal" class="img-vertical">
+          <p class="pie-foto">Integración y cableado del módulo electrónico principal</p>
+        </div>
+        <div class="contenedor-imagen-vertical">
+          <img src="img/proyectos/DESHUMIDIFICADOR DIY/Montando-pantalla-TFT.webp" alt="Ensamblaje y fijación de la pantalla TFT en su soporte" class="img-vertical">
+          <p class="pie-foto">Ensamblaje y fijación de la pantalla TFT en su soporte</p>
+        </div>
+        <div class="contenedor-imagen-vertical">
+          <img src="img/proyectos/DESHUMIDIFICADOR DIY/Electronica-montada.webp" alt="Acabado final del montaje interno y conexionado" class="img-vertical">
+          <p class="pie-foto">Acabado final del montaje interno y conexionado</p>
+        </div>
+      </div>
+
+      <h3 id="funcionamiento">FUNCIONAMIENTO</h3>
+
+      <p>El algoritmo de control del deshumidificador operará bajo las siguientes premisas:</p>
+      <p>Cuando la humedad detectada supera el umbral establecido, el ventilador se activa 
+        de forma inmediata, seguido del compresor tras un retardo de seguridad de 30 segundos.</p>
+
+      <p>El sistema monitoriza constantemente las variables ambientales. Si la temperatura desciende 
+        de los 16°C, se activa una alerta de riesgo de congelación que activa dos modos de protección:</p>
+      
+      <div class="lista-subparrafos">
+        <p>
+          <strong>» Desescarche (12°C - 16°C):</strong> Por cada 60 minutos de ciclo de trabajo, el compresor se detiene durante 8 minutos.
+        </p>
+        <p>
+          <strong>» Desescarche Crítico (&lt; 12°C):</strong> El ciclo se intensifica, deteniendo el compresor 15 minutos por cada 30 de funcionamiento.
+        </p>
+      </div>
+
+      <p>En ambos modos, el ventilador permanece activo para forzar la circulación de aire y eliminar el escarchado de las bobinas.</p>
+
+      <p>La seguridad del sistema se complementa con un control de nivel en el depósito: si este 
+        alcanza su capacidad máxima o se detecta su ausencia, el deshumidificador detendrá su operación 
+        o bloqueará el arranque de manera preventiva. Para alertar al usuario, se ha implementado una 
+        alarma sonora que puede habilitarse o silenciarse desde el panel de control.</p>
+
+      <p>Finalmente, el equipo incluye una función de temporizador. Al activar la cuenta atrás, 
+        el sistema gestionará el apagado automático del aparato una vez transcurrido el tiempo programado, 
+        optimizando así el consumo energético.</p>
+
+      <h3 id="interfaz-grafica">DISEÑO DE INTERFAZ GRÁFICA</h3>
+
+      <p>Para optimizar la interacción entre el usuario y el deshumidificador, se ha integrado una pantalla TFT táctil. 
+        Si bien el uso directo de la librería LVGL es común, su complejidad crece exponencialmente al gestionar menús y 
+        ventanas múltiples. Por ello, optamos por EEZ Studio, una solución open-source potente y versátil.</p>
+
+      <p>Este software permite el diseño visual mediante la técnica drag-and-drop, facilitando la creación de interfaces 
+        sofisticadas con parámetros de personalización prácticamente ilimitados. Una vez finalizado el diseño, basta con
+        compilar para obtener los archivos necesarios, listos para integrarse en el código base del sistema.</p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Pantalla_principal.webp" alt="Interfaz de usuario del deshumidificador diseñada en EEZ Studio" class="img-centrada">
+        <p class="pie-foto">Pantalla principal || EEZ Studio</p>
+      </div>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Deposito_lleno.webp" alt="Interfaz de usuario del deshumidificador diseñada en EEZ Studio" class="img-centrada">
+        <p class="pie-foto">Mensaje depósito lleno || EEZ Studio</p>
+      </div>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Cuenta_atras.webp" alt="Interfaz de usuario del deshumidificador diseñada en EEZ Studio" class="img-centrada">
+        <p class="pie-foto">Visualización de la cuenta atrás || EEZ Studio</p>
+      </div>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Cuenta_atras_cumplida.webp" alt="Interfaz de usuario del deshumidificador diseñada en EEZ Studio" class="img-centrada">
+        <p class="pie-foto">Mensaje de la cuenta atrás cumplida || EEZ Studio</p>
+      </div>
+      
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Riesgo_de_hielo.webp" alt="Interfaz de usuario del deshumidificador diseñada en EEZ Studio" class="img-centrada">
+        <p class="pie-foto">Símbolo de riesgo de hielo || EEZ Studio</p>
+      </div>
+
+      
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Desescarchado.webp" alt="Interfaz de usuario del deshumidificador diseñada en EEZ Studio" class="img-centrada">
+        <p class="pie-foto">Símbolo de desescarchado || EEZ Studio</p>
+      </div>
+
+    
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/DESHUMIDIFICADOR DIY/Menu_configuraciones.webp" alt="Interfaz de usuario del deshumidificador diseñada en EEZ Studio" class="img-centrada">
+        <p class="pie-foto">Menú de configuraciones || EEZ Studio</p>
+      </div>
+
+      <p>A pesar de la versatilidad de EEZ Studio, su implementación supuso un reto considerable debido a la escasa
+      documentación proporcionada por los desarrolladores. Superar esta barrera requirió un trabajo exhaustivo de 
+      investigación para unir las piezas de una información muy fragmentada en la red, donde los recursos de la 
+      comunidad solían ser incompletos o parciales. En las etapas críticas, el apoyo estratégico de la IA fue fundamental 
+      para conectar estos conceptos dispersos y solventar los problemas técnicos que los tutoriales y foros no alcanzaban a resolver.</p>
+
+      <h3 id="programacion">PROGRAMACIÓN</h3>
+
+      <p>A continuación, se muestra el código principal del funcionamiento del deshumidificador.</p>
+
+      <div class="contenedor-codigo" data-ruta="Programaciones/Deshumificador DIY/main.cpp"></div>
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+
+      <script>
+        Prism.languages.cpp['custom-types'] = {
+          pattern: /\b(?:SemaphoreHandle_t|TaskHandle_t)\b/,
+          alias: 'class-name'
+        };
+      </script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+      
+      <script src="js/visor-codigo.js"></script>
+
+      <p>Más allá del código principal, este sistema embebido integra archivos de configuración externos. 
+        Estos archivos son generados mediante la el programa EEZ Studio y deben alojarse en el mismo directorio 
+        que el código principal para asegurar su correcto funcionamiento.</p>
+
+      <h3 id="puesta_en_marcha_y_validacion" data-indice="PUESTA EN MARCHA Y<br>VALIDACIÓN">PUESTA EN MARCHA Y VALIDACIÓN</h3>
+
+      <p>Se muestra el deshumidificador completamente ensamblado y operativo. A través de la pantalla TFT táctil, el sistema 
+        permite tanto la monitorización en tiempo real de las variables ambientales (temperatura y humedad relativa) como el 
+        acceso al menú de configuración para personalizar los parámetros de funcionamiento del equipo.</p>
+
+      <div class="galeria-3-imagenes">
+        <figure class="galeria-imagen galeria-imagen-vertical">
+          <img src="img/proyectos/DESHUMIDIFICADOR DIY/Deshumidificador-funcionando.webp" alt="Puesta en marcha del deshumidificador">
+        </figure>
+
+        <div class="galeria-columna">
+          <figure class="galeria-imagen galeria-imagen-horizontal">
+            <img src="img/proyectos/DESHUMIDIFICADOR DIY/Pantalla-Temperatura-Humedad.webp" alt="Pantalla de temperatura y humedad del deshumidificador.">
+          </figure>
+
+          <figure class="galeria-imagen galeria-imagen-horizontal">
+            <img src="img/proyectos/DESHUMIDIFICADOR DIY/Menu_configuracion.webp" alt="Menu de configuración del deshumidificador.">
+          </figure>
+        </div>
+
+        <p class="pie-foto pie-foto-galeria">Puesta en marcha y validación del funcionamiento del equipo</p>
+      </div>
+
+      <p>Se verifica la respuesta del equipo ante la extracción o el llenado máximo del depósito de agua. 
+        Al retirar el tanque, se detiene el funcionamiento y se activa de forma automática una alerta visual 
+        y una alarma sonora, garantizando así un uso seguro, evitando desbordamientos.</p>
+
+      <div class="galeria-2-imagenes">
+        <figure class="galeria-imagen galeria-imagen-vertical">
+          <img src="img/proyectos/DESHUMIDIFICADOR DIY/Deshumidificador-tanque-lleno.webp" alt="Deshumidificador con el depósito lleno.">
+        </figure>
+
+        <figure class="galeria-imagen galeria-imagen-horizontal">
+          <img src="img/proyectos/DESHUMIDIFICADOR DIY/Deposito-lleno.webp" alt="Pantalla TFT cuando el depósito esta lleno.">
+        </figure>
+
+        <p class="pie-foto pie-foto-galeria">Mensaje cuando el depósito esta lleno o extraído</p>
+      </div>
+
+      <p>En el siguiente vídeo puedes ver el equipo en acción y el funcionamiento de sus características principales,
+        destacando la respuesta de la interfaz gráfica integrada en el panel de control superior.</p>
+
+      <div class="video-youtube-vertical" data-youtube-url="https://www.youtube.com/shorts/Pa2Cua0WkpM">
+        <p class="pie-foto">Funcionamiento en vivo del deshumidificador</p>
+      </div>
+
+      <h3 id="descarga_de_archivos">DESCARGA DE ARCHIVOS</h3>
+
+      <p>
+        A continuación, puedes descargar los archivos necesarios para el funcionamiento del deshumidificador.
+        Estos archivos incluyen la programación completa, los recursos de fabricación de la PCB y los modelos 3D
+        diseñados para adaptar la electrónica al chasis original.
+      </p>
+
+      <div class="descargas-archivos">
+        <a class="tarjeta-descarga" data-descarga-drive href="https://drive.google.com/file/d/1P6yqPqswNGG0BgFsazv5smPPsGLiJV9Q/view?usp=drive_link">
+          <span class="descarga-icono">
+            <img src="img/proyectos/IMG/PlatformIO_logo.svg" alt="Logo de PlatformIO">
+          </span>
+          <span class="descarga-contenido">
+            <strong>Programación</strong>
+            <small>Proyecto PlatformIO con el firmware y la interfaz TFT</small>
+          </span>
+        </a>
+
+        <a class="tarjeta-descarga" data-descarga-drive href="https://drive.google.com/file/d/1P6yqPqswNGG0BgFsazv5smPPsGLiJV9Q/view?usp=drive_link">
+          <span class="descarga-icono">
+            <img src="img/proyectos/IMG/Proteus_logo.webp" alt="Logo de Proteus">
+          </span>
+          <span class="descarga-contenido">
+            <strong>Fabricación PCB</strong>
+            <small>Archivos Gerber de fabricación de la PCB</small>
+          </span>
+        </a>
+
+        <a class="tarjeta-descarga" data-descarga-drive href="https://drive.google.com/file/d/18_3CdNb2Q1EG7wpidUAJvQqnky5DQemq/view?usp=drive_link">
+          <span class="descarga-icono">
+            <img src="img/proyectos/IMG/Inventor_logo.svg" alt="Logo de Autodesk Inventor">
+          </span>
+          <span class="descarga-contenido">
+            <strong>Modelos 3D</strong>
+            <small>Piezas diseñadas en Inventor para este deshumidificador</small>
+          </span>
+        </a>
+      </div>
+
+    </main>
+  </div>
+
+  <div id="footer-container"></div>
+  
+  <script src="js/header.js"></script>
+  <script src="js/resaltar-busqueda.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/indice_lateral.js"></script>
+  <script src="js/galerias-imagenes.js"></script>
+  <script src="js/youtube-embed.js"></script>
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <script src="js/cubo-vistas.js"></script>
+  <script src="js/descargas-drive.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto – AdriTech</title>
+
+  <link rel="icon" type="image/png" href="img/AdriTech_sp.png">
+  <link rel="apple-touch-icon" href="img/AdriTech_sp.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="AdriTech">
+  <meta property="og:url"         content="https://adritech.es/contacto.html">
+  <meta property="og:title"       content="Contacto · AdriTech">
+  <meta property="og:description" content="¿Tienes un proyecto en mente o una duda técnica? Escríbeme y te respondo lo antes posible.">
+  <meta property="og:image"       content="https://adritech.es/img/AdriTech_sp.png">
+  <meta property="og:locale"      content="es_ES">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Contacto · AdriTech">
+  <meta name="twitter:description" content="¿Tienes un proyecto en mente o una duda técnica? Escríbeme y te respondo lo antes posible.">
+  <meta name="twitter:image"       content="https://adritech.es/img/AdriTech_sp.png">
+
+  <link rel="stylesheet" href="css/encabezado.css">
+  <link rel="stylesheet" href="css/style_proyectos.css">
+  <link rel="stylesheet" href="css/contacto.css">
+  <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+
+  <div id="header-container"></div>
+
+  <section class="hero">
+    <img src="img/proyectos.jpg" alt="Contacto AdriTech">
+    <div class="hero-text">
+      <h2>Contacto</h2>
+    </div>
+  </section>
+
+  <div class="contenedor-hoja">
+    <main>
+
+      <div class="contacto-wrapper">
+
+        <div class="contacto-encabezado">
+          <p>¿Tienes un proyecto en mente, una duda técnica o simplemente quieres saludar?</p>
+          <p>Escríbeme y te respondo lo antes posible.</p>
+        </div>
+
+        <div class="contacto-tarjeta">
+
+          <div id="contacto-exito" class="contacto-exito" aria-hidden="true">
+            <div class="contacto-exito-icono">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <p class="contacto-exito-titulo">¡Gracias por escribirnos!</p>
+            <p class="contacto-exito-sub">Te contactaremos pronto.</p>
+          </div>
+
+          <form id="contacto-form" novalidate>
+
+            <div class="contacto-grid">
+
+              <div class="contacto-campo">
+                <label for="c-nombre">Nombre</label>
+                <input
+                  type="text"
+                  id="c-nombre"
+                  name="nombre"
+                  placeholder="Tu nombre"
+                  required
+                  autocomplete="given-name"
+                >
+              </div>
+
+              <div class="contacto-campo">
+                <label for="c-apellidos">Apellidos</label>
+                <input
+                  type="text"
+                  id="c-apellidos"
+                  name="apellidos"
+                  placeholder="Tus apellidos"
+                  required
+                  autocomplete="family-name"
+                >
+              </div>
+
+              <div class="contacto-campo contacto-campo-ancho">
+                <label for="c-email">Correo electrónico</label>
+                <input
+                  type="email"
+                  id="c-email"
+                  name="email"
+                  placeholder="tu@email.com"
+                  required
+                  autocomplete="email"
+                >
+              </div>
+
+              <div class="contacto-campo contacto-campo-ancho">
+                <label for="c-asunto">Asunto</label>
+                <input
+                  type="text"
+                  id="c-asunto"
+                  name="asunto"
+                  placeholder="¿De qué trata tu mensaje?"
+                  required
+                >
+              </div>
+
+              <div class="contacto-campo contacto-campo-ancho">
+                <label for="c-mensaje">Mensaje</label>
+                <textarea
+                  id="c-mensaje"
+                  name="mensaje"
+                  placeholder="Cuéntame en qué puedo ayudarte…"
+                  required
+                ></textarea>
+              </div>
+
+            </div>
+
+            <div class="contacto-boton-fila">
+              <button type="submit" id="contacto-boton" class="contacto-boton">
+                Enviar mensaje
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="22" y1="2" x2="11" y2="13"/>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+            </div>
+
+            <div id="contacto-estado" class="contacto-estado" role="status" aria-live="polite"></div>
+
+          </form>
+
+        </div><!-- /contacto-tarjeta -->
+
+        <!-- Descomentar para mostrar correo y tiempo de respuesta
+        <div class="contacto-info">
+          <div class="contacto-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            adritech999@gmail.com
+          </div>
+          <div class="contacto-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Respuesta en 24–48 h
+          </div>
+        </div>
+        -->
+
+      </div><!-- /contacto-wrapper -->
+
+    </main>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script src="js/header.js"></script>
+  <script src="js/resaltar-busqueda.js"></script>
+  <script src="js/footer.js"></script>
+
+  <!-- EmailJS SDK (carga solo cuando el formulario existe) -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/contacto.js"></script>
+
+</body>
+</html>

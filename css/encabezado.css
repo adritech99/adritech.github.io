@@ -1,0 +1,620 @@
+/* ==========================================================================
+   ENCABEZADO — cabecera, menú, búsqueda y reloj
+   JS asociado: js/header.js
+   ========================================================================== */
+
+@import url("comun.css"); /* Importa estilos compartidos del sitio */
+
+/* --------------------------------------------------------------------------
+   Global — html, body, selección de texto
+   -------------------------------------------------------------------------- */
+html { /* Elemento raíz del documento */
+  overflow-y: scroll; /* Siempre reserva barra de desplazamiento vertical */
+  scrollbar-gutter: stable; /* Evita saltos de layout al aparecer el scroll */
+} /* Fin bloque html */
+
+body { /* Cuerpo principal de la página */
+  margin: 0; /* Sin margen externo */
+  padding: 0; /* Sin relleno interno */
+  -webkit-user-select: none; /* Desactiva selección de texto en WebKit */
+  user-select: none; /* Desactiva selección de texto */
+  -webkit-touch-callout: none; /* Desactiva menú contextual al mantener pulsado */
+} /* Fin bloque body */
+
+input, /* Campos de entrada de texto */
+textarea, /* Áreas de texto multilínea */
+[contenteditable="true"] { /* Elementos editables por el usuario */
+  -webkit-user-select: text; /* Permite selección de texto en WebKit */
+  user-select: text; /* Permite selección de texto */
+  -webkit-touch-callout: default; /* Restaura menú contextual en WebKit */
+} /* Fin bloque campos editables */
+
+#header-container { /* Contenedor del encabezado */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  box-sizing: border-box; /* Incluye borde y padding en el ancho */
+} /* Fin bloque header-container */
+
+/* --------------------------------------------------------------------------
+   PC — ancho mínimo del sitio (≥ 701 px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 701px) { /* Estilos para escritorio y pantallas anchas */
+  html { /* Elemento raíz en vista PC */
+    min-width: 1300px; /* Ancho mínimo fijo del sitio */
+    overflow-x: auto; /* Permite scroll horizontal si hace falta */
+  } /* Fin bloque html PC */
+
+  body { /* Cuerpo en vista PC */
+    min-width: 1300px; /* Ancho mínimo igual al del html */
+  } /* Fin bloque body PC */
+
+  #header-container { /* Contenedor del encabezado en PC */
+    min-width: 1300px; /* Mantiene el ancho mínimo del layout */
+  } /* Fin bloque header-container PC */
+} /* Fin media query PC ancho mínimo */
+
+/* --------------------------------------------------------------------------
+   Cabecera — contenedor principal
+   -------------------------------------------------------------------------- */
+.cabecera { /* Barra superior principal del sitio */
+  position: relative; /* Contexto para elementos posicionados dentro */
+  display: flex; /* Distribución flexible de hijos */
+  flex-wrap: wrap; /* Permite que los hijos pasen a otra línea */
+  align-items: center; /* Centra verticalmente los hijos */
+  gap: 1rem; /* Espacio entre elementos flex */
+  padding: 1rem 2rem; /* Relleno interno vertical y horizontal */
+  background-color: #272822; /* Color de fondo */
+  box-sizing: border-box; /* Incluye borde y padding en dimensiones */
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  border: 5px solid #008080; /* Borde */
+  border-radius: 12px; /* Esquinas redondeadas */
+} /* Fin bloque cabecera */
+
+.header-logo { /* Zona del logotipo en la cabecera */
+  display: inline-flex; /* Flex en línea para logo y enlaces */
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: flex-start; /* Alinea al inicio horizontal */
+  gap: 1rem; /* Espacio entre logo y texto adyacente */
+  padding: 0.25rem 0; /* Relleno vertical ligero */
+  width: auto; /* Ancho según contenido */
+  box-sizing: border-box; /* Modelo de caja con borde incluido */
+} /* Fin bloque header-logo */
+
+.logo { /* Imagen del logotipo */
+  width: 150px; /* Ancho fijo del logo en PC */
+  height: auto; /* Altura proporcional automática */
+  border-radius: 8px; /* Esquinas ligeramente redondeadas */
+  background: transparent; /* Sin fondo detrás de la imagen */
+  padding: 0; /* Sin relleno alrededor */
+  box-shadow: none; /* Sin sombra */
+  display: block; /* Comportamiento de bloque para la imagen */
+} /* Fin bloque logo */
+
+.logo-link { /* Enlace que envuelve el logo */
+  display: inline-flex; /* Flex en línea para centrar la imagen */
+  align-items: center; /* Centra verticalmente el logo */
+  text-decoration: none; /* Sin subrayado de enlace */
+} /* Fin bloque logo-link */
+
+/* Título del sitio */
+h1 { /* Título principal del encabezado */
+  font-size: 2.2rem; /* Tamaño de letra */
+  font-weight: bold; /* Texto en negrita */
+  font-family: 'Arial', sans-serif; /* Tipografía sans-serif */
+  line-height: 42px; /* Altura de línea fija */
+  color: #ffffff; /* Color del texto */
+  text-transform: capitalize; /* Primera letra de palabras en mayúscula */
+  text-align: center; /* Texto centrado */
+} /* Fin bloque h1 */
+
+.header-texto { /* Contenedor del título centrado */
+  position: absolute; /* Posicionamiento libre sobre la cabecera */
+  left: 50%; /* Punto de referencia al centro horizontal */
+  transform: translateX(-50%); /* Centra exactamente el bloque */
+  text-align: center; /* Centra el texto interno */
+  transition: top 0.2s; /* Animación suave al cambiar posición vertical */
+} /* Fin bloque header-texto */
+
+/* Fecha y hora (esquina superior derecha) */
+.header-fecha-hora { /* Bloque de fecha y hora */
+  position: absolute; /* Fijado respecto a la cabecera */
+  top: 40px; /* Distancia desde el borde superior */
+  right: 30px; /* Distancia desde el borde derecho */
+  align-items: center; /* Centra elementos hijos en eje cruzado */
+} /* Fin bloque header-fecha-hora */
+
+#fecha-hora { /* Texto de fecha y hora */
+  font-size: 1.2rem; /* Tamaño de letra */
+  opacity: 1; /* Completamente visible */
+  color: #ffffff; /* Color del texto */
+  white-space: nowrap; /* Evita salto de línea en la fecha */
+} /* Fin bloque fecha-hora */
+
+/* --------------------------------------------------------------------------
+   Menú de navegación — PC
+   -------------------------------------------------------------------------- */
+.menu-navegacion { /* Barra de enlaces de navegación */
+  background-color: #008080; /* Color de fondo */
+  position: absolute; /* Posicionado sobre la cabecera */
+  top: 120px; /* Debajo del logo y título */
+  left: 50%; /* Referencia al centro horizontal */
+  transform: translateX(-50%); /* Centra el menú */
+  display: flex; /* Enlaces en fila flexible */
+  justify-content: center; /* Centra los ítems del menú */
+  gap: 10px; /* Espacio entre enlaces */
+  border-radius: 12px; /* Esquinas redondeadas */
+  padding: 0.5rem 1rem; /* Relleno interno del menú */
+  box-sizing: border-box; /* Modelo de caja completo */
+  z-index: 9999; /* Por encima del resto del contenido */
+} /* Fin bloque menu-navegacion */
+
+.menu-navegacion a { /* Enlaces individuales del menú */
+  color: #ffffff; /* Color del texto */
+  margin: 0; /* Sin margen extra */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: bold; /* Texto en negrita */
+  display: inline-block; /* Bloque en línea para padding */
+  padding: 0.5rem 0.9rem; /* Área clicable del enlace */
+  border-radius: 8px; /* Esquinas redondeadas del ítem */
+  transition: background-color 160ms ease, transform 160ms ease, color 160ms ease; /* Transiciones al interactuar */
+} /* Fin bloque enlaces menú */
+
+.menu-navegacion a:hover, /* Enlace al pasar el ratón */
+.menu-navegacion a:focus { /* Enlace al recibir foco de teclado */
+  background-color: #272822; /* Color de fondo */
+  color: #FFBF00; /* Color de resaltado */
+  transform: translateY(-2px); /* Ligero desplazamiento hacia arriba */
+  box-shadow: none; /* Sin sombra */
+  outline: none; /* Sin contorno por defecto del navegador */
+} /* Fin bloque hover/focus menú */
+
+.menu-navegacion a.active, /* Página actual */
+.menu-navegacion a.active:hover, /* Página actual con ratón encima */
+.menu-navegacion a.active:focus { /* Página actual con foco */
+  background-color: #FFBF00; /* Color de resaltado */
+  color: #272822; /* Color del texto */
+  transform: translateY(-2px); /* Mismo efecto de elevación */
+  box-shadow: none; /* Sin sombra */
+  outline: none; /* Sin contorno de foco */
+} /* Fin bloque ítem activo menú */
+
+/* Ítem con submenú (Proyectos) */
+.menu-item { /* Contenedor de enlace con submenú */
+  position: relative; /* Contexto para posicionar el submenú */
+} /* Fin bloque menu-item */
+
+.submenu { /* Lista desplegable secundaria */
+  position: absolute; /* Flota debajo del ítem padre */
+  top: 100%; /* Justo bajo el enlace principal */
+  left: 0; /* Alineado al borde izquierdo del ítem */
+  display: none; /* Oculto hasta hover o interacción */
+  background-color: #008080; /* Mismo color que el menú principal */
+  border-radius: 10px; /* Esquinas redondeadas */
+  padding: 0.5rem 0; /* Relleno vertical del submenú */
+  white-space: nowrap; /* Evita cortes de línea en opciones */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6); /* Sombra para destacar el desplegable */
+  z-index: 1000; /* Por encima del contenido cercano */
+} /* Fin bloque submenu */
+
+.menu-navegacion .submenu a { /* Enlaces dentro del submenú */
+  display: block; /* Cada opción ocupa su propia línea */
+  padding: 0.6rem 1.2rem; /* Área clicable amplia */
+  background-color: #008080; /* Color de fondo */
+  color: #ffffff; /* Color del texto */
+  text-decoration: none; /* Sin subrayado */
+  font-size: 0.95rem; /* Tamaño de letra */
+  font-weight: bold; /* Texto en negrita */
+  white-space: nowrap; /* Una sola línea por opción */
+  transform: none; /* Sin desplazamiento en submenú */
+} /* Fin bloque enlaces submenu */
+
+.menu-navegacion .submenu a:hover, /* Opción de submenú con ratón */
+.menu-navegacion .submenu a:focus { /* Opción de submenú con foco */
+  background-color: #272822; /* Color de fondo */
+  color: #FFBF00; /* Color de resaltado */
+  transform: none; /* Sin movimiento vertical */
+} /* Fin bloque hover/focus submenu */
+
+.menu-navegacion .submenu a.active, /* Opción activa del submenú */
+.menu-navegacion .submenu a.active:hover, /* Activa con ratón encima */
+.menu-navegacion .submenu a.active:focus { /* Activa con foco */
+  background-color: #FFBF00; /* Color de resaltado */
+  color: #272822; /* Color del texto */
+  font-weight: 700; /* Negrita reforzada */
+  transform: none; /* Sin transformación */
+} /* Fin bloque activo submenu */
+
+.menu-item:hover .submenu { /* Muestra submenú al pasar por el ítem padre */
+  display: block; /* Hace visible el desplegable */
+} /* Fin bloque hover submenu */
+
+/* --------------------------------------------------------------------------
+   Búsqueda — PC
+   -------------------------------------------------------------------------- */
+.busqueda-header { /* Contenedor de barra y botón de búsqueda */
+  position: absolute; /* Posicionado en la cabecera */
+  top: 85px; /* Altura bajo el borde superior */
+  right: 30px; /* Alineado a la derecha */
+  display: flex; /* Campo y botón en fila */
+  justify-content: center; /* Centra contenido horizontalmente */
+  gap: 5px; /* Espacio entre input y botón */
+  margin-top: 15px; /* Separación adicional superior */
+} /* Fin bloque busqueda-header */
+
+#barra-busqueda { /* Campo de texto de búsqueda */
+  padding: 0.5rem 1rem; /* Relleno interno del input */
+  border-radius: 6px; /* Esquinas redondeadas */
+  border: 1px solid #ccc; /* Borde */
+  font-size: 1rem; /* Tamaño de letra */
+} /* Fin bloque barra-busqueda */
+
+#boton-buscar { /* Botón para lanzar la búsqueda */
+  padding: 0.5rem 1rem; /* Relleno del botón */
+  border-radius: 8px; /* Esquinas redondeadas */
+  background-color: #008080; /* Color de fondo */
+  color: #fffffff0; /* Color del texto */
+  border: 4px solid #008080; /* Color del borde */
+  cursor: pointer; /* Cursor de mano al pasar */
+  font-weight: bold; /* Texto en negrita */
+  display: inline-flex; /* Flex en línea para icono y texto */
+  align-items: center; /* Centra verticalmente el contenido */
+  justify-content: center; /* Centra horizontalmente */
+  gap: 0.35rem; /* Espacio entre icono y etiqueta */
+  transition: /* Transiciones de estados del botón */
+    background-color 0.2s ease, /* Cambio suave de fondo */
+    color 0.2s ease, /* Cambio suave de color de texto */
+    border-color 0.2s ease; /* Cambio suave del borde */
+} /* Fin bloque boton-buscar */
+
+#boton-buscar:hover { /* Botón al pasar el ratón */
+  background-color: #272822; /* Color de fondo */
+  color: #FFBF00; /* Color de resaltado */
+  border-color: #008080; /* Color del borde */
+} /* Fin bloque hover boton-buscar */
+
+.icono-lupa-buscar { /* Icono de lupa en el botón */
+  display: none; /* Oculto en vista PC */
+} /* Fin bloque icono-lupa-buscar */
+
+/* --------------------------------------------------------------------------
+   Contenido genérico del layout (main, section, footer, button)
+   -------------------------------------------------------------------------- */
+main { /* Área principal de contenido */
+  padding: 2rem; /* Relleno alrededor del contenido */
+  max-width: 900px; /* Ancho máximo legible */
+  margin: auto; /* Centrado horizontal */
+} /* Fin bloque main */
+
+section { /* Bloques de sección dentro del main */
+  background: white; /* Color de fondo */
+  padding: 1.5rem; /* Relleno interno */
+  margin-bottom: 1.5rem; /* Separación entre secciones */
+  border-radius: 8px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05); /* Sombra sutil */
+} /* Fin bloque section */
+
+footer { /* Pie de página */
+  background-color: #111827; /* Color de fondo */
+  color: #d1d5db; /* Color del texto */
+  text-align: center; /* Texto centrado */
+  padding: 1rem; /* Relleno interno */
+} /* Fin bloque footer */
+
+button { /* Botones genéricos del layout */
+  background-color: #2563eb; /* Color de fondo */
+  color: white; /* Color del texto */
+  border: none; /* Sin borde */
+  padding: 0.6rem 1rem; /* Relleno del botón */
+  border-radius: 6px; /* Esquinas redondeadas */
+  cursor: pointer; /* Cursor de mano */
+} /* Fin bloque button */
+
+button:hover { /* Botón al pasar el ratón */
+  background-color: #1d4ed8; /* Color de fondo */
+} /* Fin bloque hover button */
+
+/* --------------------------------------------------------------------------
+   Resaltado de resultados de búsqueda
+   -------------------------------------------------------------------------- */
+.destacado-busqueda { /* Elemento resaltado por la búsqueda */
+  background-color: rgba(255, 191, 0, 0.38) !important; /* Color de resaltado */
+  box-shadow: 0 0 0 3px rgba(255, 191, 0, 0.55); /* Sombra */
+  border-radius: 6px; /* Esquinas redondeadas del resaltado */
+  transition: background-color 0.5s ease, box-shadow 0.5s ease; /* Desvanecido suave */
+} /* Fin bloque destacado-busqueda */
+
+.destacado-busqueda-saliendo { /* Estado al quitar el resaltado */
+  background-color: rgba(255, 191, 0, 0) !important; /* Fondo transparente */
+  box-shadow: 0 0 0 0 rgba(255, 191, 0, 0); /* Sombra */
+} /* Fin bloque destacado-busqueda-saliendo */
+
+/* --------------------------------------------------------------------------
+   MÓVIL — cabecera, menú y búsqueda (≤ 700 px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 700px) { /* Estilos para tablets y móviles */
+  html { /* Elemento raíz en móvil */
+    min-width: 400px; /* Ancho mínimo reducido */
+  } /* Fin bloque html móvil */
+
+  /* Cabecera en grid */
+  .cabecera { /* Cabecera reorganizada en cuadrícula */
+    width: 100%; /* Ocupa todo el ancho */
+    --busqueda-altura: 1.5rem; /* Variable para altura del control de búsqueda */
+    display: grid; /* Layout en rejilla */
+    grid-template-columns: 82px 1fr; /* Columna logo fija y columna flexible */
+    grid-template-areas: /* Áreas nombradas de la rejilla */
+      "logo titulo" /* Fila superior: logo y título */
+      "logo menu"; /* Fila inferior: logo y menú */
+    gap: 0.3rem 0.55rem; /* Espacio entre filas y columnas */
+    align-items: center; /* Centra verticalmente las celdas */
+    padding: 0.45rem 0.5rem 0.5rem; /* Relleno compacto */
+    border-width: 3px; /* Borde más fino que en PC */
+    border-radius: 10px; /* Esquinas ligeramente menores */
+  } /* Fin bloque cabecera móvil */
+
+  .header-logo { /* Logo dentro de la rejilla móvil */
+    grid-area: logo; /* Ocupa el área logo */
+    justify-content: center; /* Centra el logo horizontalmente */
+    align-self: center; /* Centra el logo verticalmente */
+    padding: 0; /* Sin relleno extra */
+  } /* Fin bloque header-logo móvil */
+
+  .logo { /* Imagen del logo en móvil */
+    width: 82px; /* Logo más pequeño */
+  } /* Fin bloque logo móvil */
+
+  .header-texto { /* Título en la rejilla móvil */
+    position: static !important; /* Deja de flotar de forma absoluta */
+    top: auto !important; /* Anula posición superior */
+    left: auto !important; /* Anula posición izquierda */
+    grid-area: titulo; /* Ocupa el área del título */
+    transform: none !important; /* Sin desplazamiento de centrado */
+    width: 100%; /* Ocupa el ancho de la celda */
+    min-width: 0; /* Permite encoger en grid */
+    text-align: center; /* Texto centrado */
+    align-self: center; /* Centrado vertical en la celda */
+    justify-self: stretch; /* Se estira horizontalmente */
+    padding: 0 2rem 0 0; /* Espacio a la derecha para la lupa */
+    box-sizing: border-box; /* Modelo de caja completo */
+    transition: opacity 0.2s ease; /* Transición al atenuar con búsqueda activa */
+  } /* Fin bloque header-texto móvil */
+
+  .cabecera.busqueda-activa .header-texto { /* Título cuando la búsqueda está abierta */
+    opacity: 0.55; /* Atenúa el título para dar protagonismo a la búsqueda */
+  } /* Fin bloque busqueda-activa header-texto */
+
+  h1 { /* Título principal en móvil */
+    margin: 0; /* Sin margen externo */
+    font-size: clamp(0.72rem, 3.4vw, 0.95rem); /* Tamaño de letra */
+    line-height: 1.15; /* Interlineado compacto */
+    text-align: center; /* Centrado */
+    white-space: normal; /* Permite varias líneas */
+    word-break: break-word; /* Parte palabras largas si hace falta */
+    hyphens: auto; /* Guiones automáticos al partir */
+  } /* Fin bloque h1 móvil */
+
+  .header-fecha-hora { /* Fecha y hora en móvil */
+    display: none !important; /* Oculta el reloj en pantallas pequeñas */
+  } /* Fin bloque header-fecha-hora móvil */
+
+  /* Menú compacto */
+  .menu-navegacion { /* Menú adaptado a móvil */
+    position: static !important; /* Integrado en el flujo del grid */
+    top: auto !important; /* Anula posición absoluta */
+    left: auto !important; /* Anula desplazamiento lateral */
+    grid-area: menu; /* Ocupa el área del menú */
+    grid-column: 2; /* Segunda columna de la rejilla */
+    transform: none !important; /* Sin centrado por transform */
+    width: fit-content; /* Ancho según contenido */
+    max-width: 100%; /* No desborda la celda */
+    margin: 0.1rem auto 0; /* Centrado con margen superior mínimo */
+    justify-self: center; /* Centrado horizontal en la celda */
+    align-self: start; /* Alineado al inicio vertical */
+    display: flex; /* Enlaces en fila flexible */
+    align-items: center; /* Centra ítems verticalmente */
+    flex-wrap: wrap; /* Permite varias filas de enlaces */
+    justify-content: center; /* Centra los enlaces */
+    gap: 0.12rem; /* Espacio mínimo entre ítems */
+    padding: 0.18rem 0.3rem; /* Relleno compacto */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-sizing: border-box; /* Modelo de caja completo */
+  } /* Fin bloque menu-navegacion móvil */
+
+  .menu-navegacion > a, /* Enlaces directos del menú */
+  .menu-navegacion > .menu-item { /* Ítems con submenú */
+    display: flex; /* Flex para alinear contenido */
+    align-items: center; /* Centrado vertical */
+    align-self: center; /* Centrado en la fila del menú */
+  } /* Fin bloque hijos directos menú móvil */
+
+  .menu-item { /* Contenedor de submenú en móvil */
+    position: relative; /* Contexto para el desplegable */
+  } /* Fin bloque menu-item móvil */
+
+  .menu-navegacion a { /* Enlaces del menú compacto */
+    display: inline-flex; /* Flex en línea */
+    align-items: center; /* Centrado vertical del texto */
+    justify-content: center; /* Centrado horizontal */
+    padding: 0.2rem 0.38rem; /* Área táctil reducida */
+    font-size: 0.68rem; /* Tamaño de letra */
+    border-radius: 5px; /* Esquinas más pequeñas */
+    line-height: 1; /* Altura de línea compacta */
+  } /* Fin bloque enlaces menú móvil */
+
+  .menu-navegacion a:hover, /* Hover en móvil */
+  .menu-navegacion a:focus, /* Foco en móvil */
+  .menu-navegacion a.active, /* Activo en móvil */
+  .menu-navegacion a.active:hover, /* Activo con hover */
+  .menu-navegacion a.active:focus { /* Activo con foco */
+    transform: none; /* Sin elevación en pantallas táctiles */
+  } /* Fin bloque estados menú móvil */
+
+  .submenu { /* Submenú en móvil */
+    left: 50%; /* Referencia al centro del ítem padre */
+    transform: translateX(-50%); /* Centra el desplegable */
+    width: max-content; /* Ancho según el texto más largo */
+    min-width: max-content; /* No encoge por debajo del contenido */
+    max-width: calc(100vw - 1rem); /* Limita al ancho de pantalla */
+    display: none; /* Oculto por defecto */
+    flex-direction: column; /* Opciones en columna */
+    align-items: stretch; /* Opciones a ancho completo */
+  } /* Fin bloque submenu móvil */
+
+  .menu-item:hover .submenu { /* Submenú visible al hover del ítem */
+    display: flex; /* Muestra como columna flexible */
+  } /* Fin bloque hover submenu móvil */
+
+  .menu-navegacion .submenu a { /* Enlaces del submenú móvil */
+    display: block; /* Cada opción en bloque */
+    width: 100%; /* Ocupa todo el ancho del submenú */
+    font-size: 0.7rem; /* Tamaño de letra */
+    padding: 0.5rem 0.9rem; /* Área táctil cómoda */
+    white-space: nowrap; /* Una línea por opción */
+    text-align: left; /* Texto alineado a la izquierda */
+    box-sizing: border-box; /* Modelo de caja completo */
+  } /* Fin bloque enlaces submenu móvil */
+
+  /* Búsqueda expandible (lupa) */
+  .busqueda-header { /* Control de búsqueda tipo lupa en móvil */
+    position: static !important; /* Integrado en el grid */
+    top: auto !important; /* Anula posición absoluta */
+    right: auto !important; /* Anula alineación derecha */
+    grid-area: titulo; /* Comparte fila con el título */
+    grid-column: 2; /* Segunda columna */
+    z-index: 4; /* Por encima del título al expandirse */
+    display: inline-flex; /* Flex en línea */
+    align-items: center; /* Centra verticalmente */
+    width: var(--busqueda-altura); /* Ancho inicial cuadrado (solo lupa) */
+    height: var(--busqueda-altura); /* Altura fija del control */
+    margin: 0; /* Sin margen externo */
+    justify-self: end; /* Pegado al borde derecho de la celda */
+    align-self: center; /* Centrado vertical */
+    background-color: #272822; /* Color de fondo */
+    border: 1px solid #008080; /* Borde */
+    border-radius: 7px; /* Esquinas redondeadas */
+    overflow: hidden; /* Recorta contenido al expandir/contraer */
+    box-sizing: border-box; /* Modelo de caja completo */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); /* Sombra ligera */
+    transition: width 0.25s ease, box-shadow 0.2s ease; /* Animación al expandir */
+  } /* Fin bloque busqueda-header móvil */
+
+  .busqueda-header.busqueda-expandida { /* Búsqueda abierta con campo visible */
+    width: min(9.5rem, calc(100% - 0.25rem)); /* Se ensancha hasta mostrar el input */
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4); /* Sombra más marcada expandida */
+  } /* Fin bloque busqueda-expandida */
+
+  #barra-busqueda { /* Campo oculto hasta expandir en móvil */
+    width: 0; /* Sin ancho visible colapsado */
+    min-width: 0; /* Permite encoger a cero */
+    height: 100%; /* Misma altura que el contenedor */
+    flex: 1; /* Crece al expandirse */
+    padding: 0; /* Sin relleno colapsado */
+    border: none; /* Sin borde propio */
+    border-radius: 0; /* Sin esquinas internas */
+    background: transparent; /* Fondo transparente */
+    font-size: 0.65rem; /* Tamaño de letra */
+    opacity: 0; /* Invisible colapsado */
+    pointer-events: none; /* No recibe clics colapsado */
+    box-sizing: border-box; /* Modelo de caja completo */
+    transition: opacity 0.2s ease; /* Aparece suavemente al expandir */
+  } /* Fin bloque barra-busqueda móvil */
+
+  .busqueda-header.busqueda-expandida #barra-busqueda { /* Input visible expandido */
+    width: auto; /* Ancho según espacio disponible */
+    flex: 1; /* Ocupa el espacio entre bordes y botón */
+    padding: 0 0.2rem 0 0.45rem; /* Relleno interno del texto */
+    opacity: 1; /* Completamente visible */
+    pointer-events: auto; /* Acepta escritura y foco */
+    color: #ffffff; /* Color del texto */
+    caret-color: #ffffff; /* Color del cursor */
+  } /* Fin bloque barra expandida */
+
+  .busqueda-header.busqueda-expandida #barra-busqueda::placeholder { /* Placeholder expandido */
+    color: rgba(255, 255, 255, 0.5); /* Texto de ayuda semitransparente */
+  } /* Fin bloque placeholder expandido */
+
+  .busqueda-header:not(.busqueda-expandida) #barra-busqueda { /* Input colapsado */
+    display: none; /* Oculto del flujo cuando solo hay lupa */
+  } /* Fin bloque barra colapsada */
+
+  #boton-buscar { /* Botón lupa en móvil */
+    width: var(--busqueda-altura); /* Ancho cuadrado */
+    min-width: var(--busqueda-altura); /* No encoge por debajo */
+    height: 100%; /* Altura del contenedor */
+    padding: 0; /* Sin relleno extra */
+    margin: 0; /* Sin margen */
+    border: none !important; /* Sin borde del botón PC */
+    border-radius: 0; /* Sin esquinas internas */
+    flex: 0 0 var(--busqueda-altura); /* Tamaño fijo en flex */
+    display: flex; /* Centra el icono */
+    align-items: center; /* Centrado vertical del icono */
+    justify-content: center; /* Centrado horizontal */
+    line-height: 0; /* Evita espacio extra de línea */
+    font-weight: normal; /* Sin negrita del botón PC */
+    background-color: transparent; /* Fondo transparente */
+    color: #008080; /* Color del texto */
+    box-sizing: border-box; /* Modelo de caja completo */
+    -webkit-tap-highlight-color: transparent; /* Sin destello azul al tocar en iOS */
+  } /* Fin bloque boton-buscar móvil */
+
+  .busqueda-header:not(.busqueda-expandida) #boton-buscar { /* Solo lupa visible */
+    flex: 1 1 auto; /* Ocupa todo el contenedor cuadrado */
+    width: 100%; /* Ancho completo del control */
+    min-width: 100%; /* Mantiene área táctil completa */
+    height: 100%; /* Altura completa */
+    border-radius: 5px; /* Esquinas del botón solo-lupa */
+  } /* Fin bloque boton colapsado */
+
+  .busqueda-header.busqueda-expandida #boton-buscar { /* Botón con campo abierto */
+    border-left: 1px solid rgba(0, 128, 128, 0.4) !important; /* Separador del input */
+    border-radius: 0; /* Esquinas rectas junto al campo */
+  } /* Fin bloque boton expandido */
+
+  #boton-buscar:hover, /* Botón al pasar o tocar */
+  #boton-buscar:active, /* Botón al pulsar */
+  #boton-buscar:focus-visible { /* Botón con foco visible de teclado */
+    background-color: #008080; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border-color: transparent !important; /* Sin borde conflictivo */
+  } /* Fin bloque estados boton móvil */
+
+  #boton-buscar .texto-buscar { /* Etiqueta textual del botón PC */
+    display: none; /* Oculta el texto «Buscar» en móvil */
+  } /* Fin bloque texto-buscar móvil */
+
+  #boton-buscar .icono-lupa-buscar { /* Icono SVG de la lupa */
+    display: block; /* Visible en móvil */
+    width: 14px; /* Ancho del icono */
+    height: 14px; /* Alto del icono */
+    margin: 0; /* Sin margen */
+    flex-shrink: 0; /* No se comprime en flex */
+    pointer-events: none; /* Los clics van al botón padre */
+  } /* Fin bloque icono-lupa móvil */
+} /* Fin media query móvil ≤ 700px */
+
+/* --------------------------------------------------------------------------
+   MÓVIL — pantallas muy estrechas (≤ 380 px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 380px) { /* Ajustes para móviles muy pequeños */
+  .cabecera { /* Cabecera aún más compacta */
+    grid-template-columns: 72px 1fr; /* Columna logo más estrecha */
+    gap: 0.28rem 0.45rem; /* Menos espacio entre celdas */
+    padding: 0.4rem 0.45rem 0.45rem; /* Relleno reducido */
+  } /* Fin bloque cabecera ≤ 380px */
+
+  .logo { /* Logo más pequeño en pantallas estrechas */
+    width: 72px; /* Ancho reducido del logo */
+  } /* Fin bloque logo ≤ 380px */
+
+  h1 { /* Título más pequeño */
+    font-size: clamp(0.68rem, 3.2vw, 0.85rem); /* Tamaño de letra */
+  } /* Fin bloque h1 ≤ 380px */
+
+  .menu-navegacion a { /* Enlaces aún más compactos */
+    font-size: 0.62rem; /* Tamaño de letra */
+    padding: 0.18rem 0.32rem; /* Menos relleno táctil */
+  } /* Fin bloque enlaces menú ≤ 380px */
+
+  .busqueda-header.busqueda-expandida { /* Búsqueda expandida en pantalla estrecha */
+    width: min(8.5rem, calc(100% - 0.25rem)); /* Ancho máximo algo menor */
+  } /* Fin bloque busqueda-expandida ≤ 380px */
+} /* Fin media query móvil ≤ 380px */

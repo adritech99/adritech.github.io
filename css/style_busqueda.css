@@ -1,0 +1,208 @@
+body { /* Estilos base de la página de búsqueda */
+  margin: 0; /* Elimina margen por defecto del navegador */
+  padding: 0; /* Elimina relleno por defecto */
+  font-family: Arial, sans-serif; /* Tipografía principal */
+  background-color: #272822; /* Color de fondo */
+}
+
+.contenedor-hoja { /* Marco principal tipo “hoja” centrada */
+  max-width: 950px; /* Ancho máximo del contenido */
+  margin: 1.5rem auto 2rem; /* Centrado y márgenes verticales */
+  background-color: #272822; /* Color de fondo */
+  border-radius: 20px; /* Esquinas redondeadas */
+  overflow: hidden; /* Recorta hijos que sobresalgan */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Sombra elevada */
+  border: 2px solid #008080; /* Borde */
+}
+
+main { /* Área principal de resultados */
+  padding: 1.5rem 2rem 2rem; /* Espaciado interno del main */
+}
+
+main h3 { /* Título de la sección de búsqueda */
+  color: #ffffff; /* Color del texto */
+  font-size: 2rem; /* Tamaño de letra */
+  font-weight: 600; /* Semi-negrita */
+  margin: 0 0 0.5rem; /* Solo margen inferior */
+  font-family: Arial, sans-serif; /* Tipografía del título */
+  display: inline-block; /* Permite subrayado solo bajo el texto */
+  text-decoration: underline; /* Subrayado del título */
+  text-decoration-color: #008080; /* Color del subrayado */
+  text-decoration-thickness: 2px; /* Grosor del subrayado */
+  text-underline-offset: 0.22em; /* Separación entre texto y línea */
+  text-decoration-skip-ink: none; /* Subrayado continuo bajo ascendentes */
+}
+
+#resumen-busqueda { /* Texto resumen (término buscado, cantidad, etc.) */
+  color: #b8b8b8; /* Color del texto */
+  margin: 0 0 1.5rem; /* Margen inferior antes de resultados */
+  font-size: 1rem; /* Tamaño de letra */
+}
+
+.busqueda-estado,
+.busqueda-sin-resultados,
+.busqueda-error { /* Mensajes de estado, vacío o error */
+  color: #ffffff; /* Color del texto */
+  font-size: 1rem; /* Tamaño de letra */
+  margin: 0; /* Sin márgenes externos */
+}
+
+.busqueda-error { /* Variante específica de mensaje de error */
+  color: #ffbf00; /* Color de resaltado */
+}
+
+#resultados-busqueda { /* Contenedor de tarjetas de resultado */
+  display: flex; /* Apila resultados en columna */
+  flex-direction: column; /* Dirección vertical */
+  gap: 1rem; /* Espacio entre tarjetas */
+}
+
+.tarjeta-resultado { /* Cada bloque de resultado de búsqueda */
+  background: rgba(0, 0, 0, 0.2); /* Color de fondo */
+  border: 1px solid #008080; /* Borde */
+  border-radius: 12px; /* Esquinas redondeadas */
+  padding: 1rem 1.1rem; /* Relleno interno */
+  transition: border-color 0.2s ease, transform 0.2s ease; /* Hover suave */
+}
+
+.tarjeta-resultado:hover { /* Tarjeta al pasar el cursor */
+  border-color: #ffbf00; /* Color del borde */
+  transform: translateY(-1px); /* Ligera elevación */
+}
+
+.resultado-cabecera { /* Cabecera con ruta y título del documento */
+  margin-bottom: 0.85rem; /* Separación del listado de coincidencias */
+  padding-bottom: 0.75rem; /* Espacio antes de la línea divisoria */
+  border-bottom: 1px solid rgba(0, 128, 128, 0.35); /* Color del borde */
+}
+
+.resultado-ruta,
+.resultado-ubicacion { /* Ruta del archivo y ubicación en la página */
+  margin: 0; /* Sin márgenes */
+  color: #7ec8c8; /* Color del texto */
+  font-size: 0.82rem; /* Tamaño de letra */
+  line-height: 1.4; /* Interlineado legible */
+}
+
+.resultado-ubicacion { /* Ubicación secundaria (más tenue) */
+  color: #9a9a9a; /* Color del texto */
+  font-size: 0.78rem; /* Tamaño de letra */
+}
+
+.resultado-titulo { /* Enlace al título del documento encontrado */
+  display: inline-block; /* Caja en línea para el enlace */
+  color: #ffbf00; /* Color de resaltado */
+  font-size: 1.15rem; /* Tamaño de letra */
+  font-weight: bold; /* Negrita */
+  text-decoration: none; /* Sin subrayado por defecto */
+  margin-top: 0.25rem; /* Separación de la ruta */
+}
+
+.resultado-titulo:hover { /* Título al hover */
+  color: #ffffff; /* Color del texto */
+}
+
+.resultado-coincidencias { /* Lista de fragmentos coincidentes */
+  list-style: none; /* Sin viñetas */
+  margin: 0; /* Sin margen */
+  padding: 0; /* Sin relleno */
+  display: flex; /* Apila coincidencias */
+  flex-direction: column; /* En columna */
+  gap: 0.85rem; /* Espacio entre coincidencias */
+}
+
+.resultado-item { /* Elemento individual de la lista */
+  list-style: none; /* Refuerza ausencia de viñeta */
+}
+
+.resultado-item-enlace { /* Enlace clicable a cada coincidencia */
+  display: block; /* Ocupa todo el ancho */
+  padding: 0.65rem 0.75rem; /* Relleno interno del bloque */
+  border-radius: 8px; /* Esquinas suaves */
+  background: rgba(0, 0, 0, 0.15); /* Color de fondo */
+  border-left: 3px solid #008080; /* Color del borde */
+  text-decoration: none; /* Sin subrayado */
+  color: inherit; /* Hereda color del contenedor */
+  transition: border-color 0.2s ease, background-color 0.2s ease; /* Hover del ítem */
+}
+
+.resultado-item-enlace:hover { /* Ítem de coincidencia al hover */
+  border-left-color: #ffbf00; /* Color del borde */
+  background: rgba(255, 191, 0, 0.08); /* Color de fondo */
+}
+
+.resultado-cuerpo { /* Fila con tipo y texto del fragmento */
+  display: flex; /* Tipo y texto en línea */
+  flex-wrap: wrap; /* Permite salto en pantallas estrechas */
+  align-items: baseline; /* Alinea por la línea base del texto */
+  gap: 0 0.5rem; /* Hueco horizontal entre tipo y texto */
+  margin-top: 0.3rem; /* Separación del borde superior del enlace */
+}
+
+.resultado-tipo { /* Etiqueta del tipo de coincidencia (título, párrafo, etc.) */
+  flex: 0 0 auto; /* No crece ni encoge */
+  color: #ffbf00; /* Color de resaltado */
+  font-size: 0.72rem; /* Tamaño de letra */
+  font-weight: bold; /* Negrita */
+  letter-spacing: 0.03em; /* Espaciado entre letras */
+  text-transform: uppercase; /* Mayúsculas */
+}
+
+.resultado-tipo::after { /* Dos puntos tras el tipo */
+  content: ":"; /* Añade los dos puntos */
+  margin-left: 0.05rem; /* Pequeño espacio antes del texto */
+}
+
+.resultado-texto { /* Fragmento de texto con la coincidencia */
+  flex: 1 1 12rem; /* Crece y puede envolver con mínimo ~12rem */
+  min-width: 0; /* Permite truncar/envolver en flex */
+  color: #ffffff; /* Color del texto */
+  line-height: 1.5; /* Interlineado cómodo */
+  font-size: 0.95rem; /* Tamaño de letra */
+  overflow-wrap: break-word; /* Parte palabras largas si hace falta */
+  word-break: break-word; /* Compatibilidad para cortes de palabra */
+}
+
+.resultado-item-enlace:hover .resultado-texto { /* Texto al hover del enlace */
+  color: #ffbf00; /* Color de resaltado */
+}
+
+.resultado-coincidencias mark { /* Término buscado resaltado dentro del texto */
+  background: transparent; /* Color de fondo */
+  color: #ffbf00; /* Color de resaltado */
+  font-weight: bold; /* Negrita en la coincidencia */
+  padding: 0; /* Sin relleno extra */
+}
+
+@media (max-width: 768px) { /* Ajustes para móvil y tablet estrecha */
+  .contenedor-hoja { /* Marco en pantallas pequeñas */
+    margin: 1rem 0.5rem 1.5rem; /* Márgenes laterales reducidos */
+    border-radius: 14px; /* Esquinas algo menos redondeadas */
+  }
+
+  main { /* Main con menos padding */
+    padding: 1rem 1.1rem 1.25rem; /* Espaciado compacto */
+  }
+
+  main h3 { /* Título más pequeño */
+    font-size: 1.25rem; /* Tamaño de letra */
+  }
+
+  #resumen-busqueda { /* Resumen compacto */
+    font-size: 0.9rem; /* Tamaño de letra */
+    margin-bottom: 1rem; /* Menos espacio inferior */
+  }
+
+  .resultado-ruta,
+  .resultado-ubicacion { /* Metadatos más pequeños */
+    font-size: 0.74rem; /* Tamaño de letra */
+  }
+
+  .resultado-titulo { /* Título de resultado en móvil */
+    font-size: 1.05rem; /* Tamaño de letra */
+  }
+
+  .resultado-texto { /* Fragmento en móvil */
+    font-size: 0.9rem; /* Tamaño de letra */
+  }
+}

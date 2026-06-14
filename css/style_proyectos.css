@@ -1,0 +1,1456 @@
+/* ==========================================================================
+   PROYECTOS — listado + páginas detalladas de proyecto
+   JS asociado: js/indice_lateral.js, js/lupa.js, js/galerias-imagenes.js, …
+
+   ÍNDICE DE SECCIONES
+   1. Tipografía y layout base (PC)
+   2. Tipografía — MÓVIL
+   3. Contenedor principal (.contenedor-hoja)
+   4. Índice lateral flotante (PC + móvil colapsable)
+   5. Bloque de introducción
+   6. Listas y materiales
+   7. Código (Prism)
+   8. Descargas
+   9. Imágenes y zoom
+  10. Visor 3D y cubo de vistas
+  11. Galerías de imágenes
+  12. Vídeos YouTube
+  13. Notas importantes
+  14. Galerías CNC y modelos 3D
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tipografía y layout base — PC
+   -------------------------------------------------------------------------- */
+
+body { /* Estilos base del documento en páginas de proyecto */
+  margin: 0; /* Sin margen exterior por defecto del navegador */
+  padding: 0; /* Sin relleno exterior */
+  font-family: Arial, sans-serif; /* Tipografía principal */
+  background-color: #272822; /* Color de fondo */
+}
+
+html { /* Elemento raíz del documento */
+  scroll-behavior: smooth; /* Desplazamiento suave al anclar secciones */
+}
+
+main { /* Contenedor principal del contenido */
+  text-align: center; /* Centra bloques inline del main */
+}
+
+h2 { /* Título principal de la página */
+  font-size: 3.0rem; /* Tamaño de letra */
+  font-weight: bold; /* Negrita */
+  font-family: 'Arial', sans-serif; /* Fuente del encabezado */
+  line-height: 42px; /* Altura de línea fija */
+  color: #ffffff; /* Color del texto */
+  text-transform: capitalize; /* Primera letra de palabras en mayúscula */
+  text-align: center; /* Centrado horizontal */
+}
+
+main h3 { /* Subtítulos de sección dentro del main */
+  color: #ffffff; /* Color del texto */
+  font-size: 2.6rem; /* Tamaño de letra */
+  font-weight: 600; /* Semi-negrita */
+  margin: 2rem auto 1rem; /* Separación vertical y centrado */
+  font-family: Arial, sans-serif; /* Misma familia que el cuerpo */
+  display: inline-block; /* Permite subrayado acorde al texto */
+  text-decoration: underline; /* Subrayado decorativo */
+  text-decoration-color: #008080; /* Color del subrayado */
+  text-decoration-thickness: 2px; /* Grosor del subrayado */
+  text-underline-offset: 0.22em; /* Separación entre texto y línea */
+  text-decoration-skip-ink: none; /* Subrayado continuo bajo descendentes */
+}
+
+main h4 { /* Subtítulos de nivel cuatro en el main */
+  color: #ffffff; /* Color del texto */
+  font-size: 1.6rem; /* Tamaño de letra */
+  font-weight: 600; /* Semi-negrita */
+  font-family: Arial, sans-serif; /* Fuente consistente */
+  display: block; /* Ocupa su propia línea */
+  width: max-content; /* Ancho según el texto */
+  max-width: 100%; /* No desborda en pantallas estrechas */
+  margin: 2rem 0 1rem 2.5rem; /* Sangría izquierda y márgenes verticales */
+  text-align: left; /* Alineación a la izquierda */
+  text-decoration: underline; /* Subrayado decorativo */
+  text-decoration-color: #008080; /* Color del subrayado */
+  text-decoration-thickness: 2px; /* Grosor del subrayado */
+  text-underline-offset: 0.22em; /* Separación texto-línea */
+  text-decoration-skip-ink: none; /* Línea continua bajo el texto */
+}
+
+main p { /* Párrafos del contenido principal */
+  font-size: 1.1rem; /* Tamaño de letra */
+  color: #ffffff; /* Color del texto */
+  margin: 2rem auto 1rem; /* Márgenes verticales y centrado */
+  text-align: justify; /* Texto justificado */
+  line-height: 1.6; /* Interlineado cómodo */
+  margin-top: 1rem; /* Refuerzo del margen superior */
+  max-width: 800px; /* Limita longitud de línea */
+}
+
+/* --------------------------------------------------------------------------
+   2. Tipografía — MÓVIL (≤ 768 px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) { /* Ajustes tipográficos en pantallas pequeñas */
+  h2 { /* Título principal en móvil */
+    font-size: 1.2rem; /* Tamaño de letra */
+    line-height: 1.2; /* Interlineado compacto */
+  }
+
+  main { /* Contenedor principal en móvil */
+    padding-top: 1rem; /* Espacio superior interno */
+    padding-bottom: 1.25rem; /* Espacio inferior interno */
+  }
+
+  main h3 { /* Subtítulos h3 en móvil */
+    font-size: 1.22rem; /* Tamaño de letra */
+    margin: 1rem auto 0.45rem; /* Márgenes ajustados */
+  }
+
+  main h3:first-child { /* Primer h3 del main en móvil */
+    margin-top: 0.35rem; /* Menos espacio arriba del primero */
+  }
+
+  main h4 { /* Subtítulos h4 en móvil */
+    font-size: 1.08rem; /* Tamaño de letra */
+    margin: 0.85rem auto 0.4rem; /* Márgenes compactos */
+    max-width: 800px; /* Misma anchura máxima que párrafos */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    display: block; /* Bloque a ancho completo */
+  }
+
+  main p { /* Párrafos en móvil */
+    font-size: 0.95rem; /* Tamaño de letra */
+    line-height: 1.55; /* Interlineado ajustado */
+    margin: 0.5rem auto; /* Márgenes verticales reducidos */
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Contenedor principal
+   -------------------------------------------------------------------------- */
+.contenedor-hoja { /* Hoja central del contenido del proyecto */
+  max-width: 950px; /* Ancho máximo del bloque */
+  margin-left: auto; /* Centrado horizontal (izquierda) */
+  margin-right: auto; /* Centrado horizontal (derecha) */
+  background-color: #272822; /* Color de fondo */
+  border-radius: 20px; /* Esquinas redondeadas */
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Sombra de profundidad */
+}
+
+/* --------------------------------------------------------------------------
+   4. Índice lateral flotante
+      PC: panel a la izquierda del contenido
+      Móvil: colapsable con botón fijo (ver js/indice_lateral.js)
+   -------------------------------------------------------------------------- */
+:root { /* Variables CSS del layout del índice lateral */
+  --contenido-ancho: 950px; /* Ancho del contenedor principal */
+  --indice-ancho: 200px; /* Ancho base del panel índice */
+  --indice-ancho-max: 350px; /* Ancho máximo permitido del índice */
+  --indice-pos-izq: 16px; /* Separación desde el borde izquierdo */
+  --indice-separacion: 12px; /* Hueco entre índice y contenido */
+  --indice-top: 100px; /* Distancia desde la parte superior */
+}
+
+/* Panel del índice */
+.indice-lateral { /* Panel flotante de navegación por secciones */
+  position: fixed; /* Fijo respecto al viewport */
+  top: var(--indice-top); /* Posición vertical desde variables */
+  left: var(--indice-pos-izq); /* Posición horizontal desde variables */
+  width: var(--indice-ancho); /* Ancho del panel */
+  max-width: var(--indice-ancho); /* Límite de ancho */
+  max-height: calc(100vh - var(--indice-top) - 20px); /* Altura máxima visible */
+  overflow: hidden; /* Recorta contenido que desborda */
+  box-sizing: border-box; /* Incluye padding y borde en el tamaño */
+
+  padding: 1rem; /* Relleno interno */
+  font-size: 0.8rem; /* Tamaño de letra */
+  background-color: #272822; /* Color de fondo */
+  border: 2px solid #008080; /* Borde */
+  border-radius: 14px; /* Esquinas redondeadas */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra del panel */
+  z-index: 100; /* Por encima del contenido */
+  opacity: 0; /* Oculto hasta que JS marque listo */
+  visibility: hidden; /* No visible ni interactivo al cargar */
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease; /* Transición de aparición */
+}
+
+/* Estado: visible tras calcular dimensiones (JS añade .indice-listo) */
+body.indice-listo .indice-lateral { /* Índice listo para mostrarse */
+  opacity: 1; /* Totalmente visible */
+  visibility: visible; /* Participa en el layout */
+}
+
+
+/* Estado: colapsado — panel oculto, botón toggle visible */
+body.indice-colapsado .indice-lateral { /* Panel colapsado en móvil o por usuario */
+  width: 0; /* Sin ancho visible */
+  padding: 0; /* Sin relleno interno */
+  border-color: transparent; /* Borde invisible */
+  background: transparent; /* Fondo transparente */
+  box-shadow: none; /* Sin sombra */
+  overflow: visible; /* Permite ver el botón toggle */
+  pointer-events: none; /* El panel no recibe clics */
+  opacity: 1; /* Mantiene opacidad para el botón */
+  visibility: visible; /* Sigue en el flujo para el toggle */
+}
+
+body.indice-colapsado .indice-lateral ul { /* Lista oculta al colapsar */
+  display: none; /* No muestra enlaces del índice */
+}
+
+/* Botón colapsar / expandir */
+.indice-toggle { /* Botón para abrir o cerrar el índice */
+  position: absolute; /* Posicionado dentro del panel */
+  top: 8px; /* Separación desde arriba */
+  right: 8px; /* Esquina superior derecha */
+  z-index: 6; /* Por encima del contenido del índice */
+  width: 32px; /* Ancho del botón */
+  height: 32px; /* Alto del botón */
+  padding: 0; /* Sin relleno extra */
+  display: flex; /* Centra el icono con flexbox */
+  align-items: center; /* Centrado vertical del icono */
+  justify-content: center; /* Centrado horizontal del icono */
+  transform: none; /* Sin transformación por defecto */
+  background-color: #272822; /* Color de fondo */
+  color: #ffbf00; /* Color del texto */
+  border: 2px solid #008080; /* Borde */
+  border-radius: 10px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); /* Sombra del botón */
+  cursor: pointer; /* Indica que es clicable */
+  font-size: 1.25rem; /* Tamaño de letra */
+  line-height: 1; /* Altura de línea compacta */
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; /* Transición al hover */
+}
+
+.indice-toggle span { /* Contenedor del icono del toggle */
+  display: block; /* Bloque para ajustar posición */
+  transform: translateY(-1px); /* Alineación óptica vertical */
+}
+
+.indice-toggle:hover { /* Estado hover del botón toggle */
+  background-color: #008080; /* Color de fondo */
+  color: #ffffff; /* Color del texto */
+  box-shadow: 0 4px 16px rgba(0, 128, 128, 0.45); /* Sombra resaltada */
+}
+
+/* Botón colapsado — fijo al borde izquierdo (móvil) */
+body.indice-colapsado .indice-toggle { /* Botón anclado al borde cuando el índice está cerrado */
+  position: fixed; /* Fijo en el viewport */
+  top: var(--indice-top); /* Misma altura que el panel */
+  left: 0; /* Pegado al borde izquierdo */
+  transform: none; /* Sin desplazamiento */
+  width: 28px; /* Más estrecho en modo colapsado */
+  height: 52px; /* Más alto para área táctil */
+  border-left: none; /* Sin borde en el lado del viewport */
+  border-radius: 0 12px 12px 0; /* Redondeo solo a la derecha */
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5); /* Sombra hacia la derecha */
+  pointer-events: auto; /* Recibe clics aunque el panel no */
+}
+
+.indice-lateral h4 { /* Título del panel de índice */
+  color: #ffffff; /* Color del texto */
+  margin-bottom: 1rem; /* Separación de la lista de enlaces */
+  text-align: center; /* Centrado del encabezado */
+}
+
+/* Lista de enlaces del índice */
+.indice-scroll-area { /* Zona desplazable de enlaces del índice */
+  max-height: calc(100vh - var(--indice-top) - 52px); /* Altura máxima con margen inferior */
+  overflow-y: auto; /* Scroll vertical si hay muchos enlaces */
+  overflow-x: visible; /* Permite efectos horizontales en hover */
+  padding-right: 2px; /* Pequeño hueco para el scroll */
+  scrollbar-width: none; /* Oculta barra en Firefox */
+  text-align: left; /* Enlaces alineados a la izquierda */
+}
+
+.indice-scroll-area::-webkit-scrollbar { /* Barra de scroll en WebKit */
+  display: none; /* Oculta la barra de desplazamiento */
+}
+
+/* Enlaces: títulos h3, subíndices h4 (») y sección activa */
+.indice-lateral ul { /* Lista de anclas del índice */
+  list-style: none; /* Sin viñetas */
+  padding: 0; /* Sin relleno por defecto */
+  margin: 0; /* Sin margen por defecto */
+  text-align: left; /* Alineación de ítems */
+}
+
+.indice-lateral li { /* Cada entrada del índice */
+  margin: 0.6rem 0; /* Separación vertical entre enlaces */
+  display: flex; /* Flex para alinear marca y texto */
+  justify-content: flex-start; /* Contenido al inicio */
+  align-items: flex-start; /* Alineación superior */
+}
+
+.indice-lateral a { /* Enlaces de navegación del índice */
+  color: #ffffff; /* Color del texto */
+  text-decoration: none; /* Sin subrayado */
+  font-weight: bold; /* Texto en negrita */
+  display: inline-block; /* Permite transformaciones en hover */
+  width: fit-content; /* Ancho según contenido */
+  max-width: 100%; /* No desborda el panel */
+  transition: color 0.2s ease, transform 0.2s ease; /* Animación al hover y activo */
+}
+
+.indice-lateral a .indice-texto { /* Texto visible del enlace del índice */
+  display: inline-table; /* Permite partir líneas con control */
+  max-width: 100%; /* Respeta el ancho del panel */
+  text-align: left; /* Alineación del texto */
+  white-space: normal; /* Permite saltos de línea */
+  line-height: 1.35; /* Interlineado compacto */
+  overflow-wrap: break-word; /* Parte palabras largas si hace falta */
+}
+
+.indice-lateral a[data-subindice] .indice-texto { /* Texto de subíndices (h4) */
+  display: inline-flex; /* Flex para marca y texto en línea */
+  align-items: center; /* Centrado vertical de marca y texto */
+  gap: 0.35em; /* Espacio entre marca » y texto */
+  white-space: normal; /* Saltos de línea permitidos */
+  text-align: left; /* Alineación a la izquierda */
+}
+
+.indice-lateral a .indice-marca { /* Símbolo » u otra marca del subíndice */
+  display: inline-flex; /* Flex para centrar el glifo */
+  align-items: center; /* Centrado vertical */
+  line-height: 1; /* Altura de línea del símbolo */
+  flex-shrink: 0; /* La marca no se comprime */
+}
+
+.indice-lateral a:hover { /* Enlace del índice al pasar el ratón */
+  color: #FFBF00; /* Color de resaltado */
+  transform: translateX(4px); /* Desplazamiento sutil a la derecha */
+}
+
+.indice-lateral a.seccion-activa { /* Enlace de la sección visible en scroll */
+  color: #FFBF00 !important; /* Color de resaltado */
+  transform: translateX(10px); /* Mayor desplazamiento que en hover */
+  font-weight: bold; /* Refuerzo de negrita */
+}
+
+/* --------------------------------------------------------------------------
+   5. Bloque de introducción (texto + imagen lateral)
+   -------------------------------------------------------------------------- */
+.imagen-lateral-intro { /* Contenedor de la imagen lateral del bloque intro */
+  width: 400px; /* Ancho fijo de la columna de imagen */
+  flex-shrink: 0; /* Evita que la imagen se encoja en el flex */
+  margin-top: 1rem; /* Separación superior respecto al texto */
+}
+
+.imagen-lateral-intro img { /* Imagen dentro del contenedor lateral */
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  border-radius: 12px; /* Esquinas redondeadas */
+  border: 1px solid #444; /* Borde */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4); /* Sombra para dar profundidad */
+  margin-top: 0.25rem; /* Pequeño margen superior */
+  display: block; /* Elimina espacio inferior de elemento inline */
+  transition: transform 0.3s ease, border-color 0.3s ease, filter 0.3s ease; /* Transición suave al pasar el ratón */
+}
+
+.imagen-lateral-intro img:hover { /* Estado hover de la imagen lateral */
+  transform: scale(1.01); /* Ligero zoom al pasar el ratón */
+  border-color: #008080; /* Color del borde */
+  filter: brightness(1.2); /* Aumenta el brillo al resaltar */
+  cursor: pointer; /* Indica que es interactiva */
+}
+
+.bloque-introduccion { /* Fila flex: texto intro + imagen lateral */
+  display: flex; /* Disposición horizontal texto/imagen */
+  align-items: flex-start; /* Alinea arriba texto e imagen */
+  gap: 40px; /* Espacio entre columna de texto e imagen */
+  max-width: 800px; /* Ancho máximo del bloque */
+  margin: 2rem auto; /* Centrado vertical con margen */
+  padding: 0; /* Sin relleno interno */
+  text-align: justify; /* Texto justificado en el bloque */
+}
+
+/* Bloque intro — MÓVIL (≤ 850 px) */
+@media (max-width: 850px) { /* Ajustes del bloque intro en pantallas estrechas */
+  .bloque-introduccion { /* Bloque intro en móvil */
+    flex-direction: column; /* Apila imagen debajo del texto */
+    align-items: center; /* Centra los elementos apilados */
+  }
+  .texto-intro p { /* Párrafos del texto intro en móvil */
+    text-align: justify; /* Mantiene texto justificado */
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Listas en párrafos y lista de materiales
+   -------------------------------------------------------------------------- */
+.lista-subparrafos { /* Contenedor de subpárrafos bajo un encabezado */
+  max-width: 800px; /* Mismo ancho que el cuerpo del artículo */
+  margin: 0.5rem auto 1rem; /* Márgenes vertical y centrado horizontal */
+  padding-left: 3rem; /* Sangría izquierda respecto al título */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
+  width: 100%; /* Ocupa el ancho disponible hasta max-width */
+}
+
+.lista-subparrafos p { /* Cada párrafo de la lista de subpárrafos */
+  margin: 0 0 0.55rem; /* Separación entre párrafos */
+  text-align: justify; /* Texto justificado */
+  overflow-wrap: break-word; /* Parte palabras largas si hace falta */
+}
+
+.lista-subparrafos p:last-child { /* Último párrafo de la lista */
+  margin-bottom: 0; /* Sin margen inferior extra */
+}
+
+/* --------------------------------------------------------------------------
+   6 (cont.). Lista de materiales
+   -------------------------------------------------------------------------- */
+/* Lista de materiales */
+.lista-materiales { /* Bloque de lista de materiales del proyecto */
+  max-width: 800px; /* Ancho máximo alineado con el contenido */
+  margin: 1rem auto 2rem; /* Márgenes superior, centrado e inferior */
+  padding-left: 3rem; /* Sangría bajo el encabezado de materiales */
+  box-sizing: border-box; /* Padding incluido en el ancho */
+  width: 100%; /* Ancho fluido hasta max-width */
+  text-align: left; /* Alineación izquierda de la lista */
+}
+
+.lista-materiales ul { /* Lista ul de materiales */
+  list-style: none; /* Quita viñetas por defecto del navegador */
+  padding-left: 0; /* Sin sangría extra del ul */
+}
+
+.lista-materiales li { /* Cada ítem de material */
+  color: #ffffff; /* Color del texto */
+  font-size: 1.1rem; /* Tamaño de letra */
+  line-height: 1.4; /* Interlineado legible */
+  position: relative; /* Referencia para el pseudo-elemento » */
+  padding-left: 25px; /* Espacio para el marcador personalizado */
+  margin-bottom: 10px; /* Separación entre ítems */
+  overflow-wrap: break-word; /* Evita desbordes con textos largos */
+}
+
+.lista-materiales li::before { /* Marcador » antes de cada material */
+  content: "»"; /* Carácter de viñeta personalizado */
+  color: #008080; /* Color del texto */
+  font-weight: bold; /* Marcador en negrita */
+  font-size: 1.4rem; /* Tamaño de letra */
+  position: absolute; /* Posicionado respecto al li */
+  left: 0; /* Alineado al borde izquierdo del li */
+  top: -5px; /* Ajuste vertical fino del marcador */
+}
+
+@media (max-width: 768px) { /* Listas y materiales en móvil */
+  .lista-subparrafos { /* Contenedor subpárrafos en móvil */
+    margin: 0.35rem auto 0.65rem; /* Márgenes más compactos */
+    padding-left: 1.2rem; /* Menos sangría en pantalla pequeña */
+  }
+
+  .lista-subparrafos p { /* Párrafos en móvil */
+    margin-bottom: 0.45rem; /* Menor separación entre párrafos */
+    font-size: 0.95rem; /* Tamaño de letra */
+    line-height: 1.55; /* Mayor interlineado para lectura móvil */
+  }
+
+  .lista-materiales { /* Bloque materiales en móvil */
+    margin: 0.75rem auto 1.25rem; /* Márgenes reducidos */
+    padding-left: 1.15rem; /* Sangría adaptada a móvil */
+  }
+
+  .lista-materiales li { /* Ítems de material en móvil */
+    font-size: 0.95rem; /* Tamaño de letra */
+    line-height: 1.55; /* Interlineado cómodo en móvil */
+    margin-bottom: 8px; /* Menor separación entre ítems */
+  }
+
+  .lista-materiales li::before { /* Marcador » en móvil */
+    font-size: 0.95rem; /* Tamaño de letra */
+    top: 0; /* Sin desplazamiento vertical extra */
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Bloques de código (Prism)
+   -------------------------------------------------------------------------- */
+/* Bloques de código con resaltado de sintaxis */
+.contenedor-codigo { /* Envoltorio del bloque de código Prism */
+  background-color: transparent; /* Fondo transparente del contenedor */
+  border-radius: 8px; /* Esquinas redondeadas del bloque */
+  margin: 2rem auto; /* Separación vertical y centrado */
+  max-width: 95%; /* Casi todo el ancho de la hoja */
+  border: 1px solid #3e3d32; /* Borde */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra pronunciada */
+  text-align: left; /* Código alineado a la izquierda */
+  max-height: 600px; /* Altura máxima antes de scroll */
+  overflow-y: auto; /* Scroll vertical si el código es largo */
+  display: flex; /* Layout flex columna */
+  flex-direction: column; /* Cabecera arriba, pre abajo */
+}
+
+.vsc-header { /* Barra superior estilo VS Code del bloque */
+  position: sticky; /* Permanece visible al hacer scroll */
+  top: 0; /* Pegada al borde superior del contenedor */
+  z-index: 10; /* Por encima del contenido del pre */
+  background-color: transparent; /* Sin fondo opaco propio */
+  display: flex; /* Alinea elementos de la cabecera */
+  align-items: center; /* Centrado vertical en la barra */
+  gap: 10px; /* Espacio entre controles de la cabecera */
+}
+
+.contenedor-codigo pre[class*="language-"] { /* Elemento pre con clase language-* */
+  background-color: #272822 !important; /* Color de fondo */
+  color: #f8f8f2 !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.vsc-control { /* Tokens de control personalizados VSC */
+  color: #33ff00 !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.vsc-rosa-custom { /* Token rosa personalizado */
+  color: #f13574 !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.vsc-pistacho { /* Token pistacho personalizado */
+  color: #A6E22E !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.keyword { /* Palabras clave del lenguaje */
+  color: #66d8ef !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.vsc-type, /* Tipos personalizados VSC */
+.contenedor-codigo .token.class-name, /* Nombres de clase */
+.contenedor-codigo .token.type, /* Tipos genéricos */
+.contenedor-codigo .token.builtin { /* Tipos built-in */
+  color: #66d9ef !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.function { /* Nombres de funciones */
+  color: #ff9900 !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.number { /* Literales numéricos */
+  color: #fbff00 !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.boolean { /* Valores booleanos */
+  color: #ae81ff !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.comment { /* Comentarios en el código */
+  color: #75715e !important; /* Color de resaltado */
+  font-style: italic !important; /* Comentarios en cursiva */
+}
+
+.contenedor-codigo .token.string { /* Cadenas de texto */
+  color: #66d8ef !important; /* Color de resaltado */
+}
+
+.contenedor-codigo .token.directive, /* Directivas del preprocesador */
+.contenedor-codigo .token.directive-hash { color: #33ff00 !important; } /* Color de resaltado */
+.contenedor-codigo .token.operator { color: #ac7fff !important; } /* Color de resaltado */
+.contenedor-codigo .token.punctuation { color: #f8f8f2 !important; } /* Color de resaltado */
+
+.token.class-name { /* Nombres de clase fuera del contenedor (enlaces) */
+  color: #A6E22E !important; /* Color de resaltado */
+  -webkit-text-fill-color: #A6E22E !important; /* Color del texto */
+  text-decoration: none !important; /* Sin subrayado por defecto */
+  border-bottom: 1px solid #A6E22E; /* Color del subrayado */
+  padding-bottom: 1px; /* Espacio bajo el subrayado */
+}
+
+/* --------------------------------------------------------------------------
+   8. Bloque de descargas
+   -------------------------------------------------------------------------- */
+/* Bloque de descargas */
+.descargas-archivos { /* Rejilla de tarjetas de archivos descargables */
+  width: 90%; /* Ancho fluido del bloque */
+  max-width: 800px; /* Máximo alineado con el contenido */
+  margin: 2.5rem auto 3rem; /* Márgenes vertical y centrado */
+  display: grid; /* Disposición en cuadrícula */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Columnas adaptativas */
+  gap: 1.2rem; /* Espacio entre tarjetas */
+}
+
+.tarjeta-descarga { /* Cada enlace/tarjeta de descarga */
+  display: flex; /* Contenido en columna flex */
+  flex-direction: column; /* Icono arriba, texto abajo */
+  align-items: center; /* Centrado horizontal del contenido */
+  justify-content: center; /* Centrado vertical interno */
+  gap: 0.75rem; /* Espacio entre icono y texto */
+  padding: 1rem; /* Relleno interno de la tarjeta */
+  text-align: center; /* Texto centrado */
+  color: #ffffff; /* Color del texto */
+  text-decoration: none; /* Sin subrayado de enlace */
+  background-color: rgba(39, 40, 34, 0.92); /* Color de fondo */
+  border: 1px solid #444; /* Borde */
+  border-radius: 14px; /* Esquinas muy redondeadas */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra de elevación */
+  transition: transform 0.3s ease, border-color 0.3s ease; /* Animación al hover */
+}
+
+.tarjeta-descarga:hover { /* Tarjeta al pasar el ratón */
+  transform: scale(1.01); /* Ligero zoom */
+  border-color: #008080; /* Color del borde */
+}
+
+.descarga-icono { /* Contenedor del icono de tipo de archivo */
+  width: 46px; /* Ancho fijo del icono */
+  height: 46px; /* Alto fijo del icono */
+  flex: 0 0 46px; /* No crece ni encoge en flex */
+  display: flex; /* Centra la imagen o texto del icono */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  color: #ffbf00; /* Color del texto */
+  font-size: 0.85rem; /* Tamaño de letra */
+  font-weight: bold; /* Texto fallback en negrita */
+  border: 2px solid #008080; /* Borde */
+  border-radius: 12px; /* Esquinas redondeadas del marco */
+  background: radial-gradient(circle at top left, rgba(0,128,128,0.45), rgba(39,40,34,0.95)); /* Color de fondo */
+  letter-spacing: 0.5px; /* Espaciado entre letras del fallback */
+}
+
+.descarga-icono img { /* Imagen dentro del icono de descarga */
+  width: 72%; /* Ocupa la mayor parte del marco */
+  height: 72%; /* Proporción cuadrada dentro del marco */
+  object-fit: contain; /* Escala sin recortar */
+  display: block; /* Elimina hueco inferior inline */
+}
+
+.tarjeta-descarga:hover .descarga-icono { /* Icono cuando la tarjeta está en hover */
+  border-color: #ffbf00; /* Color del borde */
+}
+
+.descarga-contenido { /* Bloque de título y detalle de la descarga */
+  display: flex; /* Columna de textos */
+  flex-direction: column; /* Título arriba, detalle abajo */
+  align-items: center; /* Centrado horizontal */
+  gap: 0.35rem; /* Espacio entre título y subtítulo */
+  width: 100%; /* Ocupa el ancho de la tarjeta */
+  text-align: center; /* Textos centrados */
+}
+
+.descarga-contenido strong { /* Nombre del archivo descargable */
+  color: #ffffff; /* Color del texto */
+  font-size: 1rem; /* Tamaño de letra */
+}
+
+.descarga-contenido small { /* Detalle secundario (tamaño, formato, etc.) */
+  color: #888; /* Color del texto */
+  line-height: 1.35; /* Interlineado del detalle */
+}
+
+/* --------------------------------------------------------------------------
+   9. Zoom de imágenes (esquemáticos, PCB, etc.)
+   -------------------------------------------------------------------------- */
+/* Zoom de imágenes (esquemáticos, PCB, etc.) */
+.imagen-zoom-contenedor { /* Contenedor de imagen con lupa de zoom */
+  position: relative; /* Referencia para la lupa absoluta */
+  width: 90%; /* Ancho fluido del contenedor */
+  max-width: 900px; /* Límite de ancho en escritorio */
+  margin: 1.5rem auto; /* Separación vertical y centrado */
+  display: block; /* Bloque a ancho completo */
+  overflow: hidden; /* Recorta el zoom que desborda */
+  border: 1px solid #333; /* Borde */
+}
+
+.img-zoom { /* Imagen base dentro del contenedor de zoom */
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  display: block; /* Elimina hueco inferior inline */
+}
+
+.lupa-cuadrada { /* Ventana cuadrada de ampliación (escritorio) */
+  position: absolute; /* Flota sobre la imagen */
+  border: 2px solid #008080; /* Borde */
+  width: 300px; /* Ancho de la ventana de zoom */
+  height: 300px; /* Alto de la ventana de zoom */
+  display: none; /* Oculta hasta que JS la active */
+  pointer-events: none; /* No intercepta clics del ratón */
+  background-repeat: no-repeat; /* Fragmento ampliado sin repetición */
+  background-color: #272822; /* Color de fondo */
+  box-shadow: 0 0 20px rgba(0,0,0,0.8); /* Sombra pronunciada de la lupa */
+  border-radius: 4px; /* Esquinas ligeramente redondeadas */
+}
+
+.visor-esquema-movil { /* Overlay a pantalla completa en móvil */
+  display: none; /* Oculto por defecto */
+  position: fixed; /* Cubre todo el viewport */
+  inset: 0; /* Ocupa los cuatro bordes */
+  z-index: 10000; /* Por encima de todo el contenido */
+  background: rgba(0, 0, 0, 0.9); /* Color de fondo */
+  padding: 1rem; /* Margen interno del overlay */
+  box-sizing: border-box; /* Incluye padding en el tamaño */
+  align-items: center; /* Centrado vertical al activarse */
+  justify-content: center; /* Centrado horizontal al activarse */
+}
+
+.visor-esquema-movil.activo { /* Visor móvil visible */
+  display: flex; /* Activa el centrado flex del overlay */
+}
+
+body.visor-esquema-abierto { /* Body cuando el visor móvil está abierto */
+  overflow: hidden; /* Impide scroll del fondo */
+}
+
+.visor-esquema-imagen { /* Imagen ampliada dentro del visor móvil */
+  max-width: 100%; /* No desborda horizontalmente */
+  max-height: 100%; /* No desborda verticalmente */
+  width: auto; /* Ancho según proporción */
+  height: auto; /* Alto según proporción */
+  object-fit: contain; /* Escala sin recortar */
+  border: 2px solid #008080; /* Borde */
+  border-radius: 10px; /* Esquinas redondeadas */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65); /* Sombra de elevación */
+}
+
+
+.imagen-zoom-tocable { /* Contenedor clicable para abrir zoom en móvil */
+  cursor: pointer; /* Indica que es interactivo */
+}
+
+.imagen-zoom-tocable img { /* Imagen dentro del contenedor tocable */
+  pointer-events: none; /* El clic lo recibe el contenedor padre */
+}
+
+.imagen-zoom-tocable:hover img { /* Imagen al pasar el ratón en escritorio */
+  transform: scale(1.02); /* Ligero zoom de resaltado */
+  border-color: #008080; /* Color del borde */
+}
+
+.visor-esquema-cerrar { /* Botón de cerrar del visor móvil */
+  position: absolute; /* Posicionado en la esquina del overlay */
+  top: 0.75rem; /* Separación desde arriba */
+  right: 0.75rem; /* Separación desde la derecha */
+  width: 2.4rem; /* Ancho del botón circular */
+  height: 2.4rem; /* Alto del botón circular */
+  border: 2px solid #008080; /* Borde */
+  border-radius: 50%; /* Forma circular */
+  background: #272822; /* Color de fondo */
+  color: #ffbf00; /* Color del texto */
+  font-size: 1.5rem; /* Tamaño de letra */
+  line-height: 1; /* Altura de línea compacta */
+  cursor: pointer; /* Indica que es clicable */
+  display: flex; /* Centra el icono con flexbox */
+  align-items: center; /* Centrado vertical del icono */
+  justify-content: center; /* Centrado horizontal del icono */
+  padding: 0; /* Sin relleno interno extra */
+}
+
+/* --------------------------------------------------------------------------
+  10. Visor 3D y cubo de vistas
+   -------------------------------------------------------------------------- */
+/* Visor 3D */
+.contenedor-3d { /* Contenedor del visor model-viewer */
+  width: 90%; /* Ancho fluido */
+  max-width: 900px; /* Límite de ancho en escritorio */
+  margin: 1.5rem auto; /* Separación vertical y centrado */
+  text-align: center; /* Centra elementos inline internos */
+}
+
+.visor-3d-wrapper { /* Envoltorio relativo del visor y cubo de vistas */
+  position: relative; /* Referencia para el cubo absoluto */
+}
+
+model-viewer { /* Componente web del modelo 3D */
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: 500px; /* Altura fija del canvas 3D en escritorio */
+  background-color: #1a1a1a; /* Color de fondo */
+  border-radius: 12px; /* Esquinas redondeadas */
+  border: 2px solid #008080; /* Borde */
+  outline: none; /* Sin contorno al enfocar */
+}
+
+/* Cubo de vistas (estilo Inventor) */
+.cubo-vistas { /* Panel del cubo de orientación 3D */
+  --cubo-tamano: 50px; /* Variable: lado del cubo en píxeles */
+  --cubo-profundidad: calc(var(--cubo-tamano) / 2); /* Mitad del lado para translateZ */
+
+  position: absolute; /* Flota sobre el visor 3D */
+  top: 26px; /* Separación desde arriba */
+  right: 26px; /* Separación desde la derecha */
+  z-index: 10; /* Por encima del model-viewer */
+  display: flex; /* Columna: cubo + botón inicio */
+  flex-direction: column; /* Apila cubo y botón verticalmente */
+  align-items: center; /* Centrado horizontal del conjunto */
+  gap: 4px; /* Espacio entre cubo y botón inicio */
+  pointer-events: none; /* El contenedor no captura clics */
+}
+
+.cubo-vistas-escena { /* Escena con perspectiva 3D del cubo */
+  width: var(--cubo-tamano); /* Ancho según variable CSS */
+  height: var(--cubo-tamano); /* Alto según variable CSS */
+  perspective: 200px; /* Profundidad de la proyección 3D */
+  pointer-events: auto; /* Las caras del cubo sí reciben clics */
+}
+
+.cubo-vistas-cubo { /* Cubo 3D con transformaciones por cara */
+  width: 100%; /* Ocupa toda la escena */
+  height: 100%; /* Ocupa toda la escena */
+  position: relative; /* Referencia para caras absolutas */
+  transform-style: preserve-3d; /* Mantiene el espacio 3D de las caras */
+}
+
+.cubo-cara { /* Cada cara clickeable del cubo de vistas */
+  position: absolute; /* Posicionada en el espacio 3D */
+  width: var(--cubo-tamano); /* Ancho de la cara */
+  height: var(--cubo-tamano); /* Alto de la cara */
+  margin: 0; /* Sin margen exterior */
+  padding: 2px; /* Relleno interno mínimo */
+  border: 1px solid #008080; /* Borde */
+  background-color: rgba(39, 40, 34, 0.92); /* Color de fondo */
+  color: #ffffff; /* Color del texto */
+  font-family: Arial, sans-serif; /* Fuente de la etiqueta */
+  font-size: 7px; /* Tamaño de letra */
+  font-weight: bold; /* Etiqueta en negrita */
+  line-height: 1.05; /* Interlineado compacto */
+  text-align: center; /* Texto centrado en la cara */
+  cursor: pointer; /* Indica vista clicable */
+  display: flex; /* Centra la etiqueta en la cara */
+  align-items: center; /* Centrado vertical del texto */
+  justify-content: center; /* Centrado horizontal del texto */
+  box-sizing: border-box; /* Incluye borde y padding en el tamaño */
+  backface-visibility: hidden; /* Oculta la cara trasera al rotar */
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; /* Transición al hover */
+}
+
+.cubo-cara:hover { /* Cara del cubo al pasar el ratón */
+  background-color: rgba(0, 128, 128, 0.35); /* Color de fondo */
+  border-color: #FFBF00; /* Color del borde */
+  color: #FFBF00; /* Color de resaltado */
+}
+
+.cubo-frontal   { transform: rotateY(0deg)   translateZ(var(--cubo-profundidad)); } /* Cara frontal del cubo */
+.cubo-posterior { transform: rotateY(180deg) translateZ(var(--cubo-profundidad)); } /* Cara posterior del cubo */
+.cubo-derecha   { transform: rotateY(-90deg) translateZ(var(--cubo-profundidad)); } /* Cara derecha del cubo */
+.cubo-izquierda { transform: rotateY(90deg)  translateZ(var(--cubo-profundidad)); } /* Cara izquierda del cubo */
+.cubo-superior  { transform: rotateX(90deg)  translateZ(var(--cubo-profundidad)); } /* Cara superior del cubo */
+.cubo-inferior  { transform: rotateX(-90deg) translateZ(var(--cubo-profundidad)); } /* Cara inferior del cubo */
+
+.cubo-inicio { /* Botón para restaurar vista inicial del modelo */
+  pointer-events: auto; /* Recibe clics aunque el padre no */
+  width: 22px; /* Ancho del botón */
+  height: 22px; /* Alto del botón */
+  border: 1px solid #008080; /* Borde */
+  border-radius: 5px; /* Esquinas ligeramente redondeadas */
+  background-color: rgba(39, 40, 34, 0.92); /* Color de fondo */
+  color: #ffffff; /* Color del texto */
+  font-size: 11px; /* Tamaño de letra */
+  line-height: 1; /* Altura de línea compacta */
+  cursor: pointer; /* Indica que es clicable */
+  display: flex; /* Centra el icono */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; /* Transición al hover */
+}
+
+.cubo-inicio:hover { /* Botón inicio al pasar el ratón */
+  background-color: rgba(0, 128, 128, 0.35); /* Color de fondo */
+  border-color: #FFBF00; /* Color del borde */
+  color: #FFBF00; /* Color del texto */
+}
+
+.instrucciones-3d { /* Texto de ayuda bajo el visor 3D */
+  font-size: 0.9rem; /* Tamaño de letra */
+  color: #888; /* Color del texto */
+  text-align: center; /* Centrado bajo el visor */
+  margin-top: 0.5rem; /* Separación del visor */
+  font-style: italic; /* Estilo de nota o ayuda */
+}
+
+/* Visor 3D — MÓVIL (≤ 768 px) */
+@media (max-width: 768px) { /* Ajustes del visor 3D en pantallas pequeñas */
+  model-viewer { /* Visor 3D en móvil */
+    height: 350px; /* Altura reducida del canvas */
+  }
+
+  .cubo-vistas { /* Cubo de vistas en móvil */
+    --cubo-tamano: 42px; /* Cubo más pequeño en móvil */
+    top: 22px; /* Posición superior ajustada */
+    right: 22px; /* Posición derecha ajustada */
+  }
+}
+
+/* --------------------------------------------------------------------------
+  11. Galerías de imágenes
+   -------------------------------------------------------------------------- */
+/* Imágenes centradas (formato horizontal) */
+.contenedor-imagen-centrada { /* Bloque de una imagen horizontal centrada */
+  width: 90%; /* Ancho fluido */
+  max-width: 800px; /* Límite alineado con el contenido */
+  margin: 3rem auto; /* Separación vertical y centrado */
+  display: flex; /* Columna de imagen y pie de foto */
+  flex-direction: column; /* Apila imagen y leyenda */
+  align-items: center; /* Centrado horizontal */
+}
+
+/* Imágenes verticales: 2 por línea, 1 sola centrada con el mismo ancho */
+.contenedor-imagenes-verticales { /* Fila flexible de imágenes verticales */
+  width: 90%; /* Ancho fluido */
+  max-width: 800px; /* Límite de ancho del bloque */
+  margin: 3rem auto; /* Separación vertical y centrado */
+  display: flex; /* Disposición en fila con salto */
+  flex-wrap: wrap; /* Permite varias filas de imágenes */
+  justify-content: center; /* Centra las columnas en la fila */
+  gap: 2rem; /* Espacio entre imágenes verticales */
+}
+
+.contenedor-imagen-vertical { /* Cada columna de imagen vertical */
+  flex: 0 1 calc((100% - 2rem) / 2); /* Dos columnas con hueco de gap */
+  max-width: calc((100% - 2rem) / 2); /* Máximo de media fila menos gap */
+  display: flex; /* Columna imagen + pie */
+  flex-direction: column; /* Apila imagen y leyenda */
+  align-items: center; /* Centrado horizontal */
+}
+
+.img-centrada, /* Imagen horizontal centrada */
+.img-vertical { /* Imagen en formato vertical */
+  width: 100%; /* Ocupa el ancho del contenedor */
+  height: auto; /* Mantiene proporción */
+  border-radius: 15px; /* Esquinas muy redondeadas */
+  border: 1px solid #444; /* Borde */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6); /* Sombra de elevación */
+  display: block; /* Elimina hueco inferior inline */
+  transition: transform 0.3s ease, border-color 0.3s ease; /* Animación al hover */
+}
+
+.contenedor-imagen-centrada:hover .img-centrada, /* Hover en imagen centrada */
+.contenedor-imagen-vertical:hover .img-vertical, /* Hover en imagen vertical */
+.imagen-lateral-intro:hover img, /* Hover en imagen lateral del intro */
+.galeria-imagen:hover img, /* Hover en galería mixta */
+.galeria-herramienta:hover img, /* Hover en herramienta CNC */
+.galeria-componente-3d:hover img, /* Hover en componente 3D */
+.imagen-zoom-tocable:hover img, /* Hover en imagen con zoom */
+.img-centrada:hover, /* Hover directo en img centrada */
+.img-vertical:hover { /* Hover directo en img vertical */
+  transform: scale(1.02); /* Ligero aumento de escala */
+  border-color: #008080; /* Color del borde */
+}
+
+/* Galerías mixtas: imágenes verticales y horizontales alineadas */
+.galeria-3-imagenes, /* Galería con tres imágenes */
+.galeria-2-imagenes { /* Galería con dos imágenes */
+  --separacion-galeria: 1.5rem; /* Variable: hueco entre celdas */
+  --ancho-galeria-vertical: 300px; /* Variable: columna de imágenes verticales */
+  --ancho-galeria-horizontal: 460px; /* Variable: columna de imágenes horizontales */
+
+  width: 90%; /* Ancho fluido del bloque */
+  max-width: 800px; /* Límite de ancho */
+  margin: 3rem auto; /* Separación vertical y centrado */
+  display: grid; /* Cuadrícula de dos columnas */
+  grid-template-columns: minmax(0, var(--ancho-galeria-vertical)) minmax(0, var(--ancho-galeria-horizontal)); /* Columna vertical + horizontal */
+  gap: var(--separacion-galeria); /* Espacio entre celdas */
+  align-items: start; /* Alinea filas arriba */
+  justify-content: center; /* Centra la rejilla */
+}
+
+.galeria-columna { /* Columna vertical de la galería mixta */
+  display: flex; /* Apila imágenes en columna */
+  flex-direction: column; /* Una imagen debajo de otra */
+  gap: var(--separacion-galeria); /* Separación entre imágenes de la columna */
+}
+
+.galeria-imagen { /* Cada figura de la galería mixta */
+  margin: 0; /* Sin margen exterior del figure */
+  display: flex; /* Columna imagen + pie */
+  flex-direction: column; /* Apila contenido verticalmente */
+  align-items: center; /* Centrado horizontal */
+}
+
+.galeria-imagen img { /* Imagen dentro de la galería mixta */
+  width: 100%; /* Ocupa el ancho de la celda */
+  height: auto; /* Mantiene proporción */
+  box-sizing: border-box; /* Incluye borde en el tamaño */
+  border-radius: 15px; /* Esquinas redondeadas */
+  border: 1px solid #444; /* Borde */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6); /* Sombra de elevación */
+  display: block; /* Elimina hueco inferior inline */
+  transition: transform 0.3s ease, border-color 0.3s ease; /* Animación al hover */
+}
+
+.pie-foto-galeria { /* Leyenda que abarca toda la galería mixta */
+  grid-column: 1 / -1; /* Ocupa todas las columnas de la rejilla */
+  margin-top: 0; /* Sin margen superior extra */
+}
+
+@media (max-width: 768px) { /* Galerías e imágenes en pantallas pequeñas */
+  .bloque-introduccion, /* Bloque intro en móvil */
+  .contenedor-imagen-centrada, /* Imagen centrada en móvil */
+  .contenedor-imagenes-verticales, /* Fila de verticales en móvil */
+  .imagen-zoom-contenedor, /* Zoom de imagen en móvil */
+  .contenedor-3d, /* Visor 3D en móvil */
+  .galeria-3-imagenes, /* Galería triple en móvil */
+  .galeria-2-imagenes { /* Galería doble en móvil */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 800px; /* Mantiene límite máximo */
+    margin-left: auto; /* Centrado horizontal */
+    margin-right: auto; /* Centrado horizontal */
+    box-sizing: border-box; /* Incluye padding y borde */
+  }
+
+  .imagen-lateral-intro { /* Imagen lateral del intro en móvil */
+    width: 100%; /* Ancho completo al apilar */
+    max-width: 100%; /* Sin restricción extra */
+    flex-shrink: 1; /* Puede encogerse en flex */
+    margin-top: 0.25rem; /* Pequeña separación superior */
+  }
+
+  .bloque-introduccion { /* Bloque intro en móvil */
+    align-items: stretch; /* Hijos a ancho completo */
+    margin: 0.75rem auto; /* Márgenes más compactos */
+    gap: 0.65rem; /* Menor hueco entre texto e imagen */
+  }
+
+  .contenedor-imagen-centrada, /* Margen compacto imagen centrada */
+  .contenedor-imagenes-verticales, /* Margen compacto verticales */
+  .imagen-zoom-contenedor, /* Margen compacto zoom */
+  .contenedor-3d, /* Margen compacto visor 3D */
+  .galeria-3-imagenes, /* Margen compacto galería triple */
+  .galeria-2-imagenes, /* Margen compacto galería doble */
+  .video-youtube-vertical { /* Margen compacto vídeo vertical */
+    margin-top: 0.85rem; /* Separación superior compacta */
+    margin-bottom: 0.35rem; /* Separación inferior mínima */
+  }
+
+  .contenedor-imagen-centrada + .contenedor-imagen-centrada, /* Dos centradas seguidas */
+  .contenedor-imagen-centrada + .contenedor-imagenes-verticales, /* Centrada seguida de verticales */
+  .contenedor-imagenes-verticales + .contenedor-imagen-centrada { /* Verticales seguidas de centrada */
+    margin-top: 0.55rem; /* Menor hueco entre galerías seguidas */
+  }
+
+  .contenedor-imagenes-verticales { /* Fila de verticales en móvil */
+    gap: 0.85rem; /* Menor espacio entre columnas */
+  }
+
+  .imagen-zoom-contenedor { /* Contenedor zoom en móvil */
+    margin-top: 0.65rem; /* Ajuste superior específico */
+    margin-bottom: 0.5rem; /* Ajuste inferior específico */
+  }
+
+  .lupa-cuadrada { /* Lupa de escritorio desactivada en móvil */
+    display: none !important; /* Fuerza ocultación de la lupa */
+  }
+
+  .descargas-archivos { /* Bloque de descargas en móvil */
+    width: 100%; /* Ancho completo */
+    box-sizing: border-box; /* Tamaño con borde incluido */
+  }
+
+  main p + .contenedor-imagen-centrada, /* Imagen tras párrafo */
+  main p + .contenedor-imagenes-verticales, /* Verticales tras párrafo */
+  main p + .imagen-zoom-contenedor, /* Zoom tras párrafo */
+  main p + .galeria-3-imagenes, /* Galería triple tras párrafo */
+  main p + .galeria-2-imagenes, /* Galería doble tras párrafo */
+  main h3 + .contenedor-imagen-centrada, /* Imagen tras h3 */
+  main h3 + .contenedor-imagenes-verticales, /* Verticales tras h3 */
+  main h3 + .imagen-zoom-contenedor, /* Zoom tras h3 */
+  main h3 + .galeria-3-imagenes, /* Galería triple tras h3 */
+  main h3 + .galeria-2-imagenes { /* Galería doble tras h3 */
+    margin-top: 0.55rem; /* Poco espacio tras el texto anterior */
+  }
+
+  .contenedor-imagen-centrada + h3, /* h3 tras imagen centrada */
+  .contenedor-imagenes-verticales + h3 { /* h3 tras verticales */
+    margin-top: 0.85rem; /* Separación antes del siguiente título */
+  }
+
+  .pie-foto, /* Pie de foto individual en móvil */
+  .pie-foto-galeria { /* Pie de galería en móvil */
+    margin-top: 0.3rem; /* Poco espacio sobre la leyenda */
+    margin-bottom: 0.15rem; /* Poco espacio bajo la leyenda */
+    font-size: 0.85rem; /* Tamaño de letra */
+  }
+
+  .contenedor-imagen-vertical { /* Columna vertical en móvil */
+    flex: 0 1 100%; /* Una imagen por fila */
+    max-width: 100%; /* Ocupa todo el ancho */
+  }
+
+  .galeria-3-imagenes, /* Galería triple apilada */
+  .galeria-2-imagenes { /* Galería doble apilada */
+    grid-template-columns: 1fr; /* Una sola columna */
+    align-items: stretch; /* Celdas a ancho completo */
+    justify-content: stretch; /* Rejilla estirada */
+  }
+
+  .galeria-columna, /* Columna de galería en móvil */
+  .galeria-imagen { /* Celda de imagen en móvil */
+    width: 100%; /* Ancho completo */
+  }
+
+  .img-centrada, /* Img centrada responsiva */
+  .img-vertical, /* Img vertical responsiva */
+  .img-zoom, /* Img con zoom responsiva */
+  .imagen-lateral-intro img, /* Img lateral intro responsiva */
+  .galeria-imagen img { /* Img de galería responsiva */
+    width: 100%; /* Ancho completo del contenedor */
+    max-width: 100%; /* Sin desbordamiento */
+    height: auto; /* Proporción conservada */
+    display: block; /* Sin hueco inferior inline */
+  }
+
+  .contenedor-codigo { /* Bloque de código en móvil */
+    margin: 1rem auto 1.25rem; /* Márgenes verticales ajustados */
+    max-width: 100%; /* Ancho completo */
+  }
+
+  .contenedor-codigo pre[class*="language-"], /* Bloque pre del código en móvil */
+  .contenedor-codigo code[class*="language-"] { /* Código inline en móvil */
+    font-size: 0.5rem !important; /* Tamaño de letra */
+    line-height: 1.4; /* Interlineado legible */
+  }
+
+  .contenedor-codigo .line-numbers-rows > span::before { /* Números de línea en móvil */
+    font-size: 0.75rem !important; /* Tamaño de letra */
+  }
+}
+
+@media (max-width: 600px) { /* Ajustes extra en pantallas muy estrechas */
+  .pie-foto-galeria { /* Leyenda de galería en móvil pequeño */
+    margin-top: 0.5rem; /* Un poco más de espacio superior */
+  }
+}
+
+.pie-foto { /* Leyenda bajo una imagen individual */
+  color: #888; /* Color del texto */
+  font-size: 0.95rem; /* Tamaño de letra */
+  margin-top: 1rem; /* Separación de la imagen */
+  font-style: italic; /* Estilo de pie de foto */
+  text-align: center; /* Centrado bajo la imagen */
+  font-family: Arial, sans-serif; /* Fuente consistente */
+  letter-spacing: 0.5px; /* Ligero espaciado entre letras */
+}
+
+/* --------------------------------------------------------------------------
+  12. Vídeos YouTube
+   -------------------------------------------------------------------------- */
+/* Vídeo vertical de YouTube */
+.video-youtube-vertical { /* Contenedor de vídeo vertical 9:16 */
+  width: 90%; /* Ancho fluido */
+  max-width: 360px; /* Límite estrecho para formato vertical */
+  margin: 3rem auto; /* Separación vertical y centrado */
+  display: flex; /* Columna iframe + posible leyenda */
+  flex-direction: column; /* Apila elementos verticalmente */
+  align-items: center; /* Centrado horizontal */
+}
+
+.video-youtube-vertical iframe { /* Reproductor embebido vertical */
+  width: 100%; /* Ocupa el ancho del contenedor */
+  aspect-ratio: 9 / 16; /* Proporción vertical de móvil */
+  border: 1px solid #444; /* Borde */
+  border-radius: 15px; /* Esquinas redondeadas */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6); /* Sombra de elevación */
+  display: block; /* Elimina hueco inferior inline */
+  transition: border-color 0.3s ease, transform 0.3s ease; /* Animación al hover */
+}
+
+.video-youtube-vertical iframe:hover { /* Iframe vertical al pasar el ratón */
+  transform: scale(1.01); /* Ligero zoom de resaltado */
+  border-color: #008080; /* Borde */
+}
+
+.video-youtube-vertical[data-video-error="true"]::before { /* Mensaje si falta URL válida (vertical) */
+  content: "Pega una URL valida de YouTube en data-youtube-url"; /* Texto de error para el desarrollador */
+  color: #ffbf00; /* Color del texto */
+  border: 1px solid #008080; /* Borde */
+  border-radius: 12px; /* Esquinas redondeadas */
+  padding: 1rem; /* Relleno interno del mensaje */
+  text-align: center; /* Texto centrado */
+  background-color: rgba(39, 40, 34, 0.92); /* Color de fondo */
+}
+
+/* Vídeo horizontal de YouTube */
+.video-youtube { /* Contenedor de vídeo horizontal 16:9 */
+  width: 90%; /* Ancho fluido */
+  max-width: 800px; /* Límite alineado con el contenido */
+  margin: 2.5rem auto; /* Separación vertical y centrado */
+  display: flex; /* Columna iframe + posible leyenda */
+  flex-direction: column; /* Apila elementos verticalmente */
+  align-items: center; /* Centrado horizontal */
+}
+
+.video-youtube iframe { /* Reproductor embebido horizontal */
+  width: 100%; /* Ocupa el ancho del contenedor */
+  aspect-ratio: 16 / 9; /* Proporción estándar de YouTube */
+  border: 1px solid #444; /* Borde */
+  border-radius: 15px; /* Esquinas redondeadas */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6); /* Sombra de elevación */
+  display: block; /* Elimina hueco inferior inline */
+  transition: border-color 0.3s ease, transform 0.3s ease; /* Animación al hover */
+}
+
+.video-youtube iframe:hover { /* Iframe horizontal al pasar el ratón */
+  transform: scale(1.01); /* Ligero zoom de resaltado */
+  border-color: #008080; /* Borde */
+}
+
+.video-youtube[data-video-error="true"]::before { /* Mensaje si falta URL válida (horizontal) */
+  content: "Pega una URL valida de YouTube en data-youtube-url"; /* Texto de error para el desarrollador */
+  color: #ffbf00; /* Color del texto */
+  border: 1px solid #008080; /* Borde */
+  border-radius: 12px; /* Esquinas redondeadas */
+  padding: 1rem; /* Relleno interno del mensaje */
+  text-align: center; /* Texto centrado */
+  background-color: rgba(39, 40, 34, 0.92); /* Color de fondo */
+}
+
+/* --------------------------------------------------------------------------
+  13. Notas importantes (destacado dorado)
+   -------------------------------------------------------------------------- */
+/* Notas importantes */
+.nota-importante { /* Bloque destacado de aviso o nota crítica */
+  position: relative; /* Referencia para pseudo-elementos decorativos */
+  width: 90%; /* Ancho fluido */
+  max-width: 800px; /* Límite alineado con el contenido */
+  margin: 2.2rem auto; /* Separación vertical y centrado */
+  padding: 1.45rem 1.55rem 1.4rem 1.7rem; /* Relleno interno asimétrico */
+  text-align: left; /* Texto alineado a la izquierda */
+  color: #ffffff; /* Color del texto */
+  font-size: 0.98rem; /* Tamaño de letra */
+  font-weight: 700; /* Texto en negrita */
+  line-height: 1.7; /* Interlineado amplio */
+  border-radius: 18px; /* Esquinas muy redondeadas */
+  border: 1px solid rgba(255, 200, 60, 0.62); /* Color del borde */
+  background: transparent; /* Fondo real en ::before */
+  box-shadow: /* Conjunto de sombras doradas */
+    inset 0 1px 0 rgba(255, 228, 120, 0.35), /* Brillo superior interior */
+    inset 0 -18px 36px rgba(255, 191, 0, 0.06), /* Resplandor inferior interior */
+    0 14px 42px rgba(0, 0, 0, 0.48), /* Sombra exterior de profundidad */
+    0 0 36px rgba(255, 191, 0, 0.18); /* Sombra */
+  box-sizing: border-box; /* Incluye borde y padding */
+  overflow: hidden; /* Recorta brillos que desbordan */
+  isolation: isolate; /* Contexto de apilamiento para capas */
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55); /* Sombra de texto para legibilidad */
+  transition: /* Animación al hover */
+    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), /* Elevación suave */
+    border-color 0.35s ease, /* Cambio de borde */
+    box-shadow 0.35s ease; /* Intensificación de sombras */
+}
+
+.nota-importante:hover { /* Nota al pasar el ratón */
+  transform: translateY(-4px) scale(1.012); /* Ligera elevación y zoom */
+  border-color: rgba(255, 230, 100, 0.95); /* Color del borde */
+  box-shadow: /* Sombras reforzadas en hover */
+    inset 0 1px 0 rgba(255, 240, 150, 0.5), /* Brillo superior más fuerte */
+    inset 0 -20px 40px rgba(255, 191, 0, 0.12), /* Resplandor inferior más visible */
+    0 20px 52px rgba(0, 0, 0, 0.55), /* Sombra exterior más profunda */
+    0 0 58px rgba(255, 191, 0, 0.38); /* Sombra */
+}
+
+.nota-importante::before { /* Capa de fondo degradado y borde superior brillante */
+  content: ""; /* Pseudo-elemento decorativo */
+  position: absolute; /* Cubre todo el bloque */
+  inset: 0; /* Ocupa los cuatro bordes */
+  z-index: -1; /* Detrás del texto */
+  border-radius: inherit; /* Misma curvatura que el padre */
+  pointer-events: none; /* No intercepta clics */
+  background: /* Color de fondo */
+    linear-gradient(90deg, transparent, #ff9500, #ffc400, #ffe566, #fff4b0, #ffe566, #ffc400, #ff9500, transparent) top / 100% 4px no-repeat, /* Franja brillante superior */
+    linear-gradient(125deg, rgba(255, 215, 0, 0.28) 0%, rgba(255, 180, 0, 0.08) 55%, transparent 72%), /* Color de fondo */
+    linear-gradient(305deg, rgba(218, 165, 32, 0.32) 0%, rgba(184, 134, 11, 0.1) 50%, transparent 70%), /* Color de fondo */
+    linear-gradient(180deg, #4d3c16 0%, #35280f 45%, #1c1608 100%); /* Color de fondo */
+  transition: filter 0.35s ease; /* Brillo al hover */
+}
+
+.nota-importante:hover::before { /* Fondo decorativo al hover */
+  filter: brightness(1.15); /* Aumenta el brillo del degradado */
+}
+
+.nota-importante::after { /* Resplandor radial en esquina superior derecha */
+  content: ""; /* Pseudo-elemento de luz */
+  position: absolute; /* Posicionado en la esquina */
+  top: -55px; /* Parcialmente fuera del bloque */
+  right: -35px; /* Parcialmente fuera del bloque */
+  z-index: -1; /* Detrás del contenido */
+  width: 200px; /* Diámetro del resplandor */
+  height: 200px; /* Diámetro del resplandor */
+  background: radial-gradient(circle, rgba(255, 210, 60, 0.38) 0%, rgba(255, 191, 0, 0.12) 45%, transparent 72%); /* Color de fondo */
+  pointer-events: none; /* No intercepta clics */
+  transition: transform 0.35s ease, filter 0.35s ease; /* Animación al hover */
+}
+
+.nota-importante:hover::after { /* Resplandor al pasar el ratón */
+  transform: scale(1.15); /* Amplía el halo */
+  filter: brightness(1.2); /* Más brillante */
+}
+
+.nota-importante strong { /* Título o etiqueta de la nota importante */
+  position: relative; /* Por encima de las capas decorativas */
+  z-index: 1; /* Delante del ::before y ::after */
+  display: flex; /* Fila icono + texto */
+  align-items: center; /* Centrado vertical */
+  gap: 0.55rem; /* Espacio entre icono y texto */
+  margin-bottom: 0.7rem; /* Separación del cuerpo de la nota */
+  font-size: 0.88rem; /* Tamaño de letra */
+  font-weight: 800; /* Muy negrita */
+  letter-spacing: 0.12em; /* Espaciado entre letras mayúsculas */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  color: #ffe566; /* Color del texto */
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65); /* Sombra para contraste */
+}
+
+.nota-importante strong::before { /* Icono circular de exclamación */
+  content: "!"; /* Símbolo de alerta */
+  display: inline-flex; /* Centra el glifo */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  width: 1.45rem; /* Diámetro del círculo */
+  height: 1.45rem; /* Diámetro del círculo */
+  flex-shrink: 0; /* No se comprime en flex */
+  border-radius: 50%; /* Forma circular */
+  font-size: 0.82rem; /* Tamaño de letra */
+  font-weight: 900; /* Máxima negrita */
+  line-height: 1; /* Altura de línea compacta */
+  color: #1a1200; /* Color del texto */
+  background: linear-gradient(135deg, #ffe566 0%, #ffd700 45%, #ffb300 100%); /* Color de fondo */
+  box-shadow: 0 0 0 4px rgba(255, 191, 0, 0.15), 0 4px 14px rgba(212, 160, 0, 0.45); /* Anillo y sombra del icono */
+  -webkit-text-fill-color: #1a1200; /* Color del texto en WebKit */
+  transition: transform 0.35s ease, box-shadow 0.35s ease; /* Animación al hover */
+}
+
+.nota-importante:hover strong::before { /* Icono de alerta al hover */
+  transform: scale(1.1); /* Ligero aumento de tamaño */
+  box-shadow: 0 0 0 6px rgba(255, 191, 0, 0.22), 0 6px 22px rgba(255, 180, 0, 0.55); /* Anillo y sombra más intensos */
+}
+
+/* --------------------------------------------------------------------------
+  14. Galerías CNC y modelos 3D de componentes
+   -------------------------------------------------------------------------- */
+/* Galería de herramientas CNC */
+.galeria-herramientas { /* Panel decorativo de herramientas CNC */
+  width: min(92%, 820px); /* Ancho fluido con tope */
+  margin: 2.5rem auto; /* Separación vertical y centrado */
+  padding: 2rem 1.6rem 2.2rem; /* Relleno interno generoso */
+  display: flex; /* Rejilla flexible de herramientas */
+  flex-wrap: wrap; /* Varias filas si hace falta */
+  justify-content: center; /* Centra las tarjetas */
+  align-content: center; /* Centra filas en el eje vertical */
+  gap: 1.35rem 1.1rem; /* Espacio vertical y horizontal entre ítems */
+  background: linear-gradient(155deg, rgba(0, 46, 46, 0.45) 0%, rgba(26, 27, 22, 0.92) 55%, rgba(13, 37, 37, 0.75) 100%); /* Color de fondo */
+  border: 1px solid rgba(0, 128, 128, 0.38); /* Borde */
+  border-radius: 22px; /* Esquinas muy redondeadas */
+  box-shadow: /* Sombras del panel */
+    0 18px 50px rgba(0, 0, 0, 0.42), /* Sombra exterior profunda */
+    inset 0 1px 0 rgba(255, 255, 255, 0.05); /* Brillo superior interior */
+  position: relative; /* Referencia para pseudo-elementos */
+  overflow: hidden; /* Recorta decoraciones que desbordan */
+}
+
+.galeria-herramientas::before { /* Línea brillante superior del panel */
+  content: ""; /* Pseudo-elemento decorativo */
+  position: absolute; /* En la parte superior */
+  top: 0; /* Pegado al borde superior */
+  left: 12%; /* Inicio de la línea */
+  right: 12%; /* Fin de la línea */
+  height: 1px; /* Grosor de la línea */
+  background: linear-gradient(90deg, transparent, rgba(0, 128, 128, 0.65), transparent); /* Color de fondo */
+  pointer-events: none; /* No intercepta clics */
+}
+
+.galeria-herramientas::after { /* Resplandor en esquina superior derecha */
+  content: ""; /* Pseudo-elemento de luz */
+  position: absolute; /* Esquina del panel */
+  top: -70px; /* Parcialmente fuera */
+  right: -70px; /* Parcialmente fuera */
+  width: 200px; /* Ancho */
+  height: 200px; /* Alto */
+  background: radial-gradient(circle, rgba(0, 128, 128, 0.14) 0%, transparent 70%); /* Color de fondo */
+  pointer-events: none; /* No intercepta clics */
+}
+
+.galeria-herramienta { /* Cada herramienta de la galería CNC */
+  margin: 0; /* Sin margen del figure */
+  flex: 0 1 132px; /* Ancho base flexible */
+  max-width: 148px; /* Tope de ancho de tarjeta */
+  display: flex; /* Columna imagen + leyenda */
+  flex-direction: column; /* Apila imagen y texto */
+  align-items: center; /* Centrado horizontal */
+  gap: 0.55rem; /* Espacio entre imagen y leyenda */
+  position: relative; /* Por encima de decoraciones del panel */
+  z-index: 1; /* Delante de ::before y ::after del panel */
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1); /* Elevación al hover */
+}
+
+.galeria-herramienta:hover { /* Tarjeta de herramienta al pasar el ratón */
+  transform: translateY(-5px); /* Sube ligeramente la tarjeta */
+}
+
+.galeria-herramienta img { /* Imagen de la herramienta CNC */
+  width: 100%; /* Ocupa el ancho de la tarjeta */
+  aspect-ratio: 3 / 4; /* Proporción vertical de la foto */
+  object-fit: contain; /* Escala sin recortar */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 128, 128, 0.08) 100%); /* Color de fondo */
+  border-radius: 14px; /* Esquinas redondeadas */
+  border: 1px solid rgba(0, 128, 128, 0.28); /* Borde */
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); /* Sombra de la imagen */
+  padding: 0.35rem; /* Margen interno alrededor de la foto */
+  box-sizing: border-box; /* Incluye padding y borde */
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease; /* Animación al hover */
+}
+
+.galeria-herramienta:hover img { /* Imagen de herramienta al hover */
+  border-color: rgba(255, 191, 0, 0.45); /* Color del borde */
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 191, 0, 0.12); /* Sombra */
+}
+
+.galeria-herramienta figcaption { /* Nombre de la herramienta */
+  font-size: 0.78rem; /* Tamaño de letra */
+  font-weight: 600; /* Semi-negrita */
+  color: #c9b07a; /* Color del texto */
+  text-align: center; /* Centrado bajo la imagen */
+  line-height: 1.35; /* Interlineado legible */
+  letter-spacing: 0.01em; /* Ligero espaciado entre letras */
+}
+
+/* Galería de modelos 3D de componentes */
+.galeria-componentes-3d { /* Rejilla de renders 3D de componentes */
+  width: 90%; /* Ancho fluido */
+  max-width: 800px; /* Límite alineado con el contenido */
+  margin: 2.5rem auto; /* Separación vertical y centrado */
+  display: grid; /* Cuadrícula adaptativa */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Columnas según espacio */
+  gap: 1.2rem; /* Espacio entre celdas */
+}
+
+.galeria-componente-3d { /* Cada componente 3D de la galería */
+  margin: 0; /* Sin margen del figure */
+  display: flex; /* Columna imagen + leyenda */
+  flex-direction: column; /* Apila contenido */
+  align-items: center; /* Centrado horizontal */
+  gap: 0.55rem; /* Espacio entre imagen y texto */
+}
+
+.galeria-componente-3d img { /* Render del componente 3D */
+  width: 100%; /* Ocupa el ancho de la celda */
+  height: auto; /* Mantiene proporción */
+  border-radius: 12px; /* Esquinas redondeadas */
+  border: 1px solid #444; /* Borde */
+  box-shadow: 0 10px 25px rgba(0,0,0,0.45); /* Sombra de elevación */
+  transition: transform 0.3s ease, border-color 0.3s ease; /* Animación al hover */
+}
+
+.galeria-componente-3d figcaption { /* Nombre del componente 3D */
+  font-size: 0.85rem; /* Tamaño de letra */
+  color: rgba(255,255,255,0.72); /* Color del texto */
+  text-align: center; /* Centrado bajo la imagen */
+}
+
+@media (max-width: 768px) { /* Vídeos, notas y galerías CNC en móvil */
+  .video-youtube, /* Vídeo horizontal en móvil */
+  .galeria-herramientas, /* Galería CNC en móvil */
+  .galeria-componentes-3d, /* Componentes 3D en móvil */
+  .nota-importante { /* Nota importante en móvil */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 800px; /* Mantiene límite máximo */
+  }
+
+  .galeria-herramientas { /* Panel de herramientas en móvil */
+    width: 100%; /* Ancho completo */
+    padding: 1.5rem 0.85rem 1.7rem; /* Relleno reducido */
+    gap: 1.1rem 0.75rem; /* Menor espacio entre tarjetas */
+  }
+
+  .galeria-herramienta { /* Tarjeta de herramienta en móvil */
+    flex: 0 1 calc(50% - 0.75rem); /* Dos columnas */
+    max-width: calc(50% - 0.75rem); /* Máximo de media fila */
+  }
+
+  .galeria-herramienta figcaption { /* Leyenda de herramienta en móvil */
+    font-size: 0.76rem; /* Tamaño de letra */
+  }
+}

@@ -1,0 +1,256 @@
+/* ============================================================
+   CATÁLOGO DE PROYECTOS
+   ============================================================ */
+
+.catalogo-proyectos-seccion { /* Sección contenedora del catálogo */
+  padding: 3rem 1.5rem 4rem; /* Espaciado vertical y lateral */
+  max-width: 1100px; /* Ancho máximo de la sección */
+  margin: 0 auto; /* Centrado horizontal */
+  background: transparent; /* Sin fondo propio (hereda página) */
+}
+
+#catalogo-proyectos { /* Rejilla de tarjetas de proyectos */
+  display: grid; /* Cuadrícula responsive */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Columnas fluidas mín. 300px */
+  gap: 2rem; /* Espacio entre tarjetas */
+  margin-top: 2rem; /* Separación del encabezado superior */
+  background: transparent; /* Fondo transparente */
+}
+
+/* ── Tarjeta ────────────────────────────────────────────── */
+.tarjeta-proyecto { /* Tarjeta enlazable de un proyecto */
+  position: relative; /* Contexto para pseudo-elementos */
+  display: flex; /* Flex vertical imagen + cuerpo + flecha */
+  flex-direction: column; /* Apila secciones de arriba a abajo */
+  border-radius: 18px; /* Esquinas redondeadas */
+  overflow: hidden; /* Recorta contenido e imagen */
+  text-decoration: none; /* Sin subrayado de enlace */
+  color: #ffffff; /* Color del texto */
+  background: linear-gradient(135deg, #1a1b16 0%, #0d2525 60%, #003333 100%); /* Color de fondo */
+  border: 1px solid #008080; /* Borde */
+  box-shadow: 0 8px 32px rgba(0,0,0,0.55); /* Sombra bajo la tarjeta */
+  transition: /* Animaciones al hover */
+    transform 0.38s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.38s ease,
+    border-color 0.38s ease;
+  cursor: pointer; /* Indica elemento clicable */
+}
+
+.tarjeta-proyecto::before { /* Overlay en hover */
+  content: ""; /* Genera la capa */
+  position: absolute; /* Cubre toda la tarjeta */
+  inset: 0; /* Ocupa el perímetro completo */
+  opacity: 0; /* Invisible por defecto */
+  transition: opacity 0.38s ease; /* Fundido al activarse */
+  border-radius: 18px; /* Misma curvatura que la tarjeta */
+  z-index: 1; /* Sobre fondo, bajo contenido interactivo */
+  pointer-events: none; /* No bloquea clics */
+}
+
+.tarjeta-proyecto:hover { /* Estado hover de la tarjeta */
+  transform: translateY(-8px) scale(1.025); /* Eleva y agranda ligeramente */
+  box-shadow: 0 24px 60px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,140,0,0.45); /* Sombra */
+  border-color: rgba(255, 140, 0, 0.65); /* Color del borde */
+}
+
+.tarjeta-proyecto:hover::before { /* Overlay visible en hover */
+  opacity: 1; /* Muestra el degradado */
+  background: linear-gradient( /* Brillo cálido sobre la tarjeta */
+    135deg,
+    rgba(255, 191, 0, 0.12) 0%,
+    rgba(255, 120, 0, 0.1) 50%,
+    rgba(255, 60, 0, 0.08) 100%
+  );
+}
+
+/* ── Imagen ─────────────────────────────────────────────── */
+.tarjeta-proyecto-imagen { /* Contenedor de la imagen del proyecto */
+  position: relative; /* Para ::after y brillo */
+  width: 100%; /* Ancho completo de la tarjeta */
+  height: 200px; /* Altura fija de la imagen */
+  overflow: hidden; /* Recorta zoom de la imagen */
+  flex-shrink: 0; /* No se comprime en flex */
+}
+
+.tarjeta-proyecto-imagen img { /* Imagen del proyecto */
+  width: 100%; /* Llena el ancho del contenedor */
+  height: 100%; /* Llena la altura del contenedor */
+  object-fit: cover; /* Recorte proporcional */
+  display: block; /* Elimina hueco inferior */
+  transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1), filter 0.38s ease; /* Zoom y brillo al hover */
+  filter: brightness(0.82) saturate(1.1); /* Imagen algo oscura y saturada */
+}
+
+.tarjeta-proyecto:hover .tarjeta-proyecto-imagen img { /* Imagen en hover */
+  transform: scale(1.06); /* Zoom suave */
+  filter: brightness(0.95) saturate(1.25); /* Más clara y viva */
+}
+
+/* Degradado inferior sobre la imagen */
+.tarjeta-proyecto-imagen::after { /* Fundido inferior para unir con el cuerpo */
+  content: ""; /* Crea la capa de degradado */
+  position: absolute; /* Sobre la imagen */
+  bottom: 0; /* Anclada abajo */
+  left: 0; /* Borde izquierdo */
+  right: 0; /* Borde derecho */
+  height: 55%; /* Cubre la mitad inferior aproximada */
+  background: linear-gradient(to top, #0d2525 0%, transparent 100%); /* Color de fondo */
+  pointer-events: none; /* No intercepta eventos */
+  transition: background 0.38s ease; /* Cambio de tono al hover */
+}
+
+.tarjeta-proyecto:hover .tarjeta-proyecto-imagen::after { /* Degradado en hover */
+  background: linear-gradient(to top, #1a0d00 0%, transparent 100%); /* Color de fondo */
+}
+
+/* Brillo animado al hover */
+.tarjeta-proyecto-brillo { /* Barrido de luz sobre la imagen */
+  position: absolute; /* Cubre el área de imagen */
+  inset: 0; /* Ocupa todo el contenedor */
+  background: linear-gradient( /* Franja de brillo diagonal */
+    120deg,
+    transparent 0%,
+    rgba(255, 200, 80, 0.0) 40%,
+    rgba(255, 200, 80, 0.18) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%; /* Permite desplazar el brillo */
+  background-position: -100% 0; /* Posición inicial fuera de vista */
+  transition: background-position 0.6s ease; /* Animación del barrido */
+  pointer-events: none; /* Transparente a clics */
+}
+
+.tarjeta-proyecto:hover .tarjeta-proyecto-brillo { /* Barrido activo */
+  background-position: 200% 0; /* Mueve el brillo de izquierda a derecha */
+}
+
+/* ── Cuerpo ─────────────────────────────────────────────── */
+.tarjeta-proyecto-cuerpo { /* Zona de título, descripción y tags */
+  position: relative; /* Apilamiento sobre overlay */
+  z-index: 2; /* Por encima del ::before */
+  padding: 1.2rem 1.4rem 0.8rem; /* Relleno interno */
+  flex: 1; /* Ocupa espacio restante en la tarjeta */
+  display: flex; /* Flex para alinear contenido */
+  flex-direction: column; /* Apila elementos verticalmente */
+  align-items: center; /* Centra horizontalmente */
+  gap: 0.55rem; /* Separación entre hijos */
+}
+
+.tarjeta-proyecto-titulo { /* Título del proyecto */
+  font-family: Arial, sans-serif; /* Tipografía del título */
+  font-size: 1.15rem; /* Tamaño de letra */
+  font-weight: 700; /* Negrita */
+  color: #ffffff; /* Color del texto */
+  margin: 0; /* Sin margen */
+  line-height: 1.3; /* Interlineado del título */
+  transition: color 0.3s ease; /* Cambio de color al hover */
+  text-decoration: none; /* Sin subrayado */
+  display: block; /* Bloque a ancho completo */
+  width: 100%; /* Ocupa todo el ancho del cuerpo */
+  text-align: center; /* Centrado */
+  text-underline-offset: unset; /* Anula offset heredado */
+  text-decoration-skip-ink: unset; /* Anula salto de tinta */
+}
+
+.tarjeta-proyecto:hover .tarjeta-proyecto-titulo { /* Título en hover */
+  color: #ffbf00; /* Color de resaltado */
+}
+
+.tarjeta-proyecto-desc { /* Descripción breve del proyecto */
+  font-size: 0.88rem; /* Tamaño de letra */
+  color: rgba(255, 255, 255, 0.72); /* Color del texto */
+  line-height: 1.55; /* Lectura cómoda */
+  margin: 0; /* Sin margen */
+  text-align: justify; /* Texto justificado */
+  max-width: none; /* Sin límite de ancho */
+  width: 100%; /* Ancho completo del cuerpo */
+}
+
+/* ── Tags ────────────────────────────────────────────────── */
+.tarjeta-proyecto-tags { /* Contenedor de etiquetas tecnológicas */
+  display: flex; /* Flex para varias etiquetas */
+  flex-wrap: wrap; /* Permite varias filas */
+  justify-content: center; /* Centra las pastillas */
+  gap: 0.4rem; /* Espacio entre etiquetas */
+  margin-top: 0.2rem; /* Separación del párrafo */
+  width: 100%; /* Ancho completo */
+}
+
+.proyecto-tag { /* Etiqueta individual del proyecto */
+  font-size: 0.72rem; /* Tamaño de letra */
+  font-weight: 600; /* Semi-negrita */
+  padding: 0.2rem 0.6rem; /* Relleno de la pastilla */
+  border-radius: 999px; /* Forma de píldora */
+  background: rgba(0, 128, 128, 0.22); /* Color de fondo */
+  border: 1px solid rgba(0, 128, 128, 0.5); /* Borde */
+  color: #7fffd4; /* Color del texto */
+  letter-spacing: 0.03em; /* Espaciado entre letras */
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Hover de tarjeta */
+}
+
+.tarjeta-proyecto:hover .proyecto-tag { /* Etiquetas en hover */
+  background: rgba(255, 140, 0, 0.18); /* Color de fondo */
+  border-color: rgba(255, 140, 0, 0.55); /* Color del borde */
+  color: #ffcc66; /* Color del texto */
+}
+
+/* ── Flecha ──────────────────────────────────────────────── */
+.tarjeta-proyecto-flecha { /* Fila del icono flecha */
+  position: relative; /* Apilamiento */
+  z-index: 2; /* Por encima del overlay */
+  display: flex; /* Flex para alinear el SVG */
+  justify-content: flex-end; /* Flecha a la derecha */
+  align-items: center; /* Centrado vertical */
+  padding: 0.6rem 1.2rem 1rem; /* Espaciado alrededor del icono */
+}
+
+.tarjeta-proyecto-flecha svg { /* Icono de flecha */
+  width: 1.3rem; /* Ancho del SVG */
+  height: 1.3rem; /* Alto del SVG */
+  color: #008080; /* Color del texto */
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1), color 0.3s ease; /* Movimiento al hover */
+}
+
+.tarjeta-proyecto:hover .tarjeta-proyecto-flecha svg { /* Flecha en hover */
+  transform: translateX(6px); /* Desplazamiento a la derecha */
+  color: #ffbf00; /* Color de resaltado */
+}
+
+/* ── Línea decorativa inferior ────────────────────────────── */
+.tarjeta-proyecto::after { /* Línea en la base de la tarjeta */
+  content: ""; /* Elemento visual */
+  position: absolute; /* Posicionada en el fondo */
+  bottom: 0; /* Borde inferior */
+  left: 10%; /* Inset izquierdo */
+  right: 10%; /* Inset derecho */
+  height: 2px; /* Grosor de la línea */
+  background: linear-gradient(90deg, transparent, #008080, transparent); /* Color de fondo */
+  border-radius: 2px; /* Extremos suaves */
+  transition: background 0.38s ease, left 0.38s ease, right 0.38s ease; /* Animación al hover */
+}
+
+.tarjeta-proyecto:hover::after { /* Línea en hover */
+  left: 0%; /* Se extiende al borde izquierdo */
+  right: 0%; /* Se extiende al borde derecho */
+  background: linear-gradient(90deg, transparent, #ff8c00, #ffbf00, #ff8c00, transparent); /* Color de fondo */
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) { /* Pantallas estrechas */
+  .catalogo-proyectos-seccion { /* Sección en móvil */
+    padding: 1.5rem 0.75rem 2.5rem; /* Menos padding */
+  }
+
+  #catalogo-proyectos { /* Una columna en móvil */
+    grid-template-columns: 1fr; /* Tarjetas apiladas */
+    gap: 1.25rem; /* Menor separación */
+  }
+
+  .tarjeta-proyecto-imagen { /* Imagen más baja en móvil */
+    height: 170px; /* Altura reducida */
+  }
+
+  .tarjeta-proyecto-titulo { /* Título más pequeño */
+    font-size: 1.05rem; /* Tamaño de letra */
+  }
+}

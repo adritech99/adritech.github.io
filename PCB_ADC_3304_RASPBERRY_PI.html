@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCB ADC 3304-RASPBERRY PI</title>
+
+  <link rel="icon" type="image/png" href="img/AdriTech_sp.png">
+  <link rel="apple-touch-icon" href="img/AdriTech_sp.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="article">
+  <meta property="og:site_name"   content="AdriTech">
+  <meta property="og:url"         content="https://adritech.es/PCB_ADC_3304_RASPBERRY_PI.html">
+  <meta property="og:title"       content="PCB ADC 3304 – Raspberry Pi · AdriTech">
+  <meta property="og:description" content="Diseño de PCB para interfaz entre el conversor analógico-digital MCP3304 y Raspberry Pi. Captura de señales con alta resolución y comunicación SPI.">
+  <meta property="og:image"       content="https://adritech.es/img/proyectos/PCB_ADC_3304_RASPBERRY_PI/ADC3304_RASPBERRY_PI_4.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:locale"      content="es_ES">
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="PCB ADC 3304 – Raspberry Pi · AdriTech">
+  <meta name="twitter:description" content="Diseño de PCB para interfaz entre el conversor analógico-digital MCP3304 y Raspberry Pi. Captura de señales con alta resolución y comunicación SPI.">
+  <meta name="twitter:image"       content="https://adritech.es/img/proyectos/PCB_ADC_3304_RASPBERRY_PI/ADC3304_RASPBERRY_PI_4.webp">
+
+  <link rel="stylesheet" href="css/encabezado.css">
+  <link rel="stylesheet" href="css/style_proyectos.css">
+  <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+
+  <div id="header-container"></div>
+
+  <section class="hero">
+    <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/ADC3304_RASPBERRY_PI_4.webp" alt="PCB ADC 3304 conectada a Raspberry Pi 4">
+    <div class="hero-text">
+      <h2>PCB ADC 3304 - RASPBERRY PI</h2>
+    </div>
+  </section>
+
+  <nav class="indice-lateral">
+    <ul></ul>
+  </nav>
+
+  <div class="contenedor-hoja">
+    <main>
+
+      <h3 id="introduccion">INTRODUCCIÓN</h3>
+
+      <div class="bloque-introduccion">
+        <div class="texto-intro">
+          <p>
+            La Raspberry Pi no cuenta con conversores analógico-digitales integrados, por lo que se
+            diseñó una placa PCB que incorpora un ADC para poder realizar lecturas de tensión.
+          </p>
+          <p>
+            En este caso, el ADC empleado es el MCP3304, que se encarga de leer la tensión regulada
+            mediante un potenciómetro en sus canales de entrada.
+          </p>
+          <p>
+            Además, se incorporó una pantalla OLED para visualizar los datos de tensión procesados
+            por la Raspberry Pi, adquiridos mediante el MCP3304.
+          </p>
+        </div>
+        <div class="imagen-lateral-intro">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/ADC3304_RASPBERRY_PI_4.webp" alt="PCB ADC 3304 con Raspberry Pi 4" class="img-zoom">
+          <p class="pie-foto">PCB ADC 3304 – Raspberry Pi 4</p>
+        </div>
+      </div>
+
+      <h4 id="que-es-el-mcp3304">¿Qué es el MCP3304?</h4>
+
+      <p>
+        Se trata de un conversor de señales de tensión analógicas a digitales (ADC) de bajo consumo,
+        ideal para sistemas alimentados por batería y aplicaciones de adquisición de datos remotas.
+      </p>
+
+      <p>
+        El consumo en stand-by nominal es de 50 nA, con un máximo de 1 μA, y de 450 μA su consumo
+        máximo en funcionamiento alimentado a 5 V.
+      </p>
+
+      <p>
+        Cuenta con 8 canales de entrada y 2 modos de funcionamiento. En el modo diferencial, los
+        8 canales se dividen en 4 pares de entradas, obteniendo una resolución de 13 bits; en el
+        modo simple, cada canal es una entrada independiente con resolución de 12 bits. La frecuencia
+        de muestreo es de 100 000 muestras por segundo.
+      </p>
+
+      <p>
+        También dispone de un pin para tensión de referencia externa, ajustable entre 400 mV y 5 V,
+        con una resolución entre 98 μV y 1,22 mV.
+      </p>
+
+      <p>
+        Posee interfaz serial SPI, lo que permite su comunicación con cualquier microcontrolador.
+      </p>
+
+      <div class="nota-importante">
+        <strong>Nota importante</strong>
+        Siempre se empleará un ADC con mayor resolución de la requerida. Si necesitamos una
+        resolución de 13 bits, se utilizará un ADC de 14 bits o superior.
+      </div>
+
+      <h3 id="proteus">PROTEUS</h3>
+
+      <p>
+        Se empleó Proteus 8.12 para realizar la PCB, utilizando ISIS para el esquemático y ARES
+        para el diseño del trazado. Es necesario realizar configuraciones previas en el programa
+        antes de abordar el diseño PCB.
+      </p>
+
+      <h4 id="esquematico">ESQUEMÁTICO</h4>
+
+      <p>
+        Todos los GPIO de la Raspberry Pi 4 se conectan a la PCB mediante un cable plano tipo ribbon.
+        Los GPIO no utilizados se derivan a conectores auxiliares para poder emplearlos en futuras
+        expansiones.
+      </p>
+
+      <p>
+        Dado que la Raspberry Pi 4 no es capaz de suministrar la potencia necesaria a la placa, esta
+        se alimenta a través del conector ATX, donde se conecta una fuente de alimentación de PC.
+      </p>
+
+      <p>
+        La placa incorpora dos potenciómetros: uno suministra la tensión de referencia externa y
+        el otro regula una tensión de prueba para verificar los ocho canales de entrada del ADC.
+      </p>
+
+      <h4 id="diseno-pcb">DISEÑO PCB</h4>
+
+      <p>
+        Una vez realizadas las configuraciones en Proteus, se procede a ubicar los componentes. El
+        MCP3304 se coloca en el centro de la placa y, a partir de ahí, se distribuyen el resto de
+        componentes alrededor.
+      </p>
+
+      <div class="nota-importante">
+        <strong>Nota importante</strong>
+        Evitar en los trazados de pistas cambios de dirección con ángulos de 90° o ángulos agudos
+        en forma de pico, ya que a altas frecuencias pueden provocar reflexiones de señal. Todos
+        los ángulos se ingletan a 45°.
+      </div>
+
+      <p>
+        Una vez completado el trazado de pistas, se genera el archivo Gerber para emplearlo
+        posteriormente en CircuitCam.
+      </p>
+
+      <h4 id="modelo-3d">MODELO 3D</h4>
+
+      <p>
+        El modelo 3D ayuda a visualizar el acabado final de la placa. Conviene realizarlo cuando
+        los componentes ya están distribuidos en el layout.
+      </p>
+
+      <h3 id="proceso-cnc">PROCESO CNC</h3>
+
+      <p>
+        Tras finalizar el diseño de la PCB, se procede al mecanizado en CNC. Dependiendo de la
+        máquina empleada, el proceso puede variar; en otros apartados de la web se detallan
+        configuraciones específicas.
+      </p>
+
+      <h4 id="fiduciales">FIDUCIALES</h4>
+
+      <p>En el siguiente vídeo se muestra el proceso de taladrado para colocar los fiduciales.</p>
+
+      <div class="video-youtube" data-youtube-url="https://youtu.be/XkDoKHxh-ak">
+        <p class="pie-foto">Taladrado de fiduciales en la placa de cobre</p>
+      </div>
+
+      <p>
+        Una vez realizados los dos agujeros en la placa, se colocan los fiduciales. A partir de
+        aquí ya se puede comenzar a mecanizar la PCB.
+      </p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/FIDUCIALES.webp" alt="Fiduciales colocados en la placa" class="img-centrada img-zoom">
+        <p class="pie-foto">Fiduciales instalados en la placa</p>
+      </div>
+
+      <h4 id="herramientas">HERRAMIENTAS</h4>
+
+      <p>
+        Una vez importada la PCB en el programa y realizadas las configuraciones, se añaden las
+        fresas y brocas indicadas. Para esta placa fueron necesarias las siguientes herramientas:
+      </p>
+
+      <div class="galeria-herramientas">
+        <figure class="galeria-herramienta">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/HERRAMIENTA_FRESA_CONICA.webp" alt="Fresa cónica 0,2mm - 0,5mm">
+          <figcaption>2× Fresa cónica 0,2 mm – 0,5 mm</figcaption>
+        </figure>
+        <figure class="galeria-herramienta">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/HERRAMIENTA_BROCA_1_5MM.webp" alt="Broca 1,5 mm">
+          <figcaption>Broca 1,5 mm</figcaption>
+        </figure>
+        <figure class="galeria-herramienta">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/HERRAMIENTA_END_MILL_1MM.webp" alt="End mill 1 mm">
+          <figcaption>End mill 1 mm</figcaption>
+        </figure>
+        <figure class="galeria-herramienta">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/HERRAMIENTA_BROCA_1MM.webp" alt="Broca 1 mm">
+          <figcaption>3× Broca 1 mm</figcaption>
+        </figure>
+        <figure class="galeria-herramienta">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/HERRAMIENTA_FRESA_CONTORNO_2MM.webp" alt="Fresa de contorno 2 mm">
+          <figcaption>Fresa de contorno 2 mm</figcaption>
+        </figure>
+        <figure class="galeria-herramienta">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/HERRAMIENTA_FRESA_CONTORNO_1MM.webp" alt="Fresa de contorno 1 mm">
+          <figcaption>Fresa de contorno 1 mm</figcaption>
+        </figure>
+        <figure class="galeria-herramienta">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/HERRAMIENTA_BROCA_3MM.webp" alt="Broca 3 mm">
+          <figcaption>Broca 3 mm</figcaption>
+        </figure>
+      </div>
+
+      <h4 id="taladros">TALADROS</h4>
+
+      <p>En el siguiente vídeo se muestra el proceso completo a cámara rápida de los taladros.</p>
+
+      <div class="video-youtube" data-youtube-url="https://youtu.be/OoSlWKsUgIE">
+        <p class="pie-foto">Taladrado de la PCB a cámara rápida</p>
+      </div>
+
+      <h4 id="cara-bottom">CARA BOTTOM</h4>
+
+      <p>En el siguiente vídeo se muestra el fresado de la cara Bottom de la PCB a cámara rápida.</p>
+
+      <div class="video-youtube" data-youtube-url="https://youtu.be/U0hz3HkbUZM">
+        <p class="pie-foto">Fresado de la cara Bottom</p>
+      </div>
+
+      <p>Aquí se puede ver el resultado del fresado en la cara Bottom.</p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/CNC_BOTTOM.webp" alt="Fresado CNC cara Bottom" class="img-centrada img-zoom">
+        <p class="pie-foto">Resultado del fresado – cara Bottom</p>
+      </div>
+
+      <h4 id="cara-top">CARA TOP</h4>
+
+      <p>En el siguiente vídeo se muestra el fresado de la cara Top de la PCB a cámara rápida.</p>
+
+      <div class="video-youtube" data-youtube-url="https://youtu.be/wVxtBstpNUw">
+        <p class="pie-foto">Fresado de la cara Top</p>
+      </div>
+
+      <p>Aquí se puede ver el resultado del fresado en la cara Top.</p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/CNC_TOP.webp" alt="Fresado CNC cara Top" class="img-centrada img-zoom">
+        <p class="pie-foto">Resultado del fresado – cara Top</p>
+      </div>
+
+      <h4 id="corte-de-contorno">CORTE DE CONTORNO</h4>
+
+      <p>En el siguiente vídeo se muestra el corte del contorno de la PCB a cámara rápida.</p>
+
+      <div class="video-youtube-vertical" data-youtube-url="https://youtube.com/shorts/r-YCFkSkUSw">
+        <p class="pie-foto">Corte de contorno de la PCB</p>
+      </div>
+
+      <p>En la siguiente imagen se aprecia el corte exterior realizado por la CNC.</p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/CNC_CORTE_EXTERIOR.webp" alt="Corte exterior de la PCB" class="img-centrada img-zoom">
+        <p class="pie-foto">Corte exterior de la placa</p>
+      </div>
+
+      <p>
+        A continuación, se separa la PCB de la placa de cobre y se comprueba el resultado final
+        del proceso de mecanizado.
+      </p>
+
+      <div class="galeria-2-imagenes">
+        <figure class="galeria-imagen galeria-imagen-vertical">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PCB_TOP_CNC.webp" alt="PCB cara Top tras el mecanizado CNC">
+        </figure>
+        <figure class="galeria-imagen galeria-imagen-horizontal">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PCB_BOTTOM_CNC.webp" alt="PCB cara Bottom tras el mecanizado CNC">
+        </figure>
+        <p class="pie-foto pie-foto-galeria">PCB tras el mecanizado CNC – Top y Bottom</p>
+      </div>
+
+      <p>
+        Al realizar el corte exterior, los bordes de la PCB quedan con rebabas, por lo que es
+        conveniente lijarlos.
+      </p>
+
+      <h3 id="montaje-pcb">MONTAJE DE PCB</h3>
+
+      <p>
+        Una vez fresada la PCB, antes de soldar los componentes, se aplica una capa protectora por
+        ambas caras y se deja secar al menos 20 minutos (dependiendo de la cantidad de producto
+        aplicado).
+      </p>
+
+      <div class="nota-importante">
+        <strong>Nota importante</strong>
+        Siempre que sea posible, empezar soldando los componentes más pequeños para acabar con los
+        de mayor tamaño.
+      </div>
+
+      <p>Se comienza remachando las vías para posteriormente soldarlas.</p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/REMACHADORAS_Y_VIAS.webp" alt="Remachadoras y vías de la PCB" class="img-centrada img-zoom">
+        <p class="pie-foto">Remachado de vías antes del soldado</p>
+      </div>
+
+      <p>
+        Tras remachar, se sueldan los remaches a las pistas correspondientes para garantizar el
+        contacto eléctrico.
+      </p>
+
+      <div class="galeria-2-imagenes">
+        <figure class="galeria-imagen galeria-imagen-vertical">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PCB_TOP_REMACHES_SOLDADOS.webp" alt="Cara Top con remaches soldados">
+        </figure>
+        <figure class="galeria-imagen galeria-imagen-horizontal">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PCB_BOTTOM_REMACHES_SOLDADOS.webp" alt="Cara Bottom con remaches soldados">
+        </figure>
+        <p class="pie-foto pie-foto-galeria">Remaches soldados – Top y Bottom</p>
+      </div>
+
+      <p>
+        Tras el mecanizado se detectó que no se había previsto un LED que indicara tensión en la
+        placa. Para añadirlo se optó por un LED de quita y pon entre los pines de 5 V y GND,
+        empleando un diodo LED verde SMD y una resistencia de 1 kΩ.
+      </p>
+
+      <p>
+        La idea consiste en usar dos pines hembra: en sus patillas van soldados el LED y la
+        resistencia SMD. Una de las patillas del pin se extrae de la carcasa, se recorta y se
+        suelda la resistencia al mismo nivel que el otro pin para soldar encima el LED. No es un
+        proceso sencillo, pero el resultado final es muy satisfactorio.
+      </p>
+
+      <div class="galeria-2-imagenes">
+        <figure class="galeria-imagen galeria-imagen-vertical">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/LED_SMD_01.webp" alt="Montaje del LED SMD de indicación">
+        </figure>
+        <figure class="galeria-imagen galeria-imagen-horizontal">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/LED_SMD_02.webp" alt="Detalle del LED SMD soldado">
+        </figure>
+        <p class="pie-foto pie-foto-galeria">LED SMD de indicación de tensión</p>
+      </div>
+
+      <p>
+        Una vez soldados los componentes, se diseñó una carcasa que protege y oculta la zona de la
+        resistencia y el LED, fijándola con pegamento al conjunto.
+      </p>
+
+      <div class="galeria-2-imagenes">
+        <figure class="galeria-imagen galeria-imagen-vertical">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/LED_CARCASA_01.webp" alt="Carcasa protectora del LED">
+        </figure>
+        <figure class="galeria-imagen galeria-imagen-horizontal">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/LED_CARCASA_02.webp" alt="Detalle de la carcasa del LED">
+        </figure>
+        <p class="pie-foto pie-foto-galeria">Carcasa protectora del conjunto LED–resistencia</p>
+      </div>
+
+      <p>
+        Posteriormente se sueldan el resto de componentes y se coloca el LED de quita y pon en la
+        placa. La pantalla OLED va conectada mediante pines hembra; no va soldada directamente a
+        la PCB.
+      </p>
+
+      <div class="galeria-2-imagenes">
+        <figure class="galeria-imagen galeria-imagen-vertical">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PCB_TOP_MONTADA.webp" alt="PCB montada – cara Top">
+        </figure>
+        <figure class="galeria-imagen galeria-imagen-horizontal">
+          <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PCB_BOTTOM_MONTADA.webp" alt="PCB montada – cara Bottom">
+        </figure>
+        <p class="pie-foto pie-foto-galeria">PCB montada – Top y Bottom</p>
+      </div>
+
+      <h4 id="modelo-3d-carcasa">MODELO 3D</h4>
+
+      <p>
+        Se diseñó una carcasa para proteger la placa y evitar posibles cortocircuitos en la cara
+        Bottom.
+      </p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/CARCASA_ADC_3304.jpg" alt="Carcasa 3D para la PCB ADC 3304" class="img-centrada img-zoom">
+        <p class="pie-foto">Carcasa PCB – ADC 3304</p>
+      </div>
+
+      <h3 id="programacion">PROGRAMACIÓN</h3>
+
+      <p>El lenguaje de programación empleado es Python. El funcionamiento general de la PCB es el siguiente:</p>
+
+      <div class="lista-materiales">
+        <ul>
+          <li>1.º Lectura de los 8 canales.</li>
+          <li>2.º Comprobar si el valor medido no excede al de referencia.</li>
+          <li>3.º Mostrar las lecturas tomadas y desechar las medidas que superen el valor de referencia.</li>
+        </ul>
+      </div>
+
+      <p>
+        Tras las primeras pruebas se comprobó que el segundo decimal de las lecturas era algo
+        inestable. Para solventarlo se realizan 5 medidas por canal y se calcula la media,
+        obteniendo una tolerancia de ±0,01 V.
+      </p>
+
+      <p>
+        Cuando el valor medido excede al de referencia, el valor obtenido es 1,0. Al realizar
+        5 medidas, el resultado es 5,0; en ese caso las medidas se descartan y se muestra un
+        mensaje en la pantalla.
+      </p>
+
+      <div class="nota-importante">
+        <strong>Nota importante</strong>
+        Medir con un multímetro la tensión de referencia en la PCB y ajustarla en el programa para
+        obtener lecturas correctas.
+      </div>
+
+      <p>A continuación se muestra una imagen de la PCB en funcionamiento.</p>
+
+      <div class="contenedor-imagen-centrada">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/ADC3304_RASPBERRY_PI_4.webp" alt="PCB ADC 3304 en funcionamiento con Raspberry Pi 4" class="img-centrada img-zoom">
+        <p class="pie-foto">PCB ADC 3304 en funcionamiento</p>
+      </div>
+
+      <h4 id="descargas-programacion">DESCARGAS</h4>
+
+      <p>Desde aquí puedes descargar el programa de control de la PCB.</p>
+
+      <div class="descargas-archivos">
+        <a class="tarjeta-descarga" href="#">
+          <span class="descarga-icono">
+            <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/PYTHON_LOGO.png" alt="Logo de Python">
+          </span>
+          <span class="descarga-contenido">
+            <strong>ADC 3304 – Raspberry Pi</strong>
+            <small>Programa Python de lectura y visualización</small>
+          </span>
+        </a>
+      </div>
+
+    </main>
+  </div>
+
+  <div id="footer-container"></div>
+
+  <script src="js/header.js"></script>
+  <script src="js/resaltar-busqueda.js"></script>
+  <script src="js/footer.js"></script>
+  <script src="js/indice_lateral.js"></script>
+  <script src="js/galerias-imagenes.js"></script>
+  <script src="js/youtube-embed.js"></script>
+  <script src="js/lupa.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+footer { /* Selector del pie de página */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    background-color: #00808048; /* Color de fondo */
+    color: #d1d5db; /* Color del texto */
+    text-align: center; /* Centra el contenido horizontalmente */
+    margin-top: 30px; /* Separa el footer del contenido superior */
+    padding: 1rem 0; /* Espaciado vertical interno */
+  } /* Fin del bloque footer */

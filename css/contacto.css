@@ -1,0 +1,393 @@
+/* ============================================================
+   PÁGINA DE CONTACTO
+   ============================================================ */
+
+.contacto-wrapper { /* Contenedor principal de la página de contacto */
+  max-width: 950px; /* Ancho máximo del contenido */
+  margin: 0 auto; /* Centrado horizontal */
+  padding: 3rem 1.5rem 5rem; /* Espaciado superior, lateral e inferior */
+}
+
+/* ── Encabezado ─────────────────────────────────────────── */
+.contacto-encabezado { /* Bloque de título e introducción */
+  text-align: center; /* Texto centrado */
+  margin-bottom: 2.8rem; /* Separación del formulario */
+}
+
+.contacto-encabezado p { /* Párrafos del encabezado */
+  font-size: 1.05rem; /* Tamaño del texto introductorio */
+  color: rgba(255,255,255,0.68); /* Blanco semitransparente */
+  margin: 0 auto; /* Centrado sin margen vertical */
+  max-width: 52rem; /* Limita longitud de línea */
+  line-height: 1.65; /* Interlineado cómodo */
+  text-align: center; /* Centrado del párrafo */
+}
+
+.contacto-encabezado p + p { /* Segundo párrafo y siguientes */
+  margin-top: 0.85rem; /* Separación entre párrafos consecutivos */
+}
+
+/* ── Tarjeta del formulario ─────────────────────────────── */
+.contacto-tarjeta { /* Tarjeta que envuelve el formulario */
+  background: linear-gradient(145deg, #1a1b16 0%, #0d2525 60%, #002e2e 100%); /* Degradado oscuro verdoso */
+  border: 1px solid #008080; /* Borde turquesa */
+  border-radius: 24px; /* Esquinas muy redondeadas */
+  padding: 2.8rem 3rem; /* Relleno interno generoso */
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6); /* Sombra profunda */
+  position: relative; /* Contexto para ::before y mensaje de éxito */
+  overflow: hidden; /* Recorta efectos decorativos */
+}
+
+/* Efecto de luz en esquina */
+.contacto-tarjeta::before { /* Brillo radial en esquina superior derecha */
+  content: ""; /* Genera el pseudo-elemento */
+  position: absolute; /* Posicionamiento libre */
+  top: -80px; /* Parcialmente fuera arriba */
+  right: -80px; /* Parcialmente fuera a la derecha */
+  width: 260px; /* Diámetro del efecto */
+  height: 260px; /* Altura del círculo de luz */
+  background: radial-gradient(circle, rgba(0,128,128,0.18) 0%, transparent 70%); /* Halo turquesa suave */
+  pointer-events: none; /* No interfiere con el formulario */
+}
+
+/* ── Grid de campos ─────────────────────────────────────── */
+.contacto-grid { /* Cuadrícula de dos columnas para campos */
+  display: grid; /* Activa CSS Grid */
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  gap: 1.4rem 2rem; /* Separación vertical y horizontal */
+}
+
+.contacto-campo-ancho { /* Campo que ocupa todo el ancho de la rejilla */
+  grid-column: 1 / -1; /* De la primera a la última columna */
+}
+
+/* ── Campo individual ───────────────────────────────────── */
+.contacto-campo { /* Contenedor de etiqueta + input/textarea */
+  display: flex; /* Apila label y control */
+  flex-direction: column; /* Vertical */
+  gap: 0.45rem; /* Espacio entre etiqueta y campo */
+}
+
+.contacto-campo label { /* Etiqueta del campo */
+  font-size: 0.82rem; /* Texto pequeño */
+  font-weight: 600; /* Semi-negrita */
+  color: #008080; /* Color turquesa de marca */
+  letter-spacing: 0.06em; /* Espaciado entre letras */
+  text-transform: uppercase; /* Mayúsculas */
+}
+
+.contacto-campo input,
+.contacto-campo textarea { /* Campos de texto del formulario */
+  background: rgba(39,40,34,0.75); /* Fondo oscuro semitransparente */
+  border: 1px solid rgba(0,128,128,0.4); /* Borde turquesa suave */
+  border-radius: 10px; /* Esquinas redondeadas */
+  color: #ffffff; /* Texto blanco al escribir */
+  font-family: Arial, sans-serif; /* Tipografía del input */
+  font-size: 0.95rem; /* Tamaño del texto */
+  padding: 0.75rem 1rem; /* Relleno interno */
+  outline: none; /* Quita contorno por defecto del foco */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Estados focus */
+  width: 100%; /* Ancho completo del contenedor */
+  box-sizing: border-box; /* Incluye padding en el ancho */
+  -webkit-user-select: text; /* Permite selección en WebKit */
+  user-select: text; /* Permite seleccionar texto */
+}
+
+.contacto-campo input::placeholder,
+.contacto-campo textarea::placeholder { /* Texto de ayuda en campos vacíos */
+  color: rgba(255,255,255,0.28); /* Placeholder muy tenue */
+}
+
+.contacto-campo input:focus,
+.contacto-campo textarea:focus { /* Campo con foco del teclado */
+  border-color: #008080; /* Borde turquesa sólido */
+  background: rgba(39,40,34,0.95); /* Fondo más opaco */
+  box-shadow: 0 0 0 3px rgba(0,128,128,0.2); /* Anillo de foco turquesa */
+}
+
+/* ── Estado de error en campo ───────────────────────────── */
+@keyframes sacudir { /* Animación de sacudida horizontal en error */
+  0%, 100% { transform: translateX(0); } /* Posición neutra */
+  20%       { transform: translateX(-6px); } /* Desplazamiento izquierda */
+  40%       { transform: translateX(6px); } /* Desplazamiento derecha */
+  60%       { transform: translateX(-4px); } /* Oscilación menor izquierda */
+  80%       { transform: translateX(4px); } /* Oscilación menor derecha */
+}
+
+.contacto-campo input.campo-error,
+.contacto-campo textarea.campo-error { /* Campos marcados con error de validación */
+  border-color: #e05555; /* Borde rojo */
+  box-shadow: 0 0 0 3px rgba(224,85,85,0.2); /* Halo rojo suave */
+  animation: sacudir 0.4s ease; /* Aplica la sacudida */
+}
+
+.contacto-campo input.campo-error:focus,
+.contacto-campo textarea.campo-error:focus { /* Error con foco activo */
+  border-color: #e05555; /* Mantiene borde rojo */
+  box-shadow: 0 0 0 3px rgba(224,85,85,0.25); /* Halo un poco más intenso */
+}
+
+.contacto-campo-error-msg { /* Mensaje de error bajo el campo */
+  font-size: 0.75rem; /* Texto pequeño */
+  color: #e07070; /* Rojo claro legible */
+  margin-top: 0.1rem; /* Separación mínima del input */
+  min-height: 1rem; /* Reserva espacio aunque esté vacío */
+}
+
+.contacto-campo textarea { /* Área de mensaje (sobreescribe altura mínima) */
+  resize: vertical; /* Solo redimensionar verticalmente */
+  min-height: 140px; /* Altura mínima del área de texto */
+  line-height: 1.6; /* Interlineado del mensaje */
+}
+
+/* ── Botón ──────────────────────────────────────────────── */
+.contacto-boton-fila { /* Fila que centra el botón de envío */
+  margin-top: 2rem; /* Separación del último campo */
+  display: flex; /* Flex para centrar */
+  justify-content: center; /* Centrado horizontal */
+}
+
+.contacto-boton { /* Botón principal de enviar */
+  display: inline-flex; /* Flex en línea con icono */
+  align-items: center; /* Centra icono y texto verticalmente */
+  gap: 0.65rem; /* Espacio entre icono y texto */
+  padding: 0.85rem 2.4rem; /* Relleno del botón */
+  background: linear-gradient(135deg, #008080 0%, #005f5f 100%); /* Degradado turquesa */
+  color: #ffffff; /* Texto blanco */
+  font-family: Arial, sans-serif; /* Tipografía del botón */
+  font-size: 1rem; /* Tamaño del texto */
+  font-weight: 700; /* Negrita */
+  border: none; /* Sin borde nativo */
+  border-radius: 50px; /* Forma de píldora */
+  cursor: pointer; /* Cursor de mano */
+  letter-spacing: 0.04em; /* Espaciado entre letras */
+  box-shadow: 0 8px 28px rgba(0,128,128,0.4); /* Sombra turquesa */
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease, background 0.3s ease; /* Hover y active */
+  position: relative; /* Para overlay ::before */
+  overflow: hidden; /* Recorta brillo interno */
+}
+
+.contacto-boton::before { /* Capa dorada al hover */
+  content: ""; /* Pseudo-elemento de overlay */
+  position: absolute; /* Cubre el botón */
+  inset: 0; /* Todo el perímetro */
+  background: linear-gradient(135deg, rgba(255,191,0,0.0) 0%, rgba(255,140,0,0.0) 100%); /* Inicialmente transparente */
+  transition: opacity 0.3s ease; /* Fundido del overlay */
+  opacity: 0; /* Oculto por defecto */
+  border-radius: 50px; /* Misma forma que el botón */
+}
+
+.contacto-boton:hover { /* Botón al pasar el cursor */
+  transform: translateY(-3px) scale(1.03); /* Eleva y agranda */
+  box-shadow: 0 14px 40px rgba(0,128,128,0.55), 0 0 0 1px rgba(255,140,0,0.35); /* Sombra y borde cálido */
+}
+
+.contacto-boton:hover::before { /* Overlay visible en hover */
+  opacity: 1; /* Muestra el brillo */
+  background: linear-gradient(135deg, rgba(255,191,0,0.15) 0%, rgba(255,140,0,0.12) 100%); /* Degradado dorado suave */
+}
+
+.contacto-boton:active { /* Botón al pulsar */
+  transform: scale(0.98); /* Efecto de pulsación */
+}
+
+.contacto-boton svg { /* Icono dentro del botón */
+  width: 1.15rem; /* Ancho del SVG */
+  height: 1.15rem; /* Alto del SVG */
+  flex-shrink: 0; /* No se comprime */
+  transition: transform 0.3s ease; /* Animación al hover */
+}
+
+.contacto-boton:hover svg { /* Icono en hover del botón */
+  transform: translateX(3px) rotate(-10deg); /* Se mueve y rota ligeramente */
+}
+
+/* ── Estado de envío ────────────────────────────────────── */
+.contacto-estado { /* Mensaje de estado bajo el botón (enviando, etc.) */
+  margin-top: 1.4rem; /* Separación del botón */
+  text-align: center; /* Centrado */
+  font-size: 0.95rem; /* Tamaño del mensaje */
+  font-weight: 600; /* Semi-negrita */
+  color: rgba(255, 255, 255, 0.68); /* Blanco semitransparente por defecto */
+  min-height: 1.5rem; /* Evita salto de layout */
+  transition: opacity 0.4s ease; /* Fundido al cambiar mensaje */
+}
+
+.contacto-estado.exito { /* Estado de envío correcto */
+  color: #7fffd4; /* Verde aqua de éxito */
+}
+
+.contacto-estado.error { /* Estado de error de envío */
+  color: #ff7f7f; /* Rojo claro */
+}
+
+/* ── Botón estado enviando (dorado) ─────────────────────── */
+@keyframes shimmer-dorado { /* Barrido del degradado dorado en el botón */
+  0%   { background-position: -200% center; } /* Inicio fuera a la izquierda */
+  100% { background-position:  200% center; } /* Fin fuera a la derecha */
+}
+
+@keyframes pulso-dorado { /* Pulso de sombra dorada */
+  0%, 100% { box-shadow: 0 8px 28px rgba(212,160,0,0.45); } /* Sombra base */
+  50%       { box-shadow: 0 8px 40px rgba(255,191,0,0.75), 0 0 0 6px rgba(255,191,0,0.12); } /* Pulso amplio */
+}
+
+.contacto-boton.enviando { /* Botón mientras se envía el formulario */
+  background: linear-gradient( /* Degradado dorado animado */
+    100deg,
+    #b8860b 0%,
+    #ffd700 30%,
+    #ffb300 50%,
+    #ffd700 70%,
+    #b8860b 100%
+  );
+  background-size: 200% auto; /* Permite desplazar el degradado */
+  animation: shimmer-dorado 1.4s linear infinite, pulso-dorado 1.6s ease-in-out infinite; /* Brillo y pulso */
+  color: #1a1200; /* Texto oscuro sobre dorado */
+  box-shadow: 0 8px 28px rgba(212,160,0,0.45); /* Sombra dorada */
+  cursor: not-allowed; /* Indica que no se puede pulsar de nuevo */
+  transform: none; /* Anula hover mientras envía */
+}
+
+/* ── Mensaje de éxito ───────────────────────────────────── */
+.contacto-exito { /* Panel de éxito que cubre el formulario */
+  display: flex; /* Centra contenido verticalmente */
+  flex-direction: column; /* Apila icono y textos */
+  align-items: center; /* Centrado horizontal */
+  justify-content: center; /* Centrado vertical */
+  gap: 1.8rem; /* Espacio entre elementos */
+  padding: 4rem 2.5rem; /* Relleno interno amplio */
+  opacity: 0; /* Oculto inicialmente */
+  transform: translateY(22px) scale(0.97); /* Ligeramente abajo y pequeño */
+  pointer-events: none; /* No recibe clics cuando está oculto */
+  position: absolute; /* Superpuesto a la tarjeta */
+  inset: 0; /* Cubre toda la tarjeta */
+  margin: 0; /* Sin margen externo */
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23,1,0.32,1); /* Entrada animada */
+}
+
+.contacto-exito.visible { /* Panel de éxito mostrado */
+  opacity: 1; /* Totalmente visible */
+  transform: translateY(0) scale(1); /* Posición y escala final */
+  pointer-events: auto; /* Permite interacción si hay enlaces */
+}
+
+.contacto-exito-icono { /* Círculo con icono de check */
+  width: 100px; /* Diámetro del círculo */
+  height: 100px; /* Altura igual al ancho */
+  border-radius: 50%; /* Forma circular */
+  background: linear-gradient(135deg, #b8860b 0%, #ffd700 50%, #ffb300 100%); /* Degradado dorado */
+  display: flex; /* Centra el SVG */
+  align-items: center; /* Centrado vertical del icono */
+  justify-content: center; /* Centrado horizontal del icono */
+  box-shadow: 0 0 0 18px rgba(255,191,0,0.1), 0 12px 48px rgba(212,160,0,0.5); /* Halo y sombra */
+  animation: pulso-dorado 2s ease-in-out infinite; /* Pulso continuo */
+  flex-shrink: 0; /* No se deforma en flex */
+}
+
+.contacto-exito-icono svg { /* Icono de verificación */
+  width: 48px; /* Ancho del check */
+  height: 48px; /* Alto del check */
+  color: #1a1200; /* Trazo oscuro sobre dorado */
+  stroke-width: 2.8; /* Grosor del trazo SVG */
+}
+
+.contacto-exito-titulo { /* Título principal del mensaje de éxito */
+  font-size: clamp(1.7rem, 4vw, 2.4rem); /* Tamaño fluido según viewport */
+  font-weight: 700; /* Negrita */
+  background: linear-gradient(135deg, #ffd700 0%, #ffb300 60%, #e8a000 100%); /* Degradado en el texto */
+  -webkit-background-clip: text; /* Recorta fondo al texto (WebKit) */
+  -webkit-text-fill-color: transparent; /* Texto transparente para ver el degradado */
+  background-clip: text; /* Recorte estándar del degradado */
+  margin: 0; /* Sin margen */
+  text-align: center; /* Centrado */
+  line-height: 1.2; /* Interlineado compacto */
+}
+
+.contacto-exito-sub { /* Subtítulo bajo el mensaje de éxito */
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem); /* Tamaño fluido */
+  color: rgba(255,255,255,0.6); /* Blanco semitransparente */
+  margin: 0; /* Sin margen */
+  text-align: center; /* Centrado */
+  letter-spacing: 0.02em; /* Ligero espaciado */
+}
+
+@media (max-width: 768px) { /* Ajustes del panel de éxito en móvil */
+  .contacto-exito { /* Panel más compacto */
+    gap: 1.4rem; /* Menos espacio entre elementos */
+    padding: 3rem 1.5rem; /* Menos relleno */
+  }
+
+  .contacto-exito-icono { /* Icono más pequeño */
+    width: 80px; /* Diámetro reducido */
+    height: 80px; /* Altura reducida */
+    box-shadow: 0 0 0 12px rgba(255,191,0,0.1), 0 8px 32px rgba(212,160,0,0.45); /* Halo más pequeño */
+  }
+
+  .contacto-exito-icono svg { /* Check más pequeño */
+    width: 38px; /* Ancho del SVG */
+    height: 38px; /* Alto del SVG */
+  }
+}
+
+/* ── Formulario ocultándose ─────────────────────────────── */
+#contacto-form { /* Formulario principal */
+  transition: opacity 0.4s ease, transform 0.4s ease; /* Animación al ocultarse */
+}
+
+#contacto-form.ocultando { /* Clase aplicada al enviar con éxito */
+  opacity: 0; /* Funde el formulario */
+  transform: translateY(-10px); /* Sube ligeramente al desaparecer */
+  pointer-events: none; /* Desactiva interacción */
+}
+
+/* ── Decoración lateral ─────────────────────────────────── */
+.contacto-info { /* Fila de datos de contacto (email, teléfono, etc.) */
+  display: flex; /* Flex horizontal */
+  justify-content: center; /* Centra los ítems */
+  gap: 2.5rem; /* Espacio entre ítems */
+  margin-top: 2.5rem; /* Separación de la tarjeta */
+  flex-wrap: wrap; /* Permite varias filas en pantallas estrechas */
+}
+
+.contacto-info-item { /* Cada dato con icono */
+  display: flex; /* Icono y texto en línea */
+  align-items: center; /* Alineación vertical */
+  gap: 0.6rem; /* Espacio icono-texto */
+  color: rgba(255,255,255,0.55); /* Texto secundario tenue */
+  font-size: 0.88rem; /* Tamaño pequeño */
+}
+
+.contacto-info-item svg { /* Icono del dato de contacto */
+  width: 1.1rem; /* Ancho del icono */
+  height: 1.1rem; /* Alto del icono */
+  color: #008080; /* Turquesa de acento */
+  flex-shrink: 0; /* Mantiene tamaño del icono */
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 768px) { /* Layout móvil del formulario */
+  .contacto-wrapper { /* Contenedor en móvil */
+    padding: 1.5rem 0.75rem 3rem; /* Menos padding lateral */
+  }
+
+  .contacto-tarjeta { /* Tarjeta más compacta */
+    padding: 1.8rem 1.2rem; /* Relleno reducido */
+    border-radius: 18px; /* Esquinas algo menores */
+  }
+
+  .contacto-grid { /* Una sola columna de campos */
+    grid-template-columns: 1fr; /* Apila todos los campos */
+    gap: 1.1rem; /* Separación vertical entre campos */
+  }
+
+  .contacto-campo-ancho { /* Campo ancho en una columna */
+    grid-column: 1; /* Ocupa la única columna */
+  }
+
+  .contacto-info { /* Info de contacto apilada */
+    gap: 1.4rem; /* Menos espacio horizontal */
+    flex-direction: column; /* Columna vertical */
+    align-items: center; /* Centrado */
+  }
+}

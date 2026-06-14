@@ -97,7 +97,7 @@ textarea, /* Áreas de texto multilínea */
 
 /* Título del sitio */
 h1 { /* Título principal del encabezado */
-  font-size: 2.2rem; /* Tamaño de letra */
+  font-size: 2.5rem; /* Tamaño de letra */
   font-weight: bold; /* Texto en negrita */
   font-family: 'Arial', sans-serif; /* Tipografía sans-serif */
   line-height: 42px; /* Altura de línea fija */

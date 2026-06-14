@@ -1,23 +1,23 @@
 /* ============================================================
-   PÁGINA DE SERVICIOS
+   PÁGINA DE ESPECIALIDADES
    ============================================================ */
 
-.servicios-intro { /* Bloque introductorio centrado de la página */
+.especialidades-intro { /* Bloque introductorio centrado de la página */
   max-width: 800px; /* Limita el ancho del texto introductorio */
   margin: 0 auto; /* Centra horizontalmente el bloque */
   padding: 2.5rem 1.5rem 0.5rem; /* Espaciado interno: arriba, laterales y abajo */
   text-align: center; /* Alinea el texto al centro */
 }
 
-.servicios-intro p { /* Párrafo dentro del bloque introductorio */
+.especialidades-intro p { /* Párrafo dentro del bloque introductorio */
   font-size: 1.1rem; /* Tamaño de letra */
   color: rgba(255,255,255,0.8); /* Color del texto */
   line-height: 1.7; /* Interlineado cómodo para lectura */
   margin: 0; /* Elimina márgenes por defecto del párrafo */
 }
 
-/* ── Lista de servicios ───────────────────────────────────── */
-.servicios-lista { /* Contenedor vertical de todas las tarjetas de servicio */
+/* ── Lista de especialidades ───────────────────────────────── */
+.especialidades-lista { /* Contenedor vertical de todas las tarjetas */
   max-width: 950px; /* Ancho máximo de la lista */
   margin: 2.5rem auto 4rem; /* Separación vertical y centrado horizontal */
   padding: 0 1.5rem; /* Márgenes laterales internos */
@@ -27,7 +27,7 @@
 }
 
 /* ── Tarjeta horizontal ───────────────────────────────────── */
-.servicio-tarjeta { /* Tarjeta enlazable de un servicio (layout horizontal) */
+.servicio-tarjeta { /* Tarjeta de una especialidad (layout horizontal) */
   position: relative; /* Contexto para pseudo-elementos y capas */
   display: grid; /* Cuadrícula imagen + contenido */
   grid-template-columns: 380px 1fr; /* Columna fija para imagen y flexible para texto */
@@ -97,7 +97,7 @@
 }
 
 /* ── Imagen ─────────────────────────────────────────────── */
-.servicio-imagen { /* Contenedor de la imagen del servicio */
+.servicio-imagen { /* Contenedor de la imagen */
   position: relative; /* Contexto para máscara y brillo */
   overflow: hidden; /* Recorta zoom de la imagen */
   flex-shrink: 0; /* Evita que la imagen se encoja */
@@ -150,7 +150,7 @@
 }
 
 /* ── Contenido ──────────────────────────────────────────── */
-.servicio-cuerpo { /* Zona de texto y etiquetas del servicio */
+.servicio-cuerpo { /* Zona de texto y etiquetas */
   position: relative; /* Contexto de apilamiento */
   z-index: 2; /* Por encima de la imagen */
   display: flex; /* Flex para alinear contenido verticalmente */
@@ -174,7 +174,7 @@
   z-index: 2; /* Por encima de fondos */
 }
 
-.servicio-titulo { /* Título del servicio */
+.servicio-titulo { /* Título de la especialidad */
   font-family: Arial, sans-serif; /* Tipografía del título */
   font-size: 1.35rem; /* Tamaño de letra */
   font-weight: 700; /* Negrita */
@@ -218,7 +218,7 @@
   background: linear-gradient(90deg, #ff8c00, #ffbf00, transparent); /* Color de fondo */
 }
 
-.servicio-desc { /* Descripción del servicio */
+.servicio-desc { /* Descripción */
   font-size: 0.92rem; /* Tamaño de letra */
   color: rgba(255,255,255,0.72); /* Color del texto */
   line-height: 1.65; /* Lectura cómoda */
@@ -228,7 +228,7 @@
 }
 
 /* Tags */
-.servicio-tags { /* Contenedor de etiquetas del servicio */
+.servicio-tags { /* Contenedor de etiquetas */
   display: flex; /* Flex para varias etiquetas */
   flex-wrap: wrap; /* Permite salto de línea */
   justify-content: center; /* Centra las etiquetas */
@@ -280,13 +280,13 @@
 
 /* ── Responsive ─────────────────────────────────────────── */
 @media (max-width: 768px) { /* Ajustes para pantallas estrechas */
-  .servicios-lista { /* Lista en móvil */
+  .especialidades-lista { /* Lista en móvil */
     padding: 0 0.75rem; /* Menos margen lateral */
     margin: 1.5rem auto 2.5rem; /* Menos espacio vertical */
     gap: 1.25rem; /* Tarjetas más juntas */
   }
 
-  .servicios-intro { /* Intro en móvil */
+  .especialidades-intro { /* Intro en móvil */
     padding: 1.5rem 1rem 0; /* Padding reducido */
   }
 

@@ -3,6 +3,9 @@
    Array global consumido por js/catalogo-proyectos.js.
    Cada entrada define enlace, título, descripción, imagen
    y etiquetas opcionales para el grid de proyectos.
+
+   Al subir el sitio (_sync/iniciar.bat), las meta og:* y twitter:*
+   de cada .html se generan automáticamente desde aquí.
    ═══════════════════════════════════════════════════════════ */
 
 const PROYECTOS_CATALOGO = [

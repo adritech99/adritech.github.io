@@ -31,7 +31,7 @@ const PROYECTOS_CATALOGO = [
     href: "DESHUMIDIFICADOR_DIY.html",
     titulo: "Deshumidificador DIY",
     descripcion: "Reconstrucción integral de un deshumidificador mediante una electrónica propia basada en ESP32, incorporando control inteligente, pantalla táctil TFT, firmware personalizado y nuevas funciones de seguridad y monitorización.",
-    imagen: "img/proyectos/DESHUMIDIFICADOR DIY/PCB_top_montada.webp",
+    imagen: "img/proyectos/DESHUMIDIFICADOR DIY/Tarjeta_proyecto_deshumidificador.webp",
     etiquetas: ["ESP32", "PCB", "Pantalla TFT", "ILI9341", "SHT45", "SSR", "MOSFECT", "Proteus", "EEZ Studio", "PlatformIO", "SMD", "THT"]
   }
 ];

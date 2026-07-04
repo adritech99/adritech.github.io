@@ -27,6 +27,15 @@
   <link rel="stylesheet" href="css/encabezado.css">
   <link rel="stylesheet" href="css/style_proyectos.css">
   <link rel="stylesheet" href="css/footer.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -130,6 +139,11 @@
         el otro regula una tensión de prueba para verificar los ocho canales de entrada del ADC.
       </p>
 
+      <div class="imagen-zoom-contenedor">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/Esquematico.svg" alt="Esquema" class="img-zoom">
+        <div class="lupa-cuadrada"></div>
+      </div>
+
       <h4 id="diseno-pcb">DISEÑO PCB</h4>
 
       <p>
@@ -137,6 +151,11 @@
         MCP3304 se coloca en el centro de la placa y, a partir de ahí, se distribuyen el resto de
         componentes alrededor.
       </p>
+
+      <div class="imagen-zoom-contenedor" id="contenedor-lupa">
+        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/Diseno_PCB.SVG" alt="Esquema" class="img-zoom">
+        <div class="lupa-cuadrada"></div>
+      </div>
 
       <div class="nota-importante">
         <strong>Nota importante</strong>
@@ -156,6 +175,39 @@
         El modelo 3D ayuda a visualizar el acabado final de la placa. Conviene realizarlo cuando
         los componentes ya están distribuidos en el layout.
       </p>
+
+      <div class="contenedor-3d">
+        <div class="visor-3d-wrapper">
+          <model-viewer 
+              src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/Modelo_3D.glb" 
+              alt="Modelo 3D interactivo"
+              data-cubo-tipo="pcb"
+              data-cubo-offset-theta="0"
+              data-cubo-inclinacion="75"
+              auto-rotate 
+              camera-controls 
+              shadow-intensity="1" 
+              environment-image="neutral" 
+              exposure="1"
+              touch-action="pan-y">
+          </model-viewer>
+
+          <div class="cubo-vistas" aria-label="Selección de vista">
+            <div class="cubo-vistas-escena">
+              <div class="cubo-vistas-cubo">
+                <button type="button" class="cubo-cara cubo-frontal"   data-vista="frontal">Frontal</button>
+                <button type="button" class="cubo-cara cubo-posterior" data-vista="posterior">Posterior</button>
+                <button type="button" class="cubo-cara cubo-derecha"   data-vista="derecha">Derecha</button>
+                <button type="button" class="cubo-cara cubo-izquierda" data-vista="izquierda">Izquierda</button>
+                <button type="button" class="cubo-cara cubo-superior"  data-vista="superior">Superior</button>
+                <button type="button" class="cubo-cara cubo-inferior"  data-vista="inferior">Inferior</button>
+              </div>
+            </div>
+            <button type="button" class="cubo-inicio" data-vista="isometrica" title="Vista isométrica">⌂</button>
+          </div>
+        </div>
+        <p class="instrucciones-3d">Usa el ratón para rotar, la rueda para zoom o el cubo para cambiar de vista</p>
+      </div>
 
       <h3 id="proceso-cnc">PROCESO CNC</h3>
 
@@ -384,21 +436,27 @@
         <p class="pie-foto pie-foto-galeria">PCB montada – Top y Bottom</p>
       </div>
 
-      <h4 id="modelo-3d-carcasa">MODELO 3D</h4>
-
-      <p>
-        Se diseñó una carcasa para proteger la placa y evitar posibles cortocircuitos en la cara
-        Bottom.
-      </p>
-
-      <div class="contenedor-imagen-centrada">
-        <img src="img/proyectos/PCB_ADC_3304_RASPBERRY_PI/CARCASA_ADC_3304.jpg" alt="Carcasa 3D para la PCB ADC 3304" class="img-centrada img-zoom">
-        <p class="pie-foto">Carcasa PCB – ADC 3304</p>
-      </div>
-
       <h3 id="programacion">PROGRAMACIÓN</h3>
 
       <p>El lenguaje de programación empleado es Python. El funcionamiento general de la PCB es el siguiente:</p>
+      
+      <div class="contenedor-codigo" data-ruta="Programaciones/PCB_ADC_3304_RASPBERRY_PI/Programacion.py"></div>
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+
+      <script>
+        Prism.languages.cpp['custom-types'] = {
+          pattern: /\b(?:SemaphoreHandle_t|TaskHandle_t)\b/,
+          alias: 'class-name'
+        };
+      </script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+      
+      <script src="js/visor-codigo.js"></script>
 
       <div class="lista-materiales">
         <ul>
@@ -443,10 +501,12 @@
 
       <div class="descargas-archivos">
         <a class="tarjeta-descarga" data-descarga-drive href="#">
-          <span class="descarga-icono">Py</span>
+          <span class="descarga-icono">
+            <img src="img/proyectos/IMG/Python_logo.svg" alt="Logo de Python">
+          </span>
           <span class="descarga-contenido">
             <strong>ADC 3304 – Raspberry Pi</strong>
-            <small>Programa Python de lectura y visualización</small>
+            <small>Firmware del funcionamiento de la PCB</small>
           </span>
         </a>
 
@@ -456,7 +516,7 @@
           </span>
           <span class="descarga-contenido">
             <strong>Fabricación PCB</strong>
-            <small>Proyecto Proteus con esquemático, PCB y archivos Gerber</small>
+            <small>Archivos Gerber de fabricación de la PCB</small>
           </span>
         </a>
 
@@ -483,6 +543,9 @@
   <script src="js/galerias-imagenes.js"></script>
   <script src="js/youtube-embed.js"></script>
   <script src="js/lupa.js"></script>
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <script src="js/cubo-vistas.js"></script>
   <script src="js/descargas-drive.js"></script>
 
 </body>

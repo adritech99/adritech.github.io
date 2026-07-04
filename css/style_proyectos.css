@@ -1316,6 +1316,7 @@ model-viewer { /* Componente web del modelo 3D */
   width: min(92%, 820px); /* Ancho fluido con tope */
   margin: 2.5rem auto; /* Separación vertical y centrado */
   padding: 2rem 1.6rem 2.2rem; /* Relleno interno generoso */
+  box-sizing: border-box; /* El ancho incluye padding y borde */
   display: flex; /* Rejilla flexible de herramientas */
   flex-wrap: wrap; /* Varias filas si hace falta */
   justify-content: center; /* Centra las tarjetas */
@@ -1441,13 +1442,24 @@ model-viewer { /* Componente web del modelo 3D */
 
   .galeria-herramientas { /* Panel de herramientas en móvil */
     width: 100%; /* Ancho completo */
+    margin-left: auto; /* Centrado en la página */
+    margin-right: auto; /* Centrado en la página */
     padding: 1.5rem 0.85rem 1.7rem; /* Relleno reducido */
     gap: 1.1rem 0.75rem; /* Menor espacio entre tarjetas */
+    display: grid; /* Rejilla de dos columnas centradas */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Dos columnas iguales */
+    justify-items: center; /* Centra cada tarjeta en su celda */
   }
 
   .galeria-herramienta { /* Tarjeta de herramienta en móvil */
-    flex: 0 1 calc(50% - 0.75rem); /* Dos columnas */
-    max-width: calc(50% - 0.75rem); /* Máximo de media fila */
+    flex: unset; /* Sin flex en rejilla */
+    width: 100%; /* Ocupa la celda disponible */
+    max-width: 148px; /* Mismo tope visual que en PC */
+  }
+
+  .galeria-herramienta:last-child:nth-child(odd) { /* Última herramienta impar */
+    grid-column: 1 / -1; /* Ocupa toda la fila */
+    justify-self: center; /* Centrada en la página */
   }
 
   .galeria-herramienta figcaption { /* Leyenda de herramienta en móvil */
